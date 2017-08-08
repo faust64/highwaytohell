@@ -1,0 +1,2 @@
+nagios	ALL=NOPASSWD:	/usr/lib/nagios/plugins/check_pm2
+

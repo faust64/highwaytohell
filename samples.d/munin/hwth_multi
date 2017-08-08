@@ -1,0 +1,62 @@
+#!/bin/sh
+
+export PATH=/usr/local/bin:$PATH
+if ! test -s /var/lib/highwaytohell/.profile; then
+    echo missing configuration
+    exit 1
+fi >&2
+
+for worker in refreshZones checkHealth apiGW
+do
+    pm2 show $worker >/dev/null 2>&1 || continue
+    doWorker="$doWorker $worker"
+done
+
+if test "$1" = config; then
+    for worker in $doWorker
+    do
+	case "$worker" in
+	    refreshZones) match="pubsub bull" ;;
+	    apiGW) match="GET POST" ;;
+	    checkHealth) match="checks" ;;
+	esac
+	if test "$match"; then
+	    cat <<EOF 
+multigraph HWTH$worker
+graph_title 
+graph_vlabel HWTH usage
+graph_category HighWayToHell
+EOF
+	    for what in $match
+	    do
+		cat <<EOF 
+HWTH_${worker}_$what.label $what
+HWTH_${worker}_$what.min 0
+HWTH_${worker}_$what.draw LINE1
+HWTH_${worker}_$what.info $what per minute
+HWTH_${worker}_$what.type DERIVE
+EOF
+	    done
+	fi
+    done
+elif test "$1" = auto; then
+    echo yes
+else
+    for worker in $doWorker
+    do
+	case "$worker" in
+	    refreshZones) match='pubsub bull' ;;
+	    apiGW) match='GET POST' ;;
+	    checkHealth) match="checks" ;;
+	esac
+	for what in $match
+	do
+	    value=`(pm2 show $worker | awk "/$what/" | sed 's_^.* │ \([0-9\.][^ ]*\).*$_\1_' | tr '\n' '+' ; echo) | sed 's|+$||' | bc`
+	    if test "$value"; then
+		cat <<EOF
+HWTH_${worker}_$what.value $value
+EOF
+	    fi
+	done
+    done
+fi

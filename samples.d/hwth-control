@@ -1,0 +1,223 @@
+#!/bin/sh
+
+if test `id -u` -eq 0; then
+    sudo -u hwth $0 $@
+    exit $?
+fi
+export HOME=/var/lib/highwaytohell
+if ! test -f $HOME/.profile; then
+    echo missing configuration >&2
+    exit 1
+fi
+. $HOME/.profile
+if test -f $HOME/.bash_profile; then
+    . $HOME/.bash_profile
+fi
+if test -d /usr/local/nodejs/bin; then
+    export PATH=/usr/local/nodejs/bin:$PATH
+fi
+
+if test -z "$FORKS"; then
+    NCORES=`awk 'BEG{c=0}/^core id/{c=c+1}END{print c}' /proc/cpuinfo`
+    if test "$NCORES" -ge 2; then
+	FORKS=$NCORES
+    else
+	FORKS=2
+    fi
+fi
+ACTION=$1
+shift
+if test "$1"; then
+    DO_WORKERS="$@"
+fi
+if test -z "$RUN_WORKERS"; then
+    RUN_WORKERS="refreshZones checkHealth apiGW"
+fi
+if test "$DO_WORKERS"; then
+    for worker in $DO_WORKERS
+    do
+	if echo $RUN_WORKERS | grep $worker >/dev/null; then
+	    DO="$DO $worker"
+	fi
+    done
+    if test "$RUN_WORKERS"; then
+	RUN_WORKERS="$DO"
+    fi
+fi
+if echo "$RUN_WORKERS" | grep generateZones >/dev/null; then
+    #check dependencies installed & permissions allows us writing zones & conf
+    for dep in inotify-tools ldnsutils '(bind9|bind10|nsd)'
+    do
+	dpkg -l | grep  -E "^ii  $dep" >/dev/null && continue
+	echo "missing dependencies running an authoritative name server" >&2
+	exit 1
+    done
+    if test "$DNS_DRIVER" = nsd; then
+	test -z "$NS_ROOT_DIR" && export NS_ROOT_DIR=/etc/nsd
+    else
+	test -z "$NS_ROOT_DIR" && export NS_ROOT_DIR=/etc/bind
+    fi
+    test -z "$NS_KEYS_DIR" && export NS_KEYS_DIR=$NS_ROOT_DIR/keys.d
+    test -z "$NS_ZONES_DIR" && export NS_ZONES_DIR=$NS_ROOT_DIR/zones.d
+    if test -d "$NS_ROOT_DIR"; then
+	chown -R :hwth $NS_ROOT_DIR
+	if test "$DNS_DRIVER"; then
+	    ALSO=$NS_ROOT_DIR/nsd.conf.d
+	fi
+	for d in $NS_ROOT_DIR $NS_KEYS_DIR $NS_ZONES_DIR $ALSO
+	do
+	    test -d $d
+	    chown root:hwth $d
+	    chmod 775 $d
+	done
+	if test "$DNS_DRIVER" = nsd; then
+	    if ! test -f $NS_ROOT_DIR/nsd.conf.d/highwaytohell-zones.conf; then
+		touch $NS_ROOT_DIR/nsd.conf.d/highwaytohell-zones.conf
+		chown hwth:hwth $NS_ROOT_DIR/nsd.conf.d/highwaytohell-zones.conf
+		chmod 664 $NS_ROOT_DIR/nsd.conf.d/highwaytohell-zones.conf
+	    fi
+	    if ! grep highwaytohell-zones $NS_ROOT_DIR/nsd.conf >/dev/null; then
+		cp -p $NS_ROOT_DIR/nsd.conf $NS_ROOT_DIR/nsd.hwth.conf
+		echo "include: \"$NS_ROOT_DIR/nsd.conf.d/highwaytohell-zones.conf\"" >>$NS_ROOT_DIR/nsd.hwth.conf
+		if nsd-checkconf $NS_ROOT_DIR/nsd.hwth.conf >/dev/null 2>&1; then
+		    mv $NS_ROOT_DIR/nsd.conf $NS_ROOT_DIR/nsd.pre-hwth.conf
+		    mv $NS_ROOT_DIR/nsd.hwth.conf $NS_ROOT_DIR/nsd.conf
+		    if test -x /bin/systemctl; then
+			systemctl restart nsd
+		    else
+			service restart nsd
+		    fi
+		fi
+	    fi
+	elif test "$NDS_DRIVER" = bind; then
+	    if ! test -f $NS_ROOT_DIR/highwaytohell-zones.conf; then
+		touch $NS_ROOT_DIR/highwaytohell-zones.conf
+		chown hwth:hwth $NS_ROOT_DIR/highwaytohell-zones.conf
+		chmod 664 $NS_ROOT_DIR/highwaytohell-zones.conf
+	    fi
+	    if ! grep highwaytohell-zones $NS_ROOT_DIR/named.conf.local >/dev/null; then
+		cp -p $NS_ROOT_DIR/named.conf.local $NS_ROOT_DIR/named.hwth.conf
+		echo "include \"$NS_ROOT_DIR/highwaytohell-zones.conf\";" >>$NS_ROOT_DIR/named.hwth.conf
+		if named-checkconf $NS_ROOT_DIR/named.hwth.conf >/dev/null 2>&1; then
+		    mv $NS_ROOT_DIR/named.conf.local $NS_ROOT_DIR/named.conf.pre-hwth.local
+		    mv $NS_ROOT_DIR/named.hwth.conf $NS_ROOT_DIR/named.conf.local
+		    if test -x /bin/systemctl; then
+			systemctl restart bind
+		    else
+			service restart bind
+		    fi
+		fi
+	    fi
+	fi
+    fi
+fi
+
+case "$ACTION" in
+    start)
+	ret=0
+	if ! test -d /var/lib/highwaytohell/node_modules -a -s /var/lib/highwaytohell/api/index.js; then
+	    for d in api lib workers templates node_modules package.json
+	    do
+		if ! rsync -avWxq --delete /usr/share/highwaytohell/$d /var/lib/highwaytohell/; then
+		    echo "[err] can't init working copy" >&2
+		    exit 1
+		fi
+	    done
+	fi
+	for worker in $RUN_WORKERS
+	do
+	    test -s /usr/share/highwaytohell/workers/$worker.js || continue
+	    if pm2 show $worker 2>/dev/null | grep online >/dev/null; then
+		echo "[info] $worker already running" >&2
+	    elif test -s /var/lib/highwaytohell/workers/$worker.js; then
+		(
+		    cd /var/lib/highwaytohell
+		    pm2 start ./workers/$worker.js			\
+			--name $worker -i $FORKS --update-env		\
+			--output /var/log/highwaytohell/$worker.log	\
+			--error /var/log/highwaytohell/$worker.err	\
+			--kill-timeout 5000
+		) || ret=`expr $ret + 1`
+	    else
+		echo "[err] unknown worker $worker" >&2
+	    fi
+	done
+	if test "$ret" -eq 0; then
+	    pm2 save
+	fi
+	;;
+    refresh|refresh-save)
+	if test -s /usr/share/highwaytohell/workers/checkHealth.js -a -d /usr/share/highwaytohell/node_modules; then
+	    for d in api lib workers templates node_modules package.json
+	    do
+		if ! rsync -avWxq --delete /usr/share/highwaytohell/$d /var/lib/highwaytohell/; then
+		    echo "[err] can't init working copy" >&2
+		    exit 1
+		fi
+	    done
+	    $0 reload
+	else
+	    echo "[err] missing source" >&2
+	    exit 1
+	fi
+	;;
+    status)
+	ret=0
+	for worker in $RUN_WORKERS
+	do
+	    test -s /usr/share/highwaytohell/workers/$worker.js || continue
+	    if ! pm2 show $worker 2>/dev/null | grep online >/dev/null; then
+		ret=`expr $ret + 1`
+		echo "[info] no $worker running" >&2
+	    else
+		echo "[info] $worker is running"
+	    fi
+	done
+	exit $ret
+	;;
+    stop)
+	for worker in $RUN_WORKERS
+	do
+	    test -s /usr/share/highwaytohell/workers/$worker.js || continue
+	    if ! pm2 show $worker 2>/dev/null | grep uptime >/dev/null; then
+		echo "[info] no $worker running" >&2
+	    else
+	        pm2 delete $worker
+	    fi
+	done
+	;;
+    restart)
+	$0 stop
+	$0 start
+	;;
+    reload)
+	for worker in $RUN_WORKERS
+	do
+	    test -s /usr/share/highwaytohell/workers/$worker.js || continue
+	    if ! pm2 show $worker >/dev/null 2>&1; then
+		(
+		    cd /var/lib/highwaytohell
+		    pm2 start ./workers/$worker.js			\
+			--name $worker -i $FORKS --update-env		\
+			--output /var/log/highwaytohell/$worker.log	\
+			--error /var/log/highwaytohell/$worker.err	\
+			--kill-timeout 5000
+		) || ret=`expr $ret + 1`
+		if test "$ret" -eq 0; then
+		    pm2 save
+		fi
+	    elif ! pm2 show $worker 2>/dev/null | grep online >/dev/null; then
+		pm2 stop $worker || true
+		pm2 start $worker --update-env --kill-timeout 5000
+	    else
+	        pm2 gracefulReload $worker --update-env --kill-timeout 5000
+	    fi
+	done
+	;;
+    *)
+	echo "unknown subcommand $1" >&2
+	exit 1
+	;;
+esac
+
+exit $?

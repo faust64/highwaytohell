@@ -1,0 +1,35 @@
+{
+  "name": "highwaytohell",
+  "license": "BSD-3-Clause",
+  "version": "0.0.1",
+  "dependencies": {
+    "airbrake": "^2.1.0",
+    "body-parser": "^1.17.2",
+    "bull": "^3.0.0-rc.4",
+    "cassandra-driver": "^3.2.2",
+    "connect-redis": "^3.3.0",
+    "express": "^4.15.3",
+    "express-session": "^1.15.5",
+    "joi": "^10.6.0",
+    "mustache": "^2.3.0",
+    "node-schedule": "^1.2.3",
+    "nodemailer": "^4.0.1",
+    "nodemailer-smtp-transport": "^2.7.4",
+    "pmx": "^1.2.0",
+    "qrcode": "^0.9.0",
+    "redis": "^2.7.1",
+    "request": "^2.81.0",
+    "speakeasy": "^2.0.0",
+    "twilio": "^3.6.1",
+    "winston": "^2.3.1",
+    "winston-syslog": "^1.2.6"
+  },
+  "devDependencies": {
+    "compression": "latest"
+  },
+  "description": "Living easy, living free, season ticket on a one-way ride, asking nothing, leave me be, taking everything in my stride, ...",
+  "engines": {
+    "node": "6.9.1"
+  },
+  "repository": "https://github.com/faust64/highwaytohell"
+}

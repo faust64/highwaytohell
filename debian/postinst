@@ -1,0 +1,403 @@
+#!/bin/sh
+# postinst script for highwaytohell
+
+set -e
+
+if test -z "$DEPLOYMENT_ID" -a -s /var/spool/highwaytohell/ID; then
+    DEPLOYMENT_ID=`cat /var/spool/highwaytohell/ID`
+fi
+if test "$DEPLOYMENT_ID"; then
+    test "$SLACK_HOOK" && msgpfx="[$DEPLOYMENT_ID@`hostname`.$NODE_ENV] " || msgpfx="[$DEPLOYMENT_ID] "
+else
+    test "$SLACK_HOOK" && msgpfx="[`hostname`.$NODE_ENV] " || msgpfx=
+fi
+
+notify_msg()
+{
+    if test -x /usr/local/bin/slack -a "$SLACK_HOOK"; then
+	/usr/local/bin/slack $SLACK_HOOK "$msgpfx$@" >/dev/null 2>&1 || true
+    fi
+    echo "$@"
+}
+
+create_service_directories()
+{
+    test -d /var/log/highwaytohell || mkdir -p /var/log/highwaytohell
+    if getent passwd syslog >/dev/null; then
+	chown syslog:hwth /var/log/highwaytohell
+	chmod 0775 /var/log/highwaytohell
+    else
+	chown hwth:root /var/log/highwaytohell
+	chmod 0750 /var/log/highwaytohell
+    fi
+    if test -h /var/lib/highwaytohell/.pm2/logs; then
+	return 0
+    elif test -d /var/lib/highwaytohell/.pm2/logs; then
+	rm -fr /var/lib/highwaytohell/.pm2/logs
+    fi
+    ln -sf /var/log/highwaytohell /var/lib/highwaytohell/.pm2/logs
+    if ! test -f /var/log/highwaytohell/pm2.log; then
+	touch /var/log/highwaytohell/pm2.log
+	if grep syslog /etc/passwd >/dev/null; then
+	    chown syslog:adm /var/log/highwaytohell/pm2.log
+	else
+	    chown root:adm /var/log/highwaytohell/pm2.log
+	fi
+	chmod 0640 /var/log/highwaytohell/pm2.log
+    fi
+}
+
+create_user()
+{
+    if ! getent passwd | grep hwth >/dev/null; then
+	addgroup hwth
+	#home already exists, not copying from skel warning, is to be expected and ignored
+	adduser --system --home /var/lib/highwaytohell hwth --ingroup hwth >/dev/null 2>&1
+    fi
+    for d in highwaytohell highwaytohell/.pm2
+    do
+	if ! test -d /var/lib/$d; then
+	    mkdir -p /var/lib/$d
+	fi
+	chown hwth /var/lib/$d
+    done
+}
+
+fail2ban_configuration()
+{
+    if test -d /etc/fail2ban/filters.d; then
+	if test -s /usr/share/doc/highwaytohell/fail2ban-filter.conf; then
+	    if ! cmp /usr/share/doc/highwaytohell/fail2ban-filter.conf /etc/fail2ban/filters.d/highwaytohell.conf; then
+		if cp -p /usr/share/doc/highwaytohell/fail2ban-filter.conf /etc/fail2ban/filters.d/highwaytohell.conf; then
+		    chmod 0644 /etc/fail2ban/filters.d/highwaytohell.conf
+		    chown root:root /etc/fail2ban/filters.d/highwaytohell.conf
+		    if grep highwaytohell /etc/fail2ban/jail.conf >/dev/null 2>&1; then
+			if test -x /bin/systemctl; then
+			    if ! systemctl reload fail2ban >/dev/null 2>&1; then
+				notify_msg WARNING failed reloading fail2ban
+			    fi
+			elif ! /etc/init.d/fail2ban reload >/dev/null 2>&1; then
+			    notify_msg WARNING failed reloading fail2ban
+			fi
+		    fi
+		else
+		    notify_msg WARNING failed installing fail2ban custom filter
+		fi
+	    fi
+	fi
+    fi
+}
+
+install_node_modules()
+{
+    cd /usr/share/highwaytohell
+    rm -rf /usr/share/highwaytohell/node_modules /usr/share/highwaytohell/npminstall.log
+    if ! npm install >/var/log/highwaytohell/dpkg-npminstall.log 2>&1; then
+	notify_msg WARNING installing dependencies
+    else
+	notify_msg Installed dependencies
+    fi
+    if test -d node_modules; then
+	chown -R root:root node_modules
+    fi
+}
+
+install_pm2()
+{
+    do_init=false
+    if test -f /etc/init.d/pm2 -o -f /etc/systemd/system/pm2.service -o -f /lib/systemd/system/pm2.service -o -f /usr/lib/systemd/system/pm2.service; then
+	SRVNAME=pm2
+    else
+	SRVNAME=pm2-highwaytohell
+    fi
+
+    if test -x /bin/systemctl; then
+	if ! systemctl status $SRVNAME; then
+	    do_init=true
+	fi
+    elif ! /etc/init.d/$SRVNAME status; then
+	do_init=true
+    fi >/dev/null 2>&1
+
+    if /usr/bin/npm --version | grep -E '^[0-2]\.'; then
+	NPMUPDATE=true
+    elif /usr/bin/npm --version | grep -E '^3\.[0-9]\.'; then
+	NPMUPDATE=true
+    elif /usr/bin/npm --version | grep -E '^3\.10\.[0-3]'; then
+	NPMUPDATE=true
+    else
+	NPMUPDATE=false
+    fi >/dev/null 2>&1
+    if $NPMUPDATE; then
+	if ! /usr/bin/npm install npm@3.10.4 -g >/dev/null 2>&1; then
+	    notify_msg WARNING installing npm
+	fi
+	chown -R root:root /usr/local/nodejs/lib/node_modules
+    fi
+    for dep in pm2@latest node-gyp node-pre-gyp
+    do
+	match=`echo $dep | sed 's|@.*||'`
+	if ! echo $dep | grep @latest >/dev/null; then
+	    /usr/bin/npm ls -g 2>&1 | grep $match@ >/dev/null && continue
+	fi
+	if ! /usr/bin/npm install $dep -g >/dev/null 2>&1; then
+	    notify_msg WARNING installing $dep
+	fi
+	chown -R root:root /usr/local/nodejs/lib/node_modules
+    done
+    if echo "$NODE_ENV" | grep -E '(labs|staging|stress)' >/dev/null; then
+	for dep in shrinkwrap shrinkpack
+	do
+	    /usr/bin/npm ls -g 2>&1 | grep $dep@ >/dev/null && continue
+	    if ! /usr/bin/npm install $dep -g >/dev/null 2>&1; then
+		notify_msg WARNING installing $dep
+	    fi
+	    chown -R root:root /usr/local/nodejs/lib/node_modules
+	    if ! /usr/bin/npm ls -g 2>&1 | grep $match@ >/dev/null; then
+		notify_msg failed pulling $dep
+		notify_msg "try running npm install -g $dep"
+		exit 1
+	    fi >&2
+	done
+	if test -x /usr/local/nodejs/bin/shrinkpack -a \! -L /usr/local/bin/shrinkpack; then
+	    ln -sf /usr/local/nodejs/bin/shrinkpack /usr/local/bin/
+	fi
+    fi
+    if test -x /usr/local/nodejs/bin/pm2; then
+	ln -sf /usr/local/nodejs/bin/pm2 /usr/local/bin/pm2
+    fi
+    if $do_init; then
+	case "`lsb_release -si`-`lsb_release -sc`" in
+	    *-trusty)
+		pm2 startup ubuntu --hp /var/lib/highwaytohell -u hwth >/dev/null 2>&1
+		;;
+	    Devuan-jessie)
+		pm2 startup systemv --hp /var/lib/highwaytohell -u hwth >/dev/null 2>&1
+		;;
+	    *)
+		pm2 startup systemd --hp /var/lib/highwaytohell -u hwth >/dev/null 2>&1
+		;;
+	esac
+	chown -R hwth:hwth /var/lib/highwaytohell/.pm2 || true
+    fi
+}
+
+install_snyk()
+{
+    if snyk --version >/dev/null 2>&1; then
+	return 0
+    fi
+    if ! /usr/bin/npm install snyk@latest -g >/dev/null 2>&1; then
+	notify_msg WARNING installing snyk
+    fi
+    if test -x /usr/local/nodejs/bin/snyk; then
+	ln -sf /usr/local/nodejs/bin/snyk /usr/local/bin/snyk
+    fi
+}
+
+logrotate_configure()
+{
+    if test -d /etc/logrotate.d; then
+	if ! test -s /etc/logrotate.d/highwaytohell.conf; then
+	    if grep Debian /etc/issue >/dev/null; then
+		reload_cmd=invoke-rc.d
+		reload_suffix=rotate
+		syslog_user=root
+	    else
+		if grep 'Ubuntu 14.04' /etc/issue >/dev/null; then
+		    reload_cmd=reload
+		else
+		    reload_cmd='systemctl restart'
+		fi
+		reload_suffix=
+		syslog_user=syslog
+	    fi
+	    cat <<EOF >/etc/logrotate.d/highwaytohell.conf
+/var/log/highwaytohell/pm2.log {
+    compress
+    create 640 $syslog_user adm
+    daily
+    delaycompress
+    missingok
+    notifempty
+    rotate 7
+    postrotate
+	$reload_cmd rsyslog $reload_suffix >/dev/null 2>&1 || true
+    endscript
+}
+EOF
+	fi
+    fi
+}
+
+munin_configuration()
+{
+    reload_munin=false
+    if test -d /usr/share/munin/plugins; then
+	if test -s /usr/share/doc/highwaytohell/munin.hwth_multi; then
+	    if ! cmp /usr/share/doc/highwaytohell/munin.hwth_multi /usr/share/munin/plugins/hwth_multi >/dev/null 2>&1; then
+		if cp -p /usr/share/doc/highwaytohell/munin.hwth_multi /usr/share/munin/plugins/hwth_multi; then
+		    chmod 755 /usr/share/munin/plugins/hwth_multi
+		    chown root:root /usr/share/munin/plugins/hwth_multi
+		else
+		    notify_msg WARNING failed installing munin-node probe
+		fi
+	    fi
+	fi
+    fi
+    if test -x /usr/share/munin/plugins/hwth_multi; then
+	if test -d /etc/munin/plugins; then
+	    if ln -sf /usr/share/munin/plugins/hwth_multi /etc/munin/plugins/hwth_multi; then
+		reload_munin=true
+	    else
+		notify_msg WARNING failed enabling munin-node probe
+	    fi
+	fi
+    fi
+    if test -d /etc/munin/plugin-conf.d; then
+	if test -s /usr/share/doc/highwaytohell/munin.conf.sample; then
+	    if ! cmp /usr/share/doc/highwaytohell/munin.conf.sample /etc/munin/plugin-conf.d/hwth_multi.conf >/dev/null 2>&1; then
+		if cp -p /usr/share/doc/highwaytohell/munin.conf.sample /etc/munin/plugin-conf.d/hwth_multi.conf; then
+		    chown 0644 /etc/munin/plugin-conf.d/hwth_multi.conf
+		    chown root:root /etc/munin/plugin-conf.d/hwth_multi.conf
+		    reload_munin=true
+		else
+		    notify_msg WARNING failed installing munin-node probe configuration
+		fi
+	    fi
+	fi
+    fi
+    if $reload_munin; then
+	if test -x /bin/systemctl; then
+	    if ! systemctl restart munin-node >/dev/null 2>&1; then
+		notify_msg WARNING failed restart munin-node
+	    fi
+	elif ! /etc/init.d/munin-node restart >/dev/null 2>&1; then
+	    notify_msg WARNING failed restarting munin-node
+	fi
+    fi
+}
+
+nagios_configuration()
+{
+    has_nagios=false
+    if test -d /usr/lib/nagios/plugins; then
+	if test -s /usr/share/doc/highwaytohell/nrpe-pm2-probe; then
+	    if ! cmp /usr/share/doc/highwaytohell/nrpe-pm2-probe /usr/lib/nagios/plugins/check_pm2 >/dev/null 2>&1; then
+		if cp -p /usr/share/doc/highwaytohell/nrpe-pm2-probe /usr/lib/nagios/plugins/check_pm2; then
+		    chmod 0755 /usr/lib/nagios/plugins/check_pm2
+		    chown root:root /usr/lib/nagios/plugins/check_pm2
+		fi
+	    fi
+	fi
+	if test -x /usr/lib/nagios/plugins/check_pm2; then
+	    has_nagios=true
+	fi
+    fi
+    if test -d /etc/nagios/nrpe.d; then
+	if test -s /usr/share/doc/highwaytohell/nrpe-pm2-conf; then
+	    if ! cmp /usr/share/doc/highwaytohell/nrpe-pm2-conf /etc/nagios/nrpe.d/check_pm2.cfg >/dev/null 2>&1; then
+		if cp -p /usr/share/doc/highwaytohell/nrpe-pm2-conf /etc/nagios/nrpe.d/check_pm2.cfg; then
+		    chmod 0644 /etc/nagios/nrpe.d/check_pm2.cfg
+		    chown root:root /etc/nagios/nrpe.d/check_pm2.cfg
+		fi
+	    fi
+	fi
+    else
+	has_nagios=false
+    fi
+    if $has_nagios; then
+	if test -d /etc/sudoers.d; then
+	    if test -s /usr/share/doc/highwaytohell/nrpe-pm2-sudoers; then
+		if ! cmp /usr/share/doc/highwaytohell/nrpe-pm2-sudoers /etc/sudoers.d/check_pm2 >/dev/null 2>&1; then
+		    if cp -p /usr/share/doc/highwaytohell/nrpe-pm2-sudoers /etc/sudoers.d/check_pm2; then
+			chmod 0440 /etc/sudoers.d/check_pm2
+			chown root:root /etc/sudoers.d/check_pm2
+		    fi
+		fi
+	    fi
+	fi
+    fi
+}
+
+npm_proxy()
+{
+    if test "$http_proxy" -o "$HTTP_PROXY"; then
+	if test "$http_proxy"; then
+	    if ! grep $http_proxy /var/lib/highwaytohell/.npmrc >/dev/null 2>&1; then
+		/usr/bin/npm config set proxy $http_proxy
+		/usr/bin/npm config set https-proxy $http_proxy
+		cp -p /root/.npmrc /var/lib/highwaytohell/.npmrc
+		chown hwth:hwth /var/lib/highwaytohell/.npmrc
+	    fi
+	else
+	    if ! grep $HTTP_PROXY /var/lib/highwaytohell/.npmrc >/dev/null 2>&1; then
+		/usr/bin/npm config set proxy $HTTP_PROXY
+		/usr/bin/npm config set https-proxy $HTTP_PROXY
+		cp -p /root/.npmrc /var/lib/highwaytohell/.npmrc
+		chown hwth:hwth /var/lib/highwaytohell/.npmrc
+	    fi
+	fi
+    fi
+}
+
+pm2_reload()
+{
+    if test -s /var/lib/highwaytohell/.profile; then
+	if ! /usr/bin/hwth refresh-save >/dev/null 2>&1; then
+	    notify_msg failed refreshing highwaytohell
+	else
+	    notify_msg highwaytohell refreshed
+	fi
+    else
+	notify_msg "look at docs in /usr/share/doc/highwaytohell configuring service"
+    fi
+}
+
+rsyslog_configure()
+{
+    if test -d /etc/rsyslog.d; then
+	if test -s /usr/share/doc/highwaytohell/rsyslog.conf.sample; then
+	    if ! cmp /usr/share/doc/highwaytohell/rsyslog.conf.sample /etc/rsyslog.d/hwth.conf >/dev/null 2>&1; then
+		cp -p /usr/share/doc/highwaytohell/rsyslog.conf.sample /etc/rsyslog.d/hwth.conf
+		chown root:root /etc/rsyslog.d/hwth.conf
+		chmod 644 /etc/rsyslog.d/hwth.conf
+		if test -x /bin/systemctl; then
+		    if ! systemctl restart rsyslog >/dev/null 2>&1; then
+			notify_msg WARNING failed restarting rsyslog
+		    fi
+		elif ! /etc/init.d/rsyslog restart >/dev/null 2>&1; then
+		    notify_msg WARNING failed restarting rsyslog
+		fi
+	    fi
+	fi
+    fi
+}
+
+case "$1" in
+    configure)
+	create_user
+	create_service_directories
+	npm_proxy
+	install_pm2
+	install_snyk
+	install_node_modules
+	pm2_reload
+	fail2ban_configuration
+	logrotate_configure
+	nagios_configuration
+	munin_configuration
+	rsyslog_configure
+	;;
+
+    abort-upgrade|abort-remove|abort-deconfigure) ;;
+
+    *)
+	echo "postinst called with unknown argument \`$1'" >&2
+	exit 1
+	;;
+esac
+
+#DEBHELPER#
+
+exit 0

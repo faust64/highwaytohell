@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+    <head>
+	<title>HighWayToHell</title>
+	<link rel='shortcut icon' href='/static/fav/icon32.ico'>
+	<link rel='icon' sizes='16x16' href='/static/fav/icon16.ico'>
+	<link rel='icon' sizes='32x32' href='/static/fav/icon32.ico'>
+	<link rel='icon' sizes='64x64' href='/static/fav/icon64.ico'>
+	<link rel='icon' type='image/png' sizes='196x196' href='/static/fav/icon192.png'>
+	<link rel='icon' type='image/png' sizes='160x160' href='/static/fav/icon160.png'>
+	<link rel='icon' type='image/png' sizes='96x96' href='/static/fav/icon96.png'>
+	<link rel='icon' type='image/png' sizes='64x64' href='/static/fav/icon64.png'>
+	<link rel='icon' type='image/png' sizes='32x32' href='/static/fav/icon32.png'>
+	<link rel='icon' type='image/png' sizes='16x16' href='/static/fav/icon16.png'>
+	<link rel='apple-touch-icon' href='/static/fav/icon57.png'>
+	<link rel='apple-touch-icon' sizes='114x114' href='/static/fav/favicon114.png'>
+	<link rel='apple-touch-icon' sizes='72x72' href='/static/fav/favicon72.png'>
+	<link rel='apple-touch-icon' sizes='144x144' href='/static/fav/favicon144.png'>
+	<link rel='apple-touch-icon' sizes='60x60' href='/static/fav/favicon60.png'>
+	<link rel='apple-touch-icon' sizes='120x120' href='/static/fav/favicon120.png'>
+	<link rel='apple-touch-icon' sizes='76x76' href='/static/fav/favicon76.png'>
+	<link rel='apple-touch-icon' sizes='152x152' href='/static/fav/favicon152.png'>
+	<link rel='apple-touch-icon' sizes='180x180' href='/static/fav/favicon180.png'>
+	<meta name='msapplication-TileColor' content='#FF0000'>
+	<meta name='msapplication-TileImage' content='/static/fav/icon144.png'>
+	<meta name='msapplication-config' content='/static/dav/browserconfig.xml'>
+	<link href='/static/style.css' rel='stylesheet'/>
+	<script src='/static/script.js' type='application/javascript'></script>
+    </head>
+    <body>
+	<div class='Logout'><a href='/logout'>Logout {{ username }}</a></div>
+	<table id='mainpanel'>
+	    <tr class='sections'>
+		<th class='section'><a href='/domains'>Domains</a></th>
+		<td class='section'><div class='disabledsection'>Records</div></td>
+		<td class='section'><div class='disabledsection'>Health Checks</div></td>
+		<th class='section'><a href='/settings'>Account Settings</a></th>
+	    </tr>
+	    <tr>
+		<td colspan='4'>
+		    <table id='nestedpanel'>
+			<tr>
+			    <td class='additem' colspan='2'><a href='/tokens'>Manage Tokens</a></td>
+			</tr>
+			<tr>
+			    <th class='descname'>Username</th>
+			    <td class='descdata'>{{ username }}</td>
+			</tr>
+			<tr>
+			    <th class='descname'>Email</th>
+			    <td class='descdata'>{{ email }}</td>
+			</tr>
+			<tr>
+			    <th class='descname'>User ID</th>
+			    <td class='descdata'>{{ userid }}</td>
+			</tr>
+			<tr>
+			    <th class='descname'>Scan to enable 2FA</th>
+			    <td class='descdata'><img src='{{ twofaurl }}' alt='Scan code to configure 2FA'/></td>
+			</tr>
+			<tr>
+			    <th class='descname'>Confirm 2FA Code</th>
+			    <td class='descdata'>
+				<form id='2faform' method='POST' action='/settings/2fa/confirm'>
+				    <input type=hidden name='makeitpersistent' value='mintberrycrunch'/>
+				    <input type=text size='6' name='confirmation'/><br/>
+				    <input type=submit value='Check and Enable 2FA'/>
+				</form>
+			    </td>
+			</tr>
+		    </table>
+		</td>
+	    </tr>
+	</table>
+    </body>
+</html>

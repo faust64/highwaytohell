@@ -1,0 +1,54 @@
+#!/bin/sh
+
+PRG=`basename $0`
+OK=0
+WARNING=1
+CRITICAL=2
+UNKNOWN=3
+TMPFILE=/tmp/.check_pm2.$$
+
+name=0
+user=root
+for d in / /usr /usr/local /usr/local/nodejs
+do
+    test -x $d/bin/pm2 || continue
+    bin=$d/bin/pm2
+done
+while test "$1"
+do
+    case "$1" in
+	-b)	bin=$2; shift	;;
+	-n)	name=$2; shift	;;
+	-u)	user=$2; shift	;;
+    esac
+    shift
+done
+
+ret=CRITICAL
+msg=
+if su -l $user -s $bin show $name >$TMPFILE 2>&1; then
+    if grep online $TMPFILE >/dev/null; then
+	if grep uptime $TMPFILE >/dev/null; then
+	    if grep -E 'uptime.*[0-9]s[ \t]' $TMPFILE >/dev/null; then
+		ret=WARNING
+		msg="$name just restarted"
+	    else
+		ret=OK
+		msg="$name running"
+	    fi
+	else
+	    ret=UNKNOWN
+	    msg="$name's uptime not found"
+	fi
+    else
+	msg="$name offline"
+    fi
+else
+    msg="pm2 not running"
+fi
+
+rm -f $TMPFILE
+
+echo "$ret $msg"
+eval ret=\$$ret
+exit $ret

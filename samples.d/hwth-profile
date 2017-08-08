@@ -1,0 +1,54 @@
+# /var/lib/highwaytohell/.profile.sample
+export CASSANDRA_HOST="cassandra1.example.com cassandra2.example.com cassandraN.example.com"
+export CASSANDRA_KEYSPACE=hwth
+export REDIS_HOST=elasticache.example.com
+export REDIS_PORT=6379
+export HWTH_POOL=default
+#export DEBUG=yay
+export NODE_ENV=production
+#export AIRBRAKE_ID=idstring
+#export AIRBRAKE_KEY=apikey
+
+# Regestering new accounts, set a few defaults formating confirmation emails:
+export HWTH_HOSTNAME=api-ns.example.com
+export HWTH_PROTO=https
+export MAIL_FROM=heyhey@example.com
+export MAIL_REPLYTO=noreply@example.com
+export SMTP_HOST=smtp.example.com
+
+# Eventually, instances may be dedicated to specific processes:
+#export RUN_WORKERS="apiGW checkHealth refreshZones"
+
+# Clustering processes:
+#export FORKS=2
+
+# Bind address & port - use Nginx setting up SSL
+export APIGW_ADDR=127.0.0.1
+export APIGW_PORT=8080
+
+# nsd-checkconf in sbin
+export PATH=/usr/local/sbin:/usr/sbin:/sbin:$PATH
+
+#FIXME / in-DB; via HWTH_POOL
+export NS=ns1.hwth.example.com
+export SOA_NS=ns1.hwth.example.com
+export SOA_CONTACT=charlie.example.com
+#//FIXME
+
+export DNS_DRIVER=nsd
+if test "$DNS_DRIVER" = bind; then
+    export NS_ROOT_DIR=/etc/bind
+else
+    export NS_ROOT_DIR=/etc/nsd
+fi
+export NS_KEYS_DIR=$NS_ROOT_DIR/keys.d
+export NS_ZONES_DIR=$NS_ROOT_DIR/zones.d
+if test "$DEBUG"; then
+    for var in CASSANDRA_HOST CASSANDRA_KEYSPACE REDIS_HOST REDIS_PORT \
+	HWTH_POOL NS SOA_NS SOA_CONTACT DNS_DRIVER NS_ROOT_DIR NS_KEYS_DIR \
+	NS_ZONES_DIR;
+    do
+	eval val=\$$var
+	echo "  $var => $val"
+    done
+fi

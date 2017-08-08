@@ -1,0 +1,46 @@
+#!/bin/sh
+# prerm script for highwaytohell
+
+set -e
+
+reload_service()
+{
+    if which systemctl >/dev/null; then
+	for service in $@
+	do
+	    systemctl reload $service
+	done
+    else
+	for service in $@
+	do
+	    service $service reload
+	done
+    fi
+}
+
+drop_node_modules()
+{
+    if test -d /usr/share/highwaytohell/node_modules; then
+	rm -rf /usr/share/highwaytohell/node_modules
+    fi
+    rm -f /usr/share/highwaytohell/npm-debug.log /usr/share/highwaytohell/npminstall.log /var/log/highwaytohell/*-npminstall.log
+}
+
+case "$1" in
+    remove)
+	drop_node_modules
+	;;
+
+    upgrade|deconfigure) ;;
+
+    failed-upgrade) ;;
+
+    *)
+	echo "prerm called with unknown argument \`$1'" >&2
+	exit 1
+	;;
+esac
+
+#DEBHELPER#
+
+exit 0

@@ -1,0 +1,35 @@
+machine:
+  environment:
+    CASSANDRA_HOST: 127.0.0.1
+    CASSANDRA_KEYSPACE: hwth
+    DNS_DRIVER: nsd
+    NS_ROOT_DIR: /home/ubuntu/highwaytohell
+    NS_KEYS_DIR: /home/ubuntu/highwaytohell/keys.d
+    NS_ZONES_DIR: /home/ubuntu/highwaytohell/zones.d
+    REDIS_HOST: 127.0.0.1
+    REDIS_PORT: 6379
+  services:
+    - cassandra
+test:
+  override:
+    - make test
+    - make cleanCI
+    - make createinitialarchive
+    - make createdebbin
+  pre:
+# circleCI provides with redis-2.8.4 (trusty images) -- ironically, the 3.x on precise would have done
+    - sudo service redis-server stop || true
+    - sudo update-rc.d -f redis-server remove || true
+    - echo y | sudo add-apt-repository ppa:chris-lea/redis-server
+    - sudo apt-get update
+    - sudo apt-get install redis-server -yf --force-yes:
+        environment:
+          DEBIAN_FRONTEND: noninteractive
+    - sudo service redis-server restart
+    - redis-cli flushdb
+# //
+    - sudo apt-get install -y gcc g++ make rsync build-essential ldnsutils nsd
+    - cp -p samples.d/nsd/nsd.conf samples.d/nsd/server.conf .
+    - mkdir zones.d keys.d nsd.conf.d
+    - make dbinittest
+    - npm install

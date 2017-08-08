@@ -1,0 +1,131 @@
+DROP KEYSPACE hwth;
+#having your snitch magic identifying DCs named dc1, dc2 & dc3:
+#CREATE KEYSPACE hwth WITH replication = {'class': 'NetworkTopologyStrategy', 'dc1': '1', 'dc2': '1', 'dc3': '1'} AND durable_writes = true;
+#otherwise
+CREATE KEYSPACE hwth WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 3 };
+
+USE hwth;
+CREATE TABLE users (
+	uuid varchar,
+	username varchar,
+	emailaddress varchar,
+	confirmcode varchar,
+	pwhash varchar,
+	PRIMARY KEY (uuid)
+    );
+
+CREATE TABLE twofa {
+	uuid varchar,
+	enabled boolean,
+	secret varchar,
+	PRIMARY KEY (uuid)
+    );
+
+CREATE TABLE logins (
+	uuid varchar,
+	clientip varchar,
+	time varchar,
+        succeeded bool,
+	PRIMARY KEY (uuid, time)
+    );
+
+CREATE INDEX idx_email on users(emailaddress);
+
+CREATE TABLE tokens (
+	idowner varchar,
+	tokenstring varchar,
+	permissions varchar,
+	trusted varchar,
+	PRIMARY KEY (idowner, tokenstring)
+    );
+
+CREATE TABLE nspools (
+	tag varchar,
+	PRIMARY KEY (tag)
+    );
+
+CREATE TABLE zones (
+	origin varchar,
+	ns varchar,
+	serial varchar,
+	refresh int,
+	failRefresh int,
+	authRefresh int,
+	negRefresh int,
+	ksk varchar,
+	zsk varchar,
+	nspool varchar,
+	idowner varchar,
+	PRIMARY KEY (origin, idowner)
+    );
+
+CREATE INDEX idx_pool on zones(nspool);
+CREATE INDEX idx_owner on zones(idowner);
+
+CREATE TABLE records (
+	origin varchar,
+	name varchar,
+	priority int,
+	target varchar,
+	ttl int,
+	type varchar,
+	setId varchar,
+	healthCheckId varchar,
+	PRIMARY KEY(origin, type, name, setId)
+    );
+
+CREATE TABLE checks (
+	uuid varchar,
+	origin varchar,
+	type varchar,
+	target varchar,
+	headers varchar,
+	match varchar,
+	nspool varchar,
+	requireHealthy int,
+	requireUnhealthy int,
+	invert boolean,
+	PRIMARY KEY (uuid, origin)
+    );
+
+CREATE INDEX idx_check_pool on checks(nspool);
+CREATE INDEX idx_check_origin on checks(origin);
+
+CREATE TABLE checkhistory (
+	uuid varchar,
+	when varchar,
+	value boolean,
+	PRIMARY KEY (uuid, when)
+    );
+
+CREATE TABLE dnsseckeys (
+	ksk varchar,
+	zsk varchar,
+	kskkey blob,
+	kskprivate blob,
+	zskkey blob,
+	zskprivate blob,
+	PRIMARY KEY (ksk, zsk)
+    );
+
+CREATE TABLE signedzones (
+	origin varchar,
+	zonedata blob,
+	PRIMARY KEY (origin)
+    );
+
+CREATE TABLE dsrecords (
+	origin varchar,
+	idowner varchar,
+	ds blob,
+	PRIMARY KEY (origin, idowner)
+    );
+
+CREATE TABLE notifications (
+	idcheck varchar,
+	notifyDownAfter int,
+	notifyUpAfter int,
+	notifyDriver varchar,
+	notifyTarget varchar,
+	PRIMARY KEY (idcheck)
+    );

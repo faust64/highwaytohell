@@ -1,0 +1,71 @@
+#!/bin/sh
+
+HWTH=/var/lib/highwaytohell
+LOCK=/run/hwth-watch.pid
+if ! test `id -u` -eq 0; then
+    echo must run as root >&2
+    exit 1
+elif ! test -f $HWTH/.profile; then
+    echo missing configuration >&2
+    exit 1
+fi
+. $HWTH/.profile
+if test -f $HWTH/.bash_profile; then
+    . $HWTH/.bash_profile
+fi
+MARK=$NS_ZONES_DIR/.hwth-serial
+if ! test -s $MARK; then
+    echo helloworld >$MARK
+    chown hwth:hwth $MARK
+    chmod 644 $MARK
+fi
+
+LOGFILE=/var/log/highwaytohell/hwth-watch.log
+case "$1" in
+    start)
+	if $0 status >/dev/null 2>&1; then
+	    echo already running
+	    exit 2
+	fi
+	inotifywait -m $MARK | while read path action file
+	    do
+		echo reloading on `date` >>$LOGFILE
+		if test -x /bin/systemctl; then
+		    systemctl reload $DNS_DRIVER
+		else
+		    service $DNS_DRIVER reload
+		fi >>$LOGFILE 2>&1
+	    done &
+	echo started inotify on `date` >>$LOGFILE
+	;;
+    stop)
+	if ! $0 status >/dev/null 2>&1; then
+	    echo not running
+	    exit 0
+	fi
+	PID=`ps ax | awk '/ino[t]ifywait/{print $1;exit;}'`
+	kill $PID || kill -9 $PID
+	if $0 status >/dev/null 2>&1; then
+	    echo failed killing inotify
+	    echo failed killed inotify on `date` >>/var/log/highwaytohell/hwth-watch.log
+	    exit 1
+	fi
+	echo killed inotify on `date` >>/var/log/highwaytohell/hwth-watch.log
+	echo killed
+	;;
+    restart)
+	$0 stop
+	$0 start
+	;;
+    status)
+	PID=`ps ax | awk '/ino[t]ifywait/{print $1;exit;}'`
+	if test "$PID"; then
+	    echo watching via $PID
+	else
+	    echo stopped
+	    exit 3
+	fi
+	;;
+esac
+
+exit $?

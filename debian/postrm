@@ -1,0 +1,109 @@
+#!/bin/sh
+# postrm script for highwaytohell
+
+set -e
+
+drop_munin()
+{
+    rm -f /etc/munin/plugin-conf.d/hwth_multi.conf /etc/munin/plugins/hwth_multi /usr/share/munin/plugins/hwth_multi
+}
+
+drop_nagios()
+{
+    rm -f /etc/sudoers.d/check_pm2 /etc/nagios/nrpe.d/check_pm2.cfg /usr/lib/nagios/plugins/check_pm2
+}
+
+drop_nodejs()
+{
+    if test -d /usr/local/nodejs; then
+	rm -rf /usr/bin/node /usr/bin/npm /usr/local/nodejs
+    fi
+}
+
+drop_pm2()
+{
+    SRVNAME=pm2-hwth
+    case "`lsb_release -si`-`lsb_release -sc`" in
+	*-trusty|Devuan-jessie)
+	    service $SRVNAME stop || true
+	    update-rc.d -f $SRVNAME remove || true
+	    rm -f /etc/init.d/$SRVNAME /etc/rc*.d/*$SRVNAME
+	    ;;
+	*)
+	    systemctl stop $SRVNAME || true
+	    systemctl disable $SRVNAME || true
+	    rm -f /usr/lib/systemd/system/$SRVNAME.service
+	    rm -f /lib/systemd/system/$SRVNAME.service
+	    rm -f /etc/systemd/system/$SRVNAME.service
+	    systemctl daemon-reload || true
+	    ;;
+    esac
+    rm -f /usr/local/bin/pm2 || true
+}
+
+drop_snyk()
+{
+    npm uninstall -g snyk >/dev/null 2>&1 || true
+    rm -f /usr/local/bin/snyk
+}
+
+drop_service_directories()
+{
+    for pfx in /var/log /var/tmp
+    do
+	if test -d $pfx/highwaytohell; then
+	    if mount | grep -E " $pfx/highwaytohell " >/dev/null; then
+		find $pfx/highwaytohell | grep -v "^$pfx/highwaytohell$" | while read line
+		    do
+			test -d "$line" && rm -fr "$line"
+			test -f "$line" && rm -f "$line"
+		    done || true
+	    else
+		rm -fr $pfx/highwaytohell
+	    fi
+	fi
+    done || true
+}
+
+drop_service_configuration()
+{
+    if test -d /var/lib/highwaytohell; then
+	rm -fr /var/lib/highwaytohell
+    fi
+}
+
+drop_logrotate_configuration()
+{
+    rm -f /etc/logrotate.d/highwaytohell.conf || true
+}
+
+drop_node_modules()
+{
+    rm -rf /usr/share/highwaytohell/node_modules
+}
+
+case "$1" in
+    purge|remove|abort-install|disappear)
+	drop_munin
+	drop_nagios
+	drop_pm2
+	drop_snyk
+	test "$1" = purge && drop_service_directories
+	drop_node_modules
+	drop_logrotate_configuration
+	test "$1" = purge && drop_service_configuration
+#deconfigure overrides (?)
+	test "$1" = purge && drop_nodejs
+	;;
+
+    upgrade|failed-upgrade|abort-upgrade) ;;
+
+    *)
+	echo "postrm called with unknown argument \`$1'" >&2
+	exit 1
+	;;
+esac
+
+#DEBHELPER#
+
+exit 0

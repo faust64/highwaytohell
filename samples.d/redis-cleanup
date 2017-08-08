@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# until I figure out why jobs aren't getting dropped on completion ...
+if test -s /var/lib/highwaytohell/.profile; then
+    . /var/lib/highwaytohell/.profile
+    if test "$REDIS_HOST"; then
+	test -z "$HWTH_POOL" && HWTH_POOL=default
+	echo 'keys *' | redis-cli -h $REDIS_HOST 2>/dev/null | while read line
+	    do
+		echo "$line" | grep -E "(zones refresh|health checks) $HWTH_POOL" >/dev/null || continue
+		job=`echo "$line" | sed 's|^[ 0-9)]*||'`
+		echo purging $job
+		echo "del \"$job\"" | redis-cli -h $REDIS_HOST
+	    done
+    fi
+fi
+
+exit $?

@@ -1,0 +1,301 @@
+#!/bin/sh
+
+if test -s $HOME/.butters.cfg; then
+    . $HOME/.butters.cfg
+fi
+if test -z "$APIPROTO" -o -z "$APIGW" -o -z "$APIPORT"; then
+    echo "missing endpoint configuration, please create $HOME/.butters.cfg" >&2
+    exit 1
+fi
+
+PRG=`basename $0`
+ACTION=list
+CHECKID=
+CHECKHEALTHY=3
+CHECKUNHEALTHY=2
+CHECKTYPE=http
+DEBUG=false
+DNSSEC=
+DOMAIN=example.com
+HEADERS=
+INVERT=false
+MATCH=
+PRIORITY=10
+RECORD=www
+SETID=
+TARGET=
+TTL=3600
+TYPE=A
+WHAT=domains
+
+help()
+{
+    cat <<EOF
+Usage: $PRG [OPTION]
+    Interacts with HighWayToHell API Gateway
+
+    auth options:
+      -u, --userid	user ID authenticating against API gateway
+      --token		token authenticating against API gateway
+
+    generic options:
+      -a, --action	list, get, add, edit, del, defaults to list
+      --debug		debug config before querying API gateway
+      -d, --domain	domain to work with, defaults to example.com
+      -R, --ressource	domains, records, healthchecks, healthhistory
+			defaults to domains
+      -r, --record	record name, defaults to www
+      -T, --target	record or health check target
+			https://1.2.3.4/ping (when checktype is http)
+			8.8.8.8 (when checktype is icmp)
+      -t, --type	A, AAAA, CNAME, TXT, NS, defaults to A
+
+    options specific to domains:
+      --enablednssec	enables DNSSEC on domain
+      --disablednssec	disables DNSSEC on domain
+
+    options specific to health checks:
+      --checkid		defines healthcheck to edit or remove
+      --checktype	defines healthchecks type, defaults to http
+      --header		defines healthcheck Host header
+      --healthy		defines healthcheck healthy threshold
+      --unhealthy	defines healthcheck unhealthy threshold
+      -i, --invert	invert health check return value
+      -m, --match	health check string match, defaults to none
+			which would rely on http code
+
+    options specific to records:
+      --priority        record priority, defaults to 10
+      --setid		defines a set ID - dealing with multiple records
+			with identic names
+      --ttl		sets record TTL, defaults to 3600
+EOF
+}
+
+debugConfig()
+{
+    cat <<EOF
+ACTION=$ACTION
+DEBUG=$DEBUG
+CHECKID=$CHECKID
+CHECKHEALTHY=$CHECKHEALTHY
+CHECKUNHEALTHY=$CHECKUNHEALTHY
+CHECKTYPE=$CHECKTYPE
+DOMAIN=$DOMAIN
+DNSSEC=$DNSSEC
+HEADERS=$HEADERS
+INVERT=$INVERT
+MATCH=$MATCH
+PRIORITY=$PRIORITY
+RECORD=$RECORD
+SETID=$SETID
+TARGET=$TARGET
+TTL=$TTL
+TYPE=$TYPE
+WHAT=$WHAT
+posts to $APIPROTO://$APIGW:$APIPORT/$URI
+EOF
+    if test "$POSTBODY"; then
+	echo "posting:"
+	echo "$POSTBODY"
+    fi
+}
+
+while true
+do
+    test -z "$1" && break
+    case "$1" in
+	-u|--userid)	APIUSERID=$2; shift	;;
+	--token)	APITOKEN=$2; shift	;;
+	-a|--action)	ACTION=$2; shift	;;
+	--checktype)	CHECKTYPE=$2; shift	;;
+	--checkid)	CHECKID=$2; shift	;;
+	--debug)	DEBUG=true		;;
+	--disablednssec) DNSSEC=disable		;;
+	-d|--domain)	DOMAIN=$2; shift	;;
+	--enablednssec)	DNSSEC=enable		;;
+	--header)	HEADERS=$2; shift	;;
+	--healthy)	CHECKHEALTHY=$2; shift	;;
+	-h|--help)	help; exit 0		;;
+	-i|--invert)	INVERT=true		;;
+	-m|--match)	MATCH="$2"; shift	;;
+	--priority)	PRIORITY=$2; shift	;;
+	-R|--ressource)	WHAT=$2; shift		;;
+	-r|--record)	RECORD=$2; shift	;;
+	--setid)	SETID=$2; shift		;;
+	-T|--target)	TARGET=$2; shift	;;
+	--ttl)		TTL=$2; shift		;;
+	-t|--type)	TYPE=$2; shift		;;
+	--unhealthy)	CHECKUNHEALTHY=$2; shift ;;
+	*) echo "unrecognized option $1" >&2	;;
+    esac
+    shift
+done
+
+POSTPREFIX="{ \"userid\": \"$APIUSERID\", \"token\": \"$APITOKEN\""
+POSTSUFFIX=" }"
+
+if test -z "$APITOKEN"; then
+    echo token not found
+    exit 1
+elif test -z "$APIUSERID"; then
+    echo user ID not found
+    exit 2
+elif ! echo "$ACTION" | grep -E '^(list|get|add|edit|del)$' >/dev/null; then
+    echo invalid command $ACTION
+    exit 3
+elif ! echo "$WHAT" | grep -E '^(records|domains|healthchecks|healthhistory)$' >/dev/null; then
+    echo invalid resource $WHAT
+    exit 4
+elif test -z "$DOMAIN"; then
+    echo missing domain name >&2
+    exit 5
+elif test "$WHAT" = records -a -z "$RECORD"; then
+    echo missing record name >&2
+    exit 6
+elif ! test "$PRIORITY" -ge 0 >/dev/null 2>&1; then
+    echo invalid priority "$PRIORITY" >&2
+    exit 6
+fi >&2
+
+# Routing Logic -- see API documentation
+if test "$WHAT" = healthchecks -o "$WHAT" = records; then
+    URI=$WHAT/$DOMAIN
+    if test "$ACTION" = add -o "$ACTION" = edit; then
+	if test -z "$TARGET"; then
+	    test "$WHAT" = records && echo missing target record
+	    test "$WHAT" = healthchecks && echo missing health check target
+	    exit 42
+	fi
+    fi
+else
+    URI=$WHAT
+fi
+if test "$ACTION" = get; then
+    if test "$WHAT" = records; then
+	URI=$URI/get/$RECORD
+    elif test "$WHAT" = healthchecks; then
+	URI=$URI/get/$CHECKID
+    elif test "$WHAT" = healthhistory; then
+	URI=$URI/$DOMAIN/get/$CHECKID
+    elif test "$WHAT" != domains; then
+	URI=$URI/get
+    else
+	URI=$URI/$DOMAIN
+    fi
+elif test "$ACTION" = add; then
+    if test "$WHAT" = domains; then
+	URI=$URI/$DOMAIN/add
+    elif test "$WHAT" = records; then
+	URI=$URI/add/$RECORD
+    else
+	URI=$URI/add
+    fi
+elif test "$ACTION" = del; then
+    if test "$WHAT" = domains; then
+	URI=$URI/$DOMAIN/del
+    elif test "$WHAT" = records; then
+	URI=$URI/del/$RECORD
+    elif test "$WHAT" = healthchecks; then
+	URI=$URI/del/$CHECKID
+    else
+	URI=$URI/del
+    fi
+elif test "$ACTION" = edit; then
+    if test "$WHAT" = domains; then
+	URI=$URI/$DOMAIN
+	if test "$DNSSEC"; then
+	    URI=$URI/${DNSSEC}dnssec
+	else
+	    URI=$URI/edit
+	fi
+    elif test "$WHAT" = healthchecks; then
+	URI=$URI/edit/$CHECKID
+    elif test "$WHAT" = records; then
+	URI=$URI/edit/$RECORD
+    else
+	URI=$URI/edit
+    fi
+fi
+if test "$ACTION" = del; then
+    if test "$WHAT" = records; then
+	POSTBODY=", \"recordType\": \"$TYPE\""
+	if test "$SETID"; then
+	    POSTBODY="$POSTBODY, \"setId\": \"$SETID\""
+	else
+	    POSTBODY="$POSTBODY, \"setId\": \"$RECORD\""
+	fi
+    fi
+elif test "$ACTION" = add -o "$ACTION" = edit; then
+    if test "$WHAT" = records; then
+	POSTBODY=", \"recordName\": \"$RECORD\", \"recordTarget\": \"$TARGET\""
+	if test "$CHECKID"; then
+	    POSTBODY="$POSTBODY, \"recordCheckId\": \"$CHECKID\""
+	else
+	    POSTBODY="$POSTBODY, \"recordCheckId\": \"static\""
+	fi
+	if test "$SETID"; then
+	    POSTBODY="$POSTBODY, \"setId\": \"$SETID\""
+	else
+	    POSTBODY="$POSTBODY, \"setId\": \"$RECORD\""
+	fi
+	if test "$TTL"; then
+	    POSTBODY="$POSTBODY, \"recordTtl\": $TTL"
+	else
+	    POSTBODY="$POSTBODY, \"recordTtl\": 3600"
+	fi
+	if test "$TYPE"; then
+	    POSTBODY="$POSTBODY, \"recordType\": \"$TYPE\""
+	else
+	    POSTBODY="$POSTBODY, \"recordType\": A"
+	fi
+	if test "$PRIORITY"; then
+	    POSTBODY="$POSTBODY, \"recordPriority\": $PRIORITY"
+	else
+	    POSTBODY="$POSTBODY, \"recordPriority\": 10"
+	fi
+    elif test "$WHAT" = healthchecks; then
+	POSTBODY=", \"checkType\": \"$CHECKTYPE\""
+	if test "$CHECKID"; then
+	    POSTBODY="$POSTBODY, \"checkId\": \"$CHECKID\""
+	fi
+	if $INVERT; then
+	    POSTBODY="$POSTBODY, \"checkInvert\": true"
+	else
+	    POSTBODY="$POSTBODY, \"checkInvert\": false"
+	fi
+	if test "$HEADERS"; then
+	    POSTBODY="$POSTBODY, \"checkHeaders\": \"$HEADERS\""
+	fi
+	if test "$CHECKHEALTHY" -gt 0 >/dev/null 2>&1; then
+	    POSTBODY="$POSTBODY, \"checkHealthy\": $CHECKHEALTHY"
+	else
+	    POSTBODY="$POSTBODY, \"checkHealthy\": 3"
+	fi
+	if test "$CHECKUNHEALTHY" -gt 0 >/dev/null 2>&1; then
+	    POSTBODY="$POSTBODY, \"checkUnhealthy\": $CHECKUNHEALTHY"
+	else
+	    POSTBODY="$POSTBODY, \"checkUnhealthy\": 2"
+	fi
+	if test "$MATCH"; then
+	    POSTBODY="$POSTBODY, \"checkMatch\": \"$MATCH\""
+	fi
+	if test "$TARGET"; then
+	    if test "$CHECKTYPE" = http; then
+		if ! echo "$TARGET" | grep -E '^http[s]*://' >/dev/null; then
+		    TARGET="http://$TARGET"
+		fi
+	    fi
+	    POSTBODY="$POSTBODY, \"checkTarget\": \"$TARGET\""
+	fi
+    fi
+fi
+
+if $DEBUG; then
+    debugConfig
+fi
+curl -X POST -d "$POSTPREFIX$POSTBODY$POSTSUFFIX" -H "Content-Type: application/json" $APIPROTO://$APIGW:$APIPORT/$URI
+ret=$?
+echo
+
+exit $ret

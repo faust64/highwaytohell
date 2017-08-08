@@ -1,0 +1,135 @@
+#!/bin/sh
+# preinst script for highwaytohell
+
+set -e
+
+NODE_VERSION=6.9.1
+ARCH=`uname -m`
+
+if test -z "$DEPLOYMENT_ID" -a -s /var/spool/highwaytohell/ID; then
+    DEPLOYMENT_ID=`cat /var/spool/highwaytohell/ID`
+fi
+if test "$DEPLOYMENT_ID"; then
+    test "$SLACK_HOOK" && msgpfx="[$DEPLOYMENT_ID@`hostname`.$NODE_ENV] " || msgpfx="[$DEPLOYMENT_ID] "
+else
+    test "$SLACK_HOOK" && msgpfx="[`hostname`.$NODE_ENV] " || msgpfx=
+fi
+
+notify_msg()
+{
+    if test -x /usr/local/bin/slack -a "$SLACK_HOOK"; then
+	/usr/local/bin/slack $SLACK_HOOK "$msgpfx$@" >/dev/null 2>&1 || true
+    fi
+    echo "$@"
+}
+
+case "$ARCH" in
+   i386|i586|i686|x86|x32)	DARCH=x86	;;
+   amd64|x86_64|x64)		DARCH=x64	;;
+   armv6l|armv7l|arm64)		DARCH=$ARCH	;;
+   ppc64le|ppc64)		DARCH=$ARCH	;;
+   *)	notify_msg unsupported arch ; exit 1	;;
+esac
+
+check_nodejs()
+{
+    if test -x /usr/bin/node; then
+	INSTALLED=`/usr/bin/node -v`
+	if test "$INSTALLED" = v$NODE_VERSION; then
+	    return 0
+	fi
+    fi
+
+    return 1
+}
+
+check_nodejs_configuration()
+{
+    npm -g config get user | grep root >/dev/null
+}
+
+check_gcc()
+{
+    if g++ -v 2>&1 | grep 'version 4.9'; then
+	if gcc -v 2>&1 | grep 'version 4.9'; then
+	    return 0
+	fi
+    elif g++ -v 2>&1 | grep -E 'version [5-9].'; then
+	if gcc -v 2>&1 | grep -E 'version [5-9].'; then
+	    return 0
+	fi
+    fi >/dev/null
+
+    return 1
+}
+
+configure_nodejs()
+{
+    npm -g config set user root
+}
+
+drop_node_caches()
+{
+    rm -fr /root/.node-gyp /root/.npm /tmp/npm-* >/dev/null 2>&1
+}
+
+install_nodejs()
+{
+    if wget https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${DARCH}.tar.xz -O /tmp/hwth-nodejs.tar.xz; then
+	if tar -C/usr/local -xJf /tmp/hwth-nodejs.tar.xz; then
+	    if test -d /usr/local/nodejs; then
+		if test -x /usr/local/nodejs/bin/node; then
+		    OLDVERS=`/usr/local/nodejs/bin/node -v`
+		else
+		    OLDVERS=unknown
+		fi
+		if test -d /usr/local/nodejs-$OLDVERS; then
+		    rm -fr /usr/local/nodejs-$OLDVERS
+		fi
+		mv /usr/local/nodejs /usr/local/nodejs-$OLDVERS
+	    fi
+	    mv /usr/local/node-v${NODE_VERSION}-linux-${DARCH} /usr/local/nodejs
+	    chown -R root:root /usr/local/nodejs
+	    ln -sf /usr/local/nodejs/bin/node /usr/bin/node
+	    ln -sf /usr/local/nodejs/bin/npm /usr/bin/npm
+	else
+	    notify_msg failed to extract nodejs binary package
+	    exit 1
+	fi
+	rm -f /tmp/hwth-nodejs.tar.xz
+    else
+	notify_msg unable to fetch nodejs binary package
+	exit 1
+    fi
+}
+
+upgrade_gcc()
+{
+    if test -x /usr/bin/gcc; then
+	REPLACE=`gcc -v 2>&1 | awk '/^gcc version/{print $3}' | cut -d. -f1-2`
+	update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-$REPLACE 10
+	update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-$REPLACE 10
+    fi
+    update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 20
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 20
+}
+
+case "$1" in
+    install|upgrade)
+	drop_node_caches
+	check_nodejs || install_nodejs
+	check_gcc || upgrade_gcc
+	check_nodejs_configuration || configure_nodejs
+	;;
+
+    abort-upgrade) ;;
+
+    *)
+	echo "preinst called with unknown argument \`$1'" >&2
+	exit 1
+	;;
+esac
+
+#DEBHELPER#
+
+exit 0

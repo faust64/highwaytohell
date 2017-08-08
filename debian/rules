@@ -1,0 +1,24 @@
+#!/usr/bin/make -f
+#DH_VERBOSE = 1
+
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/default.mk
+
+# see FEATURE AREAS in dpkg-buildflags(1)
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+# main packaging script based on dh7 syntax
+%:
+	dh $@
+
+override_dh_auto_install:
+	$(MAKE) install PREFIX=$(CURDIR)/debian/highwaytohell
+
+override_dh_auto_build:
+	$(MAKE) build
+
+override_dh_auto_test:
+	$(MAKE) all
+
+override_dh_auto_clean:
+	rm -fr $(CURDIR)/node_modules
