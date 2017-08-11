@@ -63,7 +63,7 @@ create_user()
     done
 }
 
-fail2ban_configuration()
+fail2ban_configure()
 {
     if test -d /etc/fail2ban/filters.d; then
 	if test -s /usr/share/doc/highwaytohell/fail2ban-filter.conf; then
@@ -92,7 +92,7 @@ install_node_modules()
 {
     cd /usr/share/highwaytohell
     rm -rf /usr/share/highwaytohell/node_modules /usr/share/highwaytohell/npminstall.log
-    if ! npm install >/var/log/highwaytohell/dpkg-npminstall.log 2>&1; then
+    if ! NODE_ENV=production npm install >/var/log/highwaytohell/dpkg-npminstall.log 2>&1; then
 	notify_msg WARNING installing dependencies
     else
 	notify_msg Installed dependencies
@@ -230,7 +230,7 @@ EOF
     fi
 }
 
-munin_configuration()
+munin_configure()
 {
     reload_munin=false
     if test -d /usr/share/munin/plugins; then
@@ -278,7 +278,7 @@ munin_configuration()
     fi
 }
 
-nagios_configuration()
+nagios_configure()
 {
     has_nagios=false
     if test -d /usr/lib/nagios/plugins; then
@@ -374,6 +374,32 @@ rsyslog_configure()
     fi
 }
 
+watchmark_configure()
+{
+    if dpkg -l | grep -E ' (nsd|bind9|bind10) ' >/dev/null; then
+	if test -x /bin/systemd; then
+	    if test -s /usr/share/doc/highwaytohell/hwth-watchmark.service; then
+		if ! cmp /usr/share/doc/highwaytohell/hwth-watchmark.service /etc/systemd/system/hwth-watchmark.service >/dev/null 2>&1; then
+		    cp -p /usr/share/doc/highwaytohell/hwth-watchmark.service /etc/systemd/system/hwth-watchmark.service
+		    chown root:root /etc/systemd/system/hwth-watchmark.service
+		    chmod 0644 /etc/systemd/system/hwth-watchmark.service
+		    if ! systemctl daemon-reload >/dev/null 2>&1; then
+			notify_msg Failed reloading systemd services configuration
+		    else
+			notify_msg Installed hwth-watchmark service, remember to enable it on your name servers
+		    fi
+		fi
+	    fi
+	else
+	    if ! ln -sf /usr/bin/hwth-watchmark /etc/init.d >/dev/null 2>&1; then
+		notify_msg Failed installing hwth-watchmark service configuration
+	    else
+		notify_msg Installed hwth-watchmark service, remember to enable it on your name servers
+	    fi
+	fi
+    fi
+}
+
 case "$1" in
     configure)
 	create_user
@@ -383,11 +409,12 @@ case "$1" in
 	install_snyk
 	install_node_modules
 	pm2_reload
-	fail2ban_configuration
+	fail2ban_configure
 	logrotate_configure
-	nagios_configuration
-	munin_configuration
+	nagios_configure
+	munin_configure
 	rsyslog_configure
+	watchmark_configure
 	;;
 
     abort-upgrade|abort-remove|abort-deconfigure) ;;

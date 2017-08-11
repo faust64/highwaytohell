@@ -41,8 +41,8 @@
 			<tr>
 			    <td class=inputlabel>name</td>
 			    <td class=inputdata>
-				<input type='hidden' id=formHelper name='domainName' value='{{ domain }}' />
-				<input type='hidden' id=formAction name='dowhat' value='add' />
+				<input type='hidden' id='formAction' name='dowhat' value='add'/>
+				<input type='hidden' id='formHelper' name='domainName' value='{{ domain }}' />
 				<input id='targetSource' onChange='updateSetId();' type=text size=32 name='recordName'/>
 			    </td>
 			</tr>
@@ -97,10 +97,11 @@
 		<th class='section'><a href='/domains'>Domains</a></th>
 		<th class='section'><a href='/records/{{ domain }}'>Records</a></th>
 		<th class='section'><a href='/healthchecks/{{ domain }}'>Health Checks</a></th>
+		<th class='section'><a href='/notifications/{{ domain }}'>Notifications</a></th>
 		<th class='section'><a href='/settings'>Account Settings</a></th>
 	    </tr>
 	    <tr>
-		<td colspan='4'>
+		<td colspan='5'>
 		    <table id='nestedpanel'>
 			<tr>
 			    <td class='toggleadd' colspan='8'><a onClick='addRecord();' href='#'>Add Record</a></td>
@@ -116,14 +117,14 @@
 			    <th class='classifier'>Drop Record</th>
 			</tr>
 {{#records}}
-			<tr onClick='editRecord("{{ domain }}", "{{ name }}", "{{ type }}", {{ priority }}, "{{ target }}", "{{ setid }}", "{{ healthcheckid }}", {{ ttl }});'>
-			    <td class='record'><a href='/records/{{ domain }}/get/{{ name }}'>{{ name }}</a></td>
-			    <td class='record'>{{ type }}</td>
-			    <td class='record'>{{ priority }}</td>
-			    <td class='record'>{{ target }}</td>
-			    <td class='record'>{{ setid }}</td>
-			    <td class='record'>{{{ healthcheck }}}</td>
-			    <td class='record'>{{ ttl }}</td>
+			<tr>
+			    <td onClick='editRecord("{{ domain }}", "{{ name }}", "{{ type }}", {{ priority }}, "{{ target }}", "{{ setid }}", "{{ healthcheckid }}", {{ ttl }});' class='record'><a href='/records/{{ domain }}/get/{{ name }}'>{{ name }}</a></td>
+			    <td onClick='editRecord("{{ domain }}", "{{ name }}", "{{ type }}", {{ priority }}, "{{ target }}", "{{ setid }}", "{{ healthcheckid }}", {{ ttl }});' class='record'>{{ type }}</td>
+			    <td onClick='editRecord("{{ domain }}", "{{ name }}", "{{ type }}", {{ priority }}, "{{ target }}", "{{ setid }}", "{{ healthcheckid }}", {{ ttl }});' class='record'>{{ priority }}</td>
+			    <td onClick='editRecord("{{ domain }}", "{{ name }}", "{{ type }}", {{ priority }}, "{{ target }}", "{{ setid }}", "{{ healthcheckid }}", {{ ttl }});' class='record'>{{ target }}</td>
+			    <td onClick='editRecord("{{ domain }}", "{{ name }}", "{{ type }}", {{ priority }}, "{{ target }}", "{{ setid }}", "{{ healthcheckid }}", {{ ttl }});' class='record'>{{ setid }}</td>
+			    <td onClick='editRecord("{{ domain }}", "{{ name }}", "{{ type }}", {{ priority }}, "{{ target }}", "{{ setid }}", "{{ healthcheckid }}", {{ ttl }});' class='record'>{{{ healthcheck }}}</td>
+			    <td onClick='editRecord("{{ domain }}", "{{ name }}", "{{ type }}", {{ priority }}, "{{ target }}", "{{ setid }}", "{{ healthcheckid }}", {{ ttl }});' class='record'>{{ ttl }}</td>
 			    <td class='record'><a onClick='dropRecord("{{ domain }}", "{{ name }}", "{{ type }}", "{{ setid }}");' href='#' alt='Drop Record'><img class='deletelogoimg' src='/static/remove.png'></a></td>
 			</tr>
 {{/records}}

@@ -96,9 +96,9 @@ transparent_data_encryption_options:
     chunk_length_kb: 64
     cipher: AES/CBC/PKCS5Padding
     key_alias: testing:1
-    key_provider: 
+    key_provider:
       - class_name: org.apache.cassandra.security.JKSKeyProvider
-        parameters: 
+        parameters:
           - keystore: conf/.keystore
             keystore_password: cassandra
             store_type: JCEKS

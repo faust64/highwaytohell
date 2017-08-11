@@ -20,6 +20,10 @@ DOMAIN=example.com
 HEADERS=
 INVERT=false
 MATCH=
+NOTIFYTYPE=smtp
+NOTIFYTARGET= #https://myservice
+NOTIFYUP=3
+NOTIFYDOWN=2
 PRIORITY=10
 RECORD=www
 SETID=
@@ -64,6 +68,12 @@ Usage: $PRG [OPTION]
       -m, --match	health check string match, defaults to none
 			which would rely on http code
 
+    options specific to notifications:
+      --notifydown	notifies after N unhealthy checks
+      --notifytarget    URL, email address or phone number (with country code)
+      --notifyup	notifies after N healthy checks
+      --notifyvia	either http-post, http-get, smtp or sms
+
     options specific to records:
       --priority        record priority, defaults to 10
       --setid		defines a set ID - dealing with multiple records
@@ -86,6 +96,10 @@ DNSSEC=$DNSSEC
 HEADERS=$HEADERS
 INVERT=$INVERT
 MATCH=$MATCH
+NOTIFYTYPE=$NOTIFYTYPE
+NOTIFYTARGET=$NOTIFYTARGET
+NOTIFYUP=$NOTIFYUP
+NOTIFYDOWN=$NOTIFYDOWN
 PRIORITY=$PRIORITY
 RECORD=$RECORD
 SETID=$SETID
@@ -119,6 +133,10 @@ do
 	-h|--help)	help; exit 0		;;
 	-i|--invert)	INVERT=true		;;
 	-m|--match)	MATCH="$2"; shift	;;
+	--notifydown)	NOTIFYDOWN=$2; shift	;;
+	--notifytarget)	NOTIFYTARGET=$2; shift	;;
+	--notifyup)	NOTIFYUP=$2; shift	;;
+	--notifyvia)	NOTIFYTYPE=$2; shift	;;
 	--priority)	PRIORITY=$2; shift	;;
 	-R|--ressource)	WHAT=$2; shift		;;
 	-r|--record)	RECORD=$2; shift	;;
@@ -144,7 +162,7 @@ elif test -z "$APIUSERID"; then
 elif ! echo "$ACTION" | grep -E '^(list|get|add|edit|del)$' >/dev/null; then
     echo invalid command $ACTION
     exit 3
-elif ! echo "$WHAT" | grep -E '^(records|domains|healthchecks|healthhistory)$' >/dev/null; then
+elif ! echo "$WHAT" | grep -E '^(records|domains|healthchecks|healthhistory|notifications)$' >/dev/null; then
     echo invalid resource $WHAT
     exit 4
 elif test -z "$DOMAIN"; then
@@ -168,13 +186,27 @@ if test "$WHAT" = healthchecks -o "$WHAT" = records; then
 	    exit 42
 	fi
     fi
+elif test "$WHAT" = notifications; then
+    URI=$WHAT/$DOMAIN
+    if test "$ACTION" = add -o "$ACTION" = edit; then
+	if test -z "$NOTIFYTYPE"; then
+	    echo missing notification type
+	    exit 42
+	elif test -z "$NOTIFYTARGET"; then
+	    echo missing notification target
+	    exit 42
+	elif test -z "$CHECKID"; then
+	    echo missing notification health check ID
+	    exit 42
+	fi
+    fi
 else
     URI=$WHAT
 fi
 if test "$ACTION" = get; then
     if test "$WHAT" = records; then
 	URI=$URI/get/$RECORD
-    elif test "$WHAT" = healthchecks; then
+    elif test "$WHAT" = healthchecks -o "$WHAT" = notifications; then
 	URI=$URI/get/$CHECKID
     elif test "$WHAT" = healthhistory; then
 	URI=$URI/$DOMAIN/get/$CHECKID
@@ -188,6 +220,8 @@ elif test "$ACTION" = add; then
 	URI=$URI/$DOMAIN/add
     elif test "$WHAT" = records; then
 	URI=$URI/add/$RECORD
+    elif test "$WHAT" = notifications; then
+	URI=$URI/add/$CHECKID
     else
 	URI=$URI/add
     fi
@@ -197,6 +231,8 @@ elif test "$ACTION" = del; then
     elif test "$WHAT" = records; then
 	URI=$URI/del/$RECORD
     elif test "$WHAT" = healthchecks; then
+	URI=$URI/del/$CHECKID
+    elif test "$WHAT" = notifications; then
 	URI=$URI/del/$CHECKID
     else
 	URI=$URI/del
@@ -209,7 +245,7 @@ elif test "$ACTION" = edit; then
 	else
 	    URI=$URI/edit
 	fi
-    elif test "$WHAT" = healthchecks; then
+    elif test "$WHAT" = healthchecks -o "$WHAT" = notifications; then
 	URI=$URI/edit/$CHECKID
     elif test "$WHAT" = records; then
 	URI=$URI/edit/$RECORD
@@ -287,6 +323,18 @@ elif test "$ACTION" = add -o "$ACTION" = edit; then
 		fi
 	    fi
 	    POSTBODY="$POSTBODY, \"checkTarget\": \"$TARGET\""
+	fi
+    elif test "$WHAT" = notifications; then
+	POSTBODY=", \"checkId\": \"$CHECKID\", \"notifyType\": \"$NOTIFYTYPE\", \"notifyTarget\": \"$NOTIFYTARGET\""
+	if test "$NOTIFYUP" -ge 0; then
+	    POSTBODY="$POSTBODY, \"notifyUp\": $NOTIFYUP"
+	else
+	    POSTBODY="$POSTBODY, \"notifyUp\": 3"
+	fi
+	if test "$NOTIFYDOWN" -ge 0; then
+	    POSTBODY="$POSTBODY, \"notifyDown\": $NOTIFYDOWN"
+	else
+	    POSTBODY="$POSTBODY, \"notifyDown\": 2"
 	fi
     fi
 fi

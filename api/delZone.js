@@ -2,8 +2,6 @@ const Promise = require('bluebird');
 
 module.exports = (cassandra, userId, domainName) => {
 	return new Promise ((resolve, reject) => {
-		/* FIXME: refresh nspool, removing zones (would need a new job queue) */
-		/* FIXME: purge health checks, eventually */
 		let dropRecords = "DELETE FROM records WHERE origin = '" + domainName + "'";
 		cassandra.execute(dropRecords)
 		    .then((drp) => {

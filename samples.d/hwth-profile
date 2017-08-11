@@ -8,6 +8,29 @@ export HWTH_POOL=default
 export NODE_ENV=production
 #export AIRBRAKE_ID=idstring
 #export AIRBRAKE_KEY=apikey
+export SOA_CONTACT=charlie.example.com #email address shown in SOA record
+
+# distributing your setup, you will want to use several pools
+# on your api GW, set the following so that new domains get created on two pools
+# (instead of only using the one defined by HWTH_POOL)
+#export HWTH_BACKUP_POOL=backup
+# depending on where your api GW is located, you would be setting distinct
+# HWTH_POOL & HWTH_BACKUP_POOL values. Whatever pool a domain is mapped with,
+# users would be able to manage its configuration from any API gateway. Their
+# zones,however, would only be served on the refreshZones workers whose
+# HWTH_POOL match any of the HWTH_POOL & HWTH_BACKUP_POOL set on api GW during
+# domain creation.
+
+# also ensure your apiGW may connect to the redis queue handling your remote
+# pool # (so that records creation/modification/deletion triggers a notification
+# for # zones generation on remote site as well - otherwise gets
+# hourly-reloaded).
+# If no env var matches a nspool tag, then queue would be started against
+# the default REDIS_HOST / REDIS_PORT defined earlier
+#export REDIS_HOST_poolname1=redis.zone1.example.com
+#export REDIS_HOST_poolname2=redis.zone1.example.com
+#export REDIS_HOST_poolnameN=redis.zoneN.example.com
+#export REDIS_PORT_poolnameN=36379
 
 # Regestering new accounts, set a few defaults formating confirmation emails:
 export HWTH_HOSTNAME=api-ns.example.com
@@ -16,8 +39,13 @@ export MAIL_FROM=heyhey@example.com
 export MAIL_REPLYTO=noreply@example.com
 export SMTP_HOST=smtp.example.com
 
+# Sending SMS notifications, you would need a valid twilio account:
+#export TWILIO_FROM=myTwilioFromNumber
+#export TWILIO_SID=xxx
+#export TWILIO_TOKEN=yyy
+
 # Eventually, instances may be dedicated to specific processes:
-#export RUN_WORKERS="apiGW checkHealth refreshZones"
+#export RUN_WORKERS="apiGW outboundNotifier checkHealth refreshZones"
 
 # Clustering processes:
 #export FORKS=2
@@ -29,12 +57,6 @@ export APIGW_PORT=8080
 # nsd-checkconf in sbin
 export PATH=/usr/local/sbin:/usr/sbin:/sbin:$PATH
 
-#FIXME / in-DB; via HWTH_POOL
-export NS=ns1.hwth.example.com
-export SOA_NS=ns1.hwth.example.com
-export SOA_CONTACT=charlie.example.com
-#//FIXME
-
 export DNS_DRIVER=nsd
 if test "$DNS_DRIVER" = bind; then
     export NS_ROOT_DIR=/etc/bind
@@ -45,8 +67,9 @@ export NS_KEYS_DIR=$NS_ROOT_DIR/keys.d
 export NS_ZONES_DIR=$NS_ROOT_DIR/zones.d
 if test "$DEBUG"; then
     for var in CASSANDRA_HOST CASSANDRA_KEYSPACE REDIS_HOST REDIS_PORT \
-	HWTH_POOL NS SOA_NS SOA_CONTACT DNS_DRIVER NS_ROOT_DIR NS_KEYS_DIR \
-	NS_ZONES_DIR;
+	HWTH_POOL HWTH_BACKUP_POOL NS SOA_NS SOA_CONTACT DNS_DRIVER \
+	NS_ROOT_DIR NS_KEYS_DIR NS_ZONES_DIR HWTH_HOSTNAME HWTH_PROTO \
+	MAIL_FROM MAIL_REPLYTO;
     do
 	eval val=\$$var
 	echo "  $var => $val"

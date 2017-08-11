@@ -41,12 +41,12 @@ CREATE TABLE tokens (
 
 CREATE TABLE nspools (
 	tag varchar,
+	fqdn varchar,
 	PRIMARY KEY (tag)
     );
 
 CREATE TABLE zones (
 	origin varchar,
-	ns varchar,
 	serial varchar,
 	refresh int,
 	failRefresh int,
@@ -55,11 +55,13 @@ CREATE TABLE zones (
 	ksk varchar,
 	zsk varchar,
 	nspool varchar,
+	bkppool varchar,
 	idowner varchar,
 	PRIMARY KEY (origin, idowner)
     );
 
 CREATE INDEX idx_pool on zones(nspool);
+CREATE INDEX idx_bkppool on zones(bkppool);
 CREATE INDEX idx_owner on zones(idowner);
 
 CREATE TABLE records (

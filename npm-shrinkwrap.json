@@ -93,9 +93,9 @@
       "resolved": "./node_shrinkwrap/buffer-equal-constant-time-1.0.1.tgz"
     },
     "bull": {
-      "version": "3.0.0-rc.4",
+      "version": "3.0.0-rc.5",
       "from": "bull@>=3.0.0-rc.4 <4.0.0",
-      "resolved": "./node_shrinkwrap/bull-3.0.0-rc.4.tgz"
+      "resolved": "./node_shrinkwrap/bull-3.0.0-rc.5.tgz"
     },
     "bytes": {
       "version": "2.4.0",
@@ -677,9 +677,9 @@
       "resolved": "./node_shrinkwrap/negotiator-0.6.1.tgz"
     },
     "node-schedule": {
-      "version": "1.2.3",
+      "version": "1.2.4",
       "from": "node-schedule@>=1.2.3 <2.0.0",
-      "resolved": "./node_shrinkwrap/node-schedule-1.2.3.tgz"
+      "resolved": "./node_shrinkwrap/node-schedule-1.2.4.tgz"
     },
     "nodemailer": {
       "version": "4.0.1",
@@ -933,9 +933,9 @@
       "resolved": "./node_shrinkwrap/tunnel-agent-0.6.0.tgz"
     },
     "twilio": {
-      "version": "3.6.1",
+      "version": "3.6.2",
       "from": "twilio@>=3.6.1 <4.0.0",
-      "resolved": "./node_shrinkwrap/twilio-3.6.1.tgz",
+      "resolved": "./node_shrinkwrap/twilio-3.6.2.tgz",
       "dependencies": {
         "lodash": {
           "version": "4.0.0",

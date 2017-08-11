@@ -110,10 +110,11 @@
 		<th class='section'><a href='/domains'>Domains</a></th>
 		<th class='section'><a href='/records/{{ domain }}'>Records</a></th>
 		<th class='section'><a href='/healthchecks/{{ domain }}'>Health Checks</a></th>
+		<th class='section'><a href='/notifications/{{ domain }}'>Notifications</a></th>
 		<th class='section'><a href='/settings'>Account Settings</a></th>
 	    </tr>
 	    <tr>
-		<td colspan='4'>
+		<td colspan='5'>
 		    <table id='nestedpanel'>
 			<tr>
 			    <td class='toggleadd' colspan='10'><a onClick='addHealthCheck("{{ domain }}");' href='#'>Add Health Check</a></td>
@@ -131,16 +132,16 @@
 			    <th class='classifier'>Drop Check</th>
 			</tr>
 {{#records}}
-			<tr onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");'>
-			    <td class='record'><a href='/healthhistory/{{ domain }}/get/{{ checkid }}'>{{ checkid }}</a></td>
-			    <td class='record'>{{ type }}</td>
-			    <td class='record'>{{ headers }}</td>
-			    <td class='record'>{{{ target }}}</a></td>
-			    <td class='record'>{{ match }}</td>
-			    <td class='record'>{{ reqhealthy }}</td>
-			    <td class='record'>{{ requnhealthy }}</td>
-			    <td class='record'>{{ invert }}</td>
-			    <td class='record'>{{ nspool }}</td>
+			<tr>
+			    <td onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'><a href='/healthhistory/{{ domain }}/get/{{ checkid }}'>{{ checkid }}</a></td>
+			    <td onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ type }}</td>
+			    <td onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ headers }}</td>
+			    <td onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{{ target }}}</a></td>
+			    <td onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ match }}</td>
+			    <td onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ reqhealthy }}</td>
+			    <td onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ requnhealthy }}</td>
+			    <td onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ invert }}</td>
+			    <td onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ nspool }}</td>
 			    <td class='record'><a onClick='dropHealthCheck("{{ domain }}", "{{ checkid }}");' href='#' alt='Drop Health Check'><img class='deletelogoimg' src='/static/remove.png'></a></td>
 			</tr>
 {{/records}}

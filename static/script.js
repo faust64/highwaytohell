@@ -20,6 +20,22 @@ function addHealthCheck(domainName) {
     showForm('Add Health Check');
 }
 
+function addNotification(domainName) {
+    var actionForm = document.getElementById('formAction');
+    var downForm = document.getElementById('notifydown');
+    var idForm = document.getElementById('checkid');
+    var targetForm = document.getElementById('notifytarget');
+    var typeForm = document.getElementById('notifytype');
+    var upForm = document.getElementById('notifyup');
+    actionForm.value = 'add';
+    downForm.value = 2;
+    idForm.value = '';
+    targetForm.value = '';
+    typeForm.value = 'http-post';
+    upForm.value = 3;
+    showForm('Add Notification');
+}
+
 function addRecord() {
     var actionForm = document.getElementById('formAction');
     var healthCheckForm = document.getElementById('recordhc');
@@ -77,7 +93,6 @@ function dropDomain(domainName) {
     if (usure === true) {
 	post('/domains/' + domainName + '/del', { })
     }
-    hideForm();
 }
 
 function dropHealthCheck(domainName, checkId) {
@@ -85,7 +100,13 @@ function dropHealthCheck(domainName, checkId) {
     if (usure === true) {
 	post('/healthchecks/' + domainName + '/del/' + checkId, { });
     }
-    hideForm();
+}
+
+function dropNotification(domainName, checkId, type) {
+    var usure = confirm('Drop ' + type + ' notification for ' + checkId + '? This can not be un-done');
+    if (usure === true) {
+	post('/notifications/' + domainName + '/del/' + checkId, { /* notificationType: type */ });
+    }
 }
 
 function dropRecord(domainName, name, type, setId) {
@@ -93,7 +114,6 @@ function dropRecord(domainName, name, type, setId) {
     if (usure === true) {
 	post('/records/' + domainName + '/del/' + name, { setId: setId, recordType: type });
     }
-    hideForm();
 }
 
 function dropToken(tokenString) {
@@ -101,7 +121,6 @@ function dropToken(tokenString) {
     if (usure === true) {
 	post('/tokens/del', { tokenString: tokenString });
     }
-    hideForm();
 }
 
 function editHealthCheck(domainName, checkId, checkType, checkHeaders, checkTarget, checkMatch, checkHealthy, checkUnhealthy, checkInvert) {
@@ -124,6 +143,22 @@ function editHealthCheck(domainName, checkId, checkType, checkHeaders, checkTarg
     typeForm.value = checkType;
     unhealthyForm.value = checkUnhealthy;
     showForm('Edit Health Check');
+}
+
+function editNotification(domainName, checkId, checkType, checkTarget, checkHealthy, checkUnhealthy) {
+    var actionForm = document.getElementById('formAction');
+    var downForm = document.getElementById('notifydown');
+    var idForm = document.getElementById('checkid');
+    var targetForm = document.getElementById('notifytarget');
+    var typeForm = document.getElementById('notifytype');
+    var upForm = document.getElementById('notifyup');
+    actionForm.value = 'edit';
+    downFrom.value = checkUnhealthy;
+    idForm.value = checkId;
+    targetForm.value = checkTarget;
+    typeForm.value = checkType;
+    upForm.value = checkHealthy;
+    showForm('Edit Notification');
 }
 
 function editRecord(domainName, recName, recType, recPriority, recTarget, recSetId, recHealthCheck, recTtl) {
@@ -204,13 +239,19 @@ function showForm(title) {
 function updateFormAction(where) {
     var form = document.getElementById('form' + where);
     if (form) {
-	var actionUrl = document.getElementById('targetSource').value;
 	if (where === 'domains') {
+	    var actionUrl = document.getElementById('targetSource').value;
 	    form.action = '/domains/' + actionUrl + '/add';
 	} else if (where === 'records') {
+	    var actionUrl = document.getElementById('targetSource').value;
 	    var domainName = document.getElementById('formHelper').value;
 	    var malcolm = document.getElementById('formAction').value;
 	    form.action = '/records/' + domainName + '/' + malcolm + '/' + actionUrl;
+	} else if (where === 'notifications') {
+	    var actionUrl = document.getElementById('checkid').value;
+	    var domainName = document.getElementById('formHelper').value;
+	    var malcolm = document.getElementById('formAction').value;
+	    form.action = '/notifications/' + domainName + '/' + malcolm + '/' + actionUrl;
 	} else {
 	    alert('unhandled form');
 	}

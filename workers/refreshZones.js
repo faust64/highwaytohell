@@ -19,16 +19,19 @@ const nsRootDir = process.env.NS_ROOT_DIR || '.';
 const nsZonesDir = process.env.NS_ZONES_DIR || (nsRootDir + '/zones.d');
 const workerPool = process.env.HWTH_POOL || 'default';
 
+const redisBackend = process.env['REDIS_HOST_' + workerPool] || process.env.REDIS_HOST || '127.0.0.1';
+const redisPort = process.env['REDIS_PORT_' + workerPool] || process.env.REDIS_PORT || 6379;
+
 const bullProbe = pmxProbe.meter({ name: 'bull jobs per minute', sample: 60 });
 const confChannel = 'refresh-config-' + workerPool;
-const confQueue = new Queue('config refresh ' + workerPool, { removeOnComplete: true, redis: { port: process.env.REDIS_PORT || 6379, host: process.env.REDIS_HOST || '127.0.0.1' }});
-const confSub = redis.createClient(process.env.REDIS_PORT || 6379, process.env.REDIS_HOST || '127.0.0.1', { db: process.env.REDIS_DBID || '0' });
+const confQueue = new Queue('config refresh ' + workerPool, { removeOnComplete: true, redis: { port: redisPort, host: redisBackend }});
+const confSub = redis.createClient(redisPort, redisBackend, { db: process.env.REDIS_DBID || '0' });
 const neighbors = require('../lib/advertiseNeighbors.js')('refresh-zones-' + workerPool + '-' + os.hostname());
-const publisher = redis.createClient(process.env.REDIS_PORT || 6379, process.env.REDIS_HOST || '127.0.0.1', { db: process.env.REDIS_DBID || '0' });
+const publisher = redis.createClient(redisPort, redisBackend, { db: process.env.REDIS_DBID || '0' });
 const pubsubProbe = pmxProbe.meter({ name: 'pubsub events per minute', sample: 60 });
 const zonesChannel = 'refresh-zones-' + workerPool;
-const zonesQueue = new Queue('zones refresh ' + workerPool, { removeOnComplete: true, redis: { port: process.env.REDIS_PORT || 6379, host: process.env.REDIS_HOST || '127.0.0.1' }});
-const zonesSub = redis.createClient(process.env.REDIS_PORT || 6379, process.env.REDIS_HOST || '127.0.0.1', { db: process.env.REDIS_DBID || '0' });
+const zonesQueue = new Queue('zones refresh ' + workerPool, { removeOnComplete: true, redis: { port: redisPort, host: redisBackend }});
+const zonesSub = redis.createClient(redisPort, redisBackend, { db: process.env.REDIS_DBID || '0' });
 
 function pullDnssecKeys() {
     return new Promise((resolve, reject) => {
@@ -170,7 +173,7 @@ zonesQueue.process((task, done) => {
     });
 
 logger.info('waiting for neighbors');
-execAsync('sleep 10')
+execAsync('sleep 15')
     .then(() => {
 	    if (neighbors.isElectedMaster() !== true) {
 		logger.info('skipping keys retrieval on slaves');

@@ -10,11 +10,14 @@ const client = new cassandra.Client({ contactPoints: (process.env.CASSANDRA_HOST
 const checksLookup = 'SELECT * FROM checks WHERE nspool = ?';
 const workerPool = process.env.HWTH_POOL || 'default';
 
+const redisBackend = process.env['REDIS_HOST_' + workerPool] || process.env.REDIS_HOST || '127.0.0.1';
+const redisPort = process.env['REDIS_PORT_' + workerPool] || process.env.REDIS_PORT || 6379;
+
 const neighbors = require('../lib/advertiseNeighbors.js')('check-health-' + workerPool);
 const bullProbe = pmxProbe.meter({ name: 'checks per mintute', sample: 60 });
-const checkQueue = new Queue('health checks ' + workerPool, { removeOnComplete: true, redis: { port: process.env.REDIS_PORT || 6379, host: process.env.REDIS_HOST || '127.0.0.1' }});
-const notifyQueue = new Queue('outbound notify ' + workerPool, { removeOnComplete: true, redis: { port: process.env.REDIS_PORT || 6379, host: process.env.REDIS_HOST || '127.0.0.1' }});
-const refreshQueue = new Queue('zones refresh ' + workerPool, { removeOnComplete: true, redis: { port: process.env.REDIS_PORT || 6379, host: process.env.REDIS_HOST || '127.0.0.1' }});
+const checkQueue = new Queue('health checks ' + workerPool, { removeOnComplete: true, redis: { port: redisPort, host: redisBackend }});
+const notifyQueue = new Queue('outbound notify ' + workerPool, { removeOnComplete: true, redis: { port: redisPort, host: redisBackend }});
+const refreshQueue = new Queue('zones refresh ' + workerPool, { removeOnComplete: true, redis: { port: redisPort, host: redisBackend }});
 
 if (process.env.AIRBRAKE_ID !== undefined && process.env.AIRBRAKE_KEY !== undefined) {
     try {
@@ -25,7 +28,63 @@ if (process.env.AIRBRAKE_ID !== undefined && process.env.AIRBRAKE_KEY !== undefi
     }
 }
 
-const cleanup = schedule.scheduleJob('42 * * * *', () => {
+const cleanupChecks = schedule.scheduleJob('*/15 * * * *', () => {
+	if (neighbors.isElectedMaster() !== true) {
+	    if (process.env.DEBUG) { logger.info('ignoring cleanup on non-master'); }
+	    return true;
+	}
+	let confLookup = "SELECT uuid, origin FROM checks WHERE nspool = '" + workerPool + "'";
+	let domainsLookup = "SELECT origin FROM zones WHERE nspool = '" + workerPool + "'";
+	let hasDomains = [];
+	client.execute(domainsLookup)
+	    .then((doms) => {
+		    client.execute(confLookup)
+			.then((confs) => {
+				for (let k = 0; k < doms.length; k++) { hasDomains.push(doms[k].origin); }
+				logger.info('collected ' + hasDomains.length + ' domains, now starting to purge orphan health checks');
+				if (process.env.DEBUG) { logger.info(hasDomains); }
+				let promises = [];
+				for (let k = 0; k < confs.length; k++) {
+				    if (hasDomains.indexOf(confs[k].origin) >= 0) { continue; }
+				    else {
+					let dropCheck = "DELETE FROM checks WHERE uuid = '" + confs[k].uuid + "' AND origin = '" + confs[k].origin + "'";
+					let dropHistory = "DELETE FROM checkhistory WHERE uuid = '" + confs[k].uuid + "'";
+					promises.push(client.execute(dropCheck)
+							.then((resp) => {
+								client.execute(dropHistory)
+								    .then((dresp) => { logger.info('purged orphan ' + confs[k].uuid); })
+								    .catch((e) => {
+									    logger.error('failed purging orphan history ' + confs[k].uuid);
+									    logger.error(e);
+									});
+							    })
+							.catch((e) => {
+								logger.error('failed purging orphan ' + confs[k].uuid);
+								logger.error(e);
+							    }));
+				    }
+				}
+				if (promises.length > 0) {
+				    Promise.all(promises)
+					.then((ret) => { logger.info('done purging orphan checks'); })
+					.catch((e) => {
+						logger.error('errored purging orphan checks');
+						logger.error(e);
+					    });
+				} else { logger.info('no orphan checks needing purge'); }
+			    })
+			.catch((e) => {
+				logger.error('failed querying cassandra for list of checks');
+				logger.error(e);
+			    });
+		})
+	    .catch((e) => {
+		    logger.error('failed querying cassandra for list of domains');
+		    logger.error(e);
+		});
+    });
+
+const cleanupLogs = schedule.scheduleJob('42 * * * *', () => {
 	if (neighbors.isElectedMaster() !== true) {
 	    if (process.env.DEBUG) { logger.info('ignoring cleanup on non-master'); }
 	    return true;

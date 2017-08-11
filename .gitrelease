@@ -1,0 +1,92 @@
+#!/bin/bash
+
+if test -z "$PWD"; then
+    echo "CRITICAL: can not read pwd" >&2
+    exit 1
+elif test -z "$GITHUB_USER"; then
+    echo "CRITICAL: missing GITHUB_USER env var" >&2
+    exit 1
+elif test -z "$GITHUB_TOKEN"; then
+    echo "CRITICAL: missing GITHUB_TOKEN env var" >&2
+    exit 1
+fi
+test -z "$TMPDIR" && TMPDIR=/tmp/
+
+BASENAME=`basename $PWD`
+BRANCH=`git branch 2>/dev/null | awk '/^\*/{print $2}' || echo production`
+GITHUB=api.github.com
+HASH=`git rev-parse HEAD 2>/dev/null || echo production`
+REPOSITORY=`git remote -v | sed -e 's|.*://[^/]*/\([^ \t]*\).*|\1|' -e 's|.*:\([^: \t]*\).*|\1|' -e 's|\.git$||' | head -1`
+VERSION=`awk '/^highwaytohell/{print $2;exit}' debian/changelog | sed -e 's|(||' -e 's|-[0-9]*)||'`
+WORKDIR=$TMPDIR/$BASENAME.$$
+case "$BRANCH" in
+    production|master)	TAG=v$VERSION ;;
+    staging) TAG=preprod-v$VERSION ;;
+    *) TAG=$BRANCH-v$VERSION ;;
+esac
+
+relBody="release $TAG"
+relData="{ \"draft\": false, \"prerelease\": false, \"body\": \"$relBody\", \"name\": \"$TAG\", \"tag_name\": \"$TAG\", \"target_commitish\": \"$HASH\" }"
+rm -fr $WORKDIR
+if curl -u $GITHUB_USER: -H "Authorization: token $GITHUB_TOKEN" -k https://$GITHUB/repos/$REPOSITORY/releases/tags/$TAG 2>&1 | grep 'Bad credentials' >/dev/null; then
+    echo "CRITICAL: failed authenticating against GitHub" >&2
+    exit 2
+elif ! curl -u $GITHUB_USER: -H "Authorization: token $GITHUB_TOKEN" -k https://$GITHUB/repos/$REPOSITORY/releases/tags/$TAG 2>&1 | grep '"message": "Not Found",$' >/dev/null; then
+    echo "CRITICAL: a release $TAG already exists for $REPOSITORY" >&2
+    exit 3
+elif test -z "$relBody"; then
+    echo "CRITICAL: failed parsing changelog for release body" >&2
+    exit 4
+elif ! mkdir -p $WORKDIR/$BASENAME/; then
+    echo "CRITICAL: can not write to working directory" >&2
+    exit 5
+elif ! cp -rp . $WORKDIR/$BASENAME/; then
+    echo "CRITICAL: failed initializing working directory $WORKDIR" >&2
+    exit 6
+fi
+cd $WORKDIR/$BASENAME
+if ! make createinitialarchive; then
+    cd -
+    rm -fr $WORKDIR
+    echo "CRITICAL: failed creating initial archive" >&2
+    exit 7
+fi
+if gpg --list-keys 2>&1 | grep -i samuel >/dev/null; then
+    if ! make createdebsource; then
+	cd -
+	rm -fr $WORKDIR
+	echo "CRITICAL: failed building source package" >&2
+	exit 8
+    fi
+fi
+if ! make createdebbin; then
+    cd -
+    rm -fr $WORKDIR
+    echo "CRITICAL: failed building binary package" >&2
+    exit 9
+elif ! curl -u $GITHUB_USER: -H "Authorization: token $GITHUB_TOKEN" --netrc --location --data "$relData" "https://$GITHUB/repos/$REPOSITORY/releases" >$WORKDIR/POST 2>&1; then
+    cd -
+    rm -fr $WORKDIR
+    echo "CRITICAL: failed posting release" >&2
+    exit 10
+fi
+
+cd -
+uploadUrl=`awk '/upload_url/{print $0}' $WORKDIR/POST | sed -e 's|.*"upload_url": "\([^"]*\)".*|\1|' -e "s/{?name,label}//"`
+if test -z "$uploadUrl"; then
+    rm -fr $WORKDIR
+    echo "CRITICAL: failed resolving assets upload URL" >&2
+    exit 11
+fi
+
+rm -fr $WORKDIR/$BASENAME $WORKDIR/POST
+find $WORKDIR -type f | while read asset
+    do
+	if ! curl -u $GITHUB_USER: -H "Authorization: token $GITHUB_TOKEN" --netrc --header "Content-Type:application/octet-stream" --data-binary "@$asset" "$uploadUrl?name=$(basename "$asset")" >/dev/null; then
+	    echo "WARNING: failed uploading $asset" >&2
+	fi
+    done
+rm -fr $WORKDIR
+echo "NOTICE: done pushing $REPOSITORY/$TAG"
+
+exit 0

@@ -1,0 +1,16 @@
+[Unit]
+Description=HighWayToHell DNS driver
+After=network.target
+
+[Service]
+Type=forking
+EnvironmentFile=-/etc/default/hwth-watchmark
+ExecStart=/usr/bin/hwth-watchmark start
+ExecStop=/usr/bin/hwth-watchmark stop
+TimeoutStopSec=5
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+

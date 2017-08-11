@@ -37,8 +37,18 @@ Table of Contents
 | POST   | /healthchecks/:domainName/get/:checkId   | api get healthcheck        |
 | GET    | /healthchecks/:domainName                | browser list healthchecks  |
 | POST   | /healthchecks/:domainName                | api list healthchecks      |
-| GET    | /healthhistory/:domainName/get/:checkId  | brower checks history      |
+| GET    | /healthhistory/:domainName/get/:checkId  | browser checks history     |
 | POST   | /healthhistory/:domainName/get/:checkId  | api checks history         |
+| GET    | /notifications/:domainName/add/:checkId  | 500                        |
+| POST   | /notifications/:domainName/add/:checkId  | api add notification       |
+| GET    | /notifications/:domainName/del/:checkId  | 500                        |
+| POST   | /notifications/:domainName/del/:checkId  | api drop notification      |
+| GET    | /notifications/:domainName/edit/:checkId | 500                        |
+| POST   | /notifications/:domainName/edit/:checkId | api edit notification      |
+| GET    | /notifications/:domainName/get/:checkId  | browser get notifications  |
+| POST   | /notifications/:domainName/get/:checkId  | api get notifications      |
+| GET    | /notifications/:domainName               | browser list notifications |
+| POST   | /notifications/:domainName               | api list notifications     |
 | GET    | /records/:domainName/add/:recordName     | 500                        |
 | POST   | /records/:domainName/add/:recordName     | api add record             |
 | GET    | /records/:domainName/del/:recordName     | 500                        |

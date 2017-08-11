@@ -35,14 +35,19 @@
 		<th class='section'><a href='/domains'>Domains</a></th>
 		<th class='section'><a href='/records/{{ domain }}'>Records</a></th>
 		<th class='section'><a href='/healthchecks/{{ domain }}'>Health Checks</a></th>
+		<th class='section'><a href='/notifications/{{ domain }}'>Notifications</a></th>
 		<th class='section'><a href='/settings'>Account Settings</a></th>
 	    </tr>
 	    <tr>
-		<td colspan='4'>
+		<td colspan='5'>
 		    <table id='nestedpanel'>
 			<tr>
 			    <th class='descname'>Origin</th>
 			    <td class='descdata'>{{ origin }}</td>
+			</tr>
+			<tr>
+			    <th class='descname'>Nameservers</th>
+			    <td class='descdata'>{{{ nspool }}}</td>
 			</tr>
 			<tr>
 			    <th class='descname'>Serial</th>
@@ -51,10 +56,6 @@
 			<tr>
 			    <th class='descname'>DNSSEC</th>
 			    <td class='descdata'>{{{ dnssec }}}</td>
-			</tr>
-			<tr>
-			    <th class='descname'>nspool</th>
-			    <td class='descdata'>{{ nspool }}</td>
 			</tr>
 		    </table>
 		</td>

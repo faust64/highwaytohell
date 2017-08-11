@@ -11,8 +11,11 @@ const schedule = require('node-schedule');
 const client = new cassandra.Client({ contactPoints: (process.env.CASSANDRA_HOST ? process.env.CASSANDRA_HOST.split(' ') : ['127.0.0.1']), keyspace: process.env.CASSANDRA_KEYSPACE || 'hwth' });
 const workerPool = process.env.HWTH_POOL || 'default';
 
+const redisBackend = process.env['REDIS_HOST_' + workerPool] || process.env.REDIS_HOST || '127.0.0.1';
+const redisPort = process.env['REDIS_PORT_' + workerPool] || process.env.REDIS_PORT || 6379;
+
 const bullProbe = pmxProbe.meter({ name: 'bull jobs per minute', sample: 60 });
-const notifyQueue = new Queue('outbound notify ' + workerPool, { removeOnComplete: true, redis: { port: process.env.REDIS_PORT || 6379, host: process.env.REDIS_HOST || '127.0.0.1' }});
+const notifyQueue = new Queue('outbound notify ' + workerPool, { removeOnComplete: true, redis: { port: redisPort, host: redisBackend }});
 
 let smsHandle = false;
 if (process.env.AIRBRAKE_ID !== undefined && process.env.AIRBRAKE_KEY !== undefined) {
@@ -38,7 +41,7 @@ notifyQueue.process((task, done) => {
 	.then((notifs) => {
 		if (notifs.rows !== undefined && notifs.rows[0] !== undefined) {
 		    let promises = [];
-		    for (let k = 0; k < notif.rows.length; k++) {
+		    for (let k = 0; k < notifs.rows.length; k++) {
 			promises.push(new outboundNotify.OutboundNotify(client, smsHandle, notifs.rows[0]))
 		    }
 		    Promise.all(promises)

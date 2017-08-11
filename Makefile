@@ -49,6 +49,7 @@ install:
 	install -c -m 0644 samples.d/nrpe/check_pm2 $(DOC_DIR)/nrpe-pm2-probe
 	install -c -m 0644 samples.d/nrpe/check_pm2.cfg $(DOC_DIR)/nrpe-pm2-conf
 	install -c -m 0644 samples.d/nrpe/sudoers-pm2 $(DOC_DIR)/nrpe-pm2-sudoers
+	install -c -m 0644 samples.d/hwth-watchmark.service $(DOC_DIR)/hwth-watchmark.service
 	for potentialDoc in API.md README.md; \
 	    do \
 		test -s $$potentialDoc || continue; \
@@ -86,7 +87,7 @@ favicon:
 	    echo "please install initial logo into repository root, as logo.png"; >&2\
 	    exit 1; \
 	fi
-	for size in 16 32 57 60 64 70 72 76 96 114 120 128 144 150 152 160  180 196 256 310; \
+	for size in 16 32 57 60 64 70 72 76 96 114 120 128 144 150 152 160 180 196 256 310; \
 	    do \
 		convert logo.png -resize "$${size}x$$size" static/fav/icon$$size.png; \
 	    done
@@ -145,9 +146,37 @@ createinitialarchive: sourceismissing
 		done; \
 	fi; \
 	git rev-parse HEAD >revision 2>/dev/null || echo alpha >revision; \
-	rm -fr .git .gitignore circle.yml samples.d/diags debian/highwaytohell debian/highwaytohell.debhelper.log; \
-	sed -i "s|(\([0-9]*\.[0-9]*\.[0-9]*-\)\([0-9]*\)) unstable;|(\1$${suffix}\2) unstable;|" debian/changelog; \
+	rm -fr .git .gitignore .gitrelease circle.yml samples.d/diags debian/highwaytohell debian/highwaytohell.debhelper.log; \
+	sed -i "s|(\([0-9]*\.[0-9]*\.[0-9]*-\)\([0-9]*\)) unstable;|(\1$${suffix}\2) unstable;|" debian/changelog
 	version=`awk '/^highwaytohell/{print $$2;exit}' debian/changelog | sed -e 's|^[^0-9]*\([0-9]*\.[0-9]*\.[0-9]*\)-.*|\1|'`; \
 	( cd .. ; tar -czf highwaytohell_$$version.orig.tar.gz highwaytohell )
+
+release:
+ifeq ($(GITHUB_USER),)
+	@/bin/echo "CRITICAL: missing GITHUB_USER env var" >&2;
+	@exit 1;
+else
+    ifeq ($(GITHUB_TOKEN),)
+	@/bin/echo "CRITICAL: missing GITHUB_TOKEN env var" >&2;
+	@exit 1;
+    else
+        ifeq (, $(shell which debuild))
+	@/bin/echo "CRITICAL: missing debuild, can not build debian packages" >&2;
+	@exit 1;
+        else
+	branch=`test -d .git && git branch | awk '/^\*/{print $$2}'`; \
+	test -z "$$branch" && branch=master; \
+	if ! git pull; then \
+	    echo "CRITICAL: failed pulling from GitHub" >&2; \
+	    exit 1; \
+	elif ! git push -u origin $$branch; then \
+	    echo "CRITICAL: failed pushing to GitHub" >&2; \
+	    exit 1; \
+	elif ! ./.gitrelease; then \
+	    exit $$?; \
+	fi
+        endif
+    endif
+endif
 
 all: build

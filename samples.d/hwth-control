@@ -31,7 +31,7 @@ if test "$1"; then
     DO_WORKERS="$@"
 fi
 if test -z "$RUN_WORKERS"; then
-    RUN_WORKERS="refreshZones checkHealth apiGW"
+    RUN_WORKERS="refreshZones outboundNotifier checkHealth apiGW"
 fi
 if test "$DO_WORKERS"; then
     for worker in $DO_WORKERS
@@ -49,68 +49,29 @@ if echo "$RUN_WORKERS" | grep generateZones >/dev/null; then
     for dep in inotify-tools ldnsutils '(bind9|bind10|nsd)'
     do
 	dpkg -l | grep  -E "^ii  $dep" >/dev/null && continue
-	echo "missing dependencies running an authoritative name server" >&2
+	echo missing dependencies running an authoritative name server >&2
 	exit 1
     done
-    if test "$DNS_DRIVER" = nsd; then
-	test -z "$NS_ROOT_DIR" && export NS_ROOT_DIR=/etc/nsd
-    else
-	test -z "$NS_ROOT_DIR" && export NS_ROOT_DIR=/etc/bind
+    if test -x /bin/systemctl; then
+	if ! test -s /etc/systemd/system/multi-user.target.wants/hwth-watchmark.service; then
+	    echo you should first start and enable hwth-watchmark service
+	    exit 1
+	fi
+    elif ! ls /etc/rc*.d/*hwth-watchmark >/dev/null 2>&1; then
+	echo you should first start and enable hwth-watchmark service
+	exit 1
     fi
-    test -z "$NS_KEYS_DIR" && export NS_KEYS_DIR=$NS_ROOT_DIR/keys.d
-    test -z "$NS_ZONES_DIR" && export NS_ZONES_DIR=$NS_ROOT_DIR/zones.d
-    if test -d "$NS_ROOT_DIR"; then
-	chown -R :hwth $NS_ROOT_DIR
-	if test "$DNS_DRIVER"; then
-	    ALSO=$NS_ROOT_DIR/nsd.conf.d
-	fi
-	for d in $NS_ROOT_DIR $NS_KEYS_DIR $NS_ZONES_DIR $ALSO
-	do
-	    test -d $d
-	    chown root:hwth $d
-	    chmod 775 $d
-	done
-	if test "$DNS_DRIVER" = nsd; then
-	    if ! test -f $NS_ROOT_DIR/nsd.conf.d/highwaytohell-zones.conf; then
-		touch $NS_ROOT_DIR/nsd.conf.d/highwaytohell-zones.conf
-		chown hwth:hwth $NS_ROOT_DIR/nsd.conf.d/highwaytohell-zones.conf
-		chmod 664 $NS_ROOT_DIR/nsd.conf.d/highwaytohell-zones.conf
-	    fi
-	    if ! grep highwaytohell-zones $NS_ROOT_DIR/nsd.conf >/dev/null; then
-		cp -p $NS_ROOT_DIR/nsd.conf $NS_ROOT_DIR/nsd.hwth.conf
-		echo "include: \"$NS_ROOT_DIR/nsd.conf.d/highwaytohell-zones.conf\"" >>$NS_ROOT_DIR/nsd.hwth.conf
-		if nsd-checkconf $NS_ROOT_DIR/nsd.hwth.conf >/dev/null 2>&1; then
-		    mv $NS_ROOT_DIR/nsd.conf $NS_ROOT_DIR/nsd.pre-hwth.conf
-		    mv $NS_ROOT_DIR/nsd.hwth.conf $NS_ROOT_DIR/nsd.conf
-		    if test -x /bin/systemctl; then
-			systemctl restart nsd
-		    else
-			service restart nsd
-		    fi
-		fi
-	    fi
-	elif test "$NDS_DRIVER" = bind; then
-	    if ! test -f $NS_ROOT_DIR/highwaytohell-zones.conf; then
-		touch $NS_ROOT_DIR/highwaytohell-zones.conf
-		chown hwth:hwth $NS_ROOT_DIR/highwaytohell-zones.conf
-		chmod 664 $NS_ROOT_DIR/highwaytohell-zones.conf
-	    fi
-	    if ! grep highwaytohell-zones $NS_ROOT_DIR/named.conf.local >/dev/null; then
-		cp -p $NS_ROOT_DIR/named.conf.local $NS_ROOT_DIR/named.hwth.conf
-		echo "include \"$NS_ROOT_DIR/highwaytohell-zones.conf\";" >>$NS_ROOT_DIR/named.hwth.conf
-		if named-checkconf $NS_ROOT_DIR/named.hwth.conf >/dev/null 2>&1; then
-		    mv $NS_ROOT_DIR/named.conf.local $NS_ROOT_DIR/named.conf.pre-hwth.local
-		    mv $NS_ROOT_DIR/named.hwth.conf $NS_ROOT_DIR/named.conf.local
-		    if test -x /bin/systemctl; then
-			systemctl restart bind
-		    else
-			service restart bind
-		    fi
-		fi
-	    fi
-	fi
+    if ! ps ax | grep inotifywait >/dev/null; then
+	echo hwth-watchmark service down, you should first start it
+	exit 1
     fi
 fi
+if test -z "$DNS_DRIVER"; then
+    export DNS_DRIVER=nsd
+fi
+test -z "$NS_ROOT_DIR" && export NS_ROOT_DIR=/etc/$DNS_DRIVER
+test -z "$NS_KEYS_DIR" && export NS_KEYS_DIR=$NS_ROOT_DIR/keys.d
+test -z "$NS_ZONES_DIR" && export NS_ZONES_DIR=$NS_ROOT_DIR/zones.d
 
 case "$ACTION" in
     start)

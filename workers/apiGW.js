@@ -7,6 +7,9 @@ const http = require('http');
 const logger = require('../lib/logger.js')('api-gateway');
 const session = require('express-session');
 
+const workerPool = process.env.HWTH_POOL || 'default';
+const redisBackend = process.env['REDIS_HOST_' + workerPool] || process.env.REDIS_HOST || '127.0.0.1';
+const redisPort = process.env['REDIS_PORT_' + workerPool] || process.env.REDIS_PORT || 6379;
 const app = express();
 const client = new cassandra.Client({ contactPoints: (process.env.CASSANDRA_HOST ? process.env.CASSANDRA_HOST.split(' ') : ['127.0.0.1']), keyspace: process.env.CASSANDRA_KEYSPACE || 'hwth' });
 const listPools = "SELECT * FROM nspools";
@@ -48,10 +51,10 @@ client.execute(listPools)
 		let zonesQueues = {};
 		for (let k = 0; k < resp.rows.length; k++) {
 		    let tagName = resp.rows[k].tag;
-		    confQueues[tagName] = new Queue('config refresh ' + tagName,
-			    { removeOnComplete: true, redis: { port: process.env.REDIS_PORT || 6379, host: process.env.REDIS_HOST || '127.0.0.1' }});
-		    zonesQueues[tagName] = new Queue('zones refresh ' + tagName,
-			    { removeOnComplete: true, redis: { port: process.env.REDIS_PORT || 6379, host: process.env.REDIS_HOST || '127.0.0.1' }});
+		    let queueBackend = process.env['REDIS_HOST_' + tagName] || process.env.REDIS_HOST || '127.0.0.1';
+		    let queuePort = process.env['REDIS_PORT_' + tagName] || process.env.REDIS_PORT || 6379;
+		    confQueues[tagName] = new Queue('config refresh ' + tagName, { removeOnComplete: true, redis: { port: queuePort, host: queueBackend }});
+		    zonesQueues[tagName] = new Queue('zones refresh ' + tagName, { removeOnComplete: true, redis: { port: queuePort, host: queueBackend }});
 		}
 		apiRouter(app, client, confQueues, zonesQueues);
 		httpServer.listen(listenPort, listenAddr, (err, res) => {

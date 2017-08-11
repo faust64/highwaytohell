@@ -12,6 +12,7 @@ Table of Contents
     * [Workers](#workers)
       * [refreshZones](#refreshzones)
       * [checkHealth](#checkhealth)
+      * [outboundNotifier](#outboundnotifier)
       * [apiGW](#apigw)
     * [CLI](#cli)
     * [Special Thanks](#special-thanks)
@@ -20,7 +21,8 @@ Table of Contents
 
 ![HWTH Illustrated](samples.d/diags/hwth.png)
 
-Some hopefully-scalable, DNSSEC-capable, DNS manager featuring health checks.
+Some hopefully-scalable, DNSSEC-capable, DNS manager featuring health checks
+& alerts configuration (HTTP POST/GET, SMS or email).
 Let's be honest, the point is to replace Route53 where I can, if I can, ...
 Any advices, contribution or feedback welcome.
 
@@ -32,9 +34,13 @@ Any advices, contribution or feedback welcome.
    configuration (`/var/lib/highwaytohell/.profile`, see setup instructions),
    you may start several workers, depending on the features you want to run.
  * starting the refreshZones worker, you would be able to generate NSD or
-   BIND configurations & corresponding zones files
+   BIND configurations & corresponding zones files. Note before doing so,
+   you would have to start a `hwth-watchmark` service in charge of reloading
+   your nameserver configuration - as root, while NodeJS user can't.
  * starting the checkHealth worker, you would be able to run health checks
    that may eventually be used as conditions, generating your DNS zones
+ * starting the outboundNotifier worker, you should be able to configure
+   POST/GET/email/SMS notifications based on your health check statuses
  * starting the apiGW worker - and configuring some SSL-capable reverse
    proxy forwarding connections to your lookpack on port 8080, you would
    have access to a web client declaring domains, records, health checks,
@@ -45,7 +51,6 @@ Any advices, contribution or feedback welcome.
 
  * sharing zones management with third-party accounts (management entities)
  * proper ACL management restricting accesses within a zones (RO mode)
- * deleting domains, we should eventually purge corresponding health checks
  * notifier (mail/hook/sms?) - outboundNotifier work in progress
  * failed logins should be able to trigger such notifications as well
  * api call querying authentication logs (only show from web client)
@@ -53,14 +58,17 @@ Any advices, contribution or feedback welcome.
  * allow client to change his password or email address (api routes ready)
  * for all queries, refactor the way we ensure user is allowed to proceed
  * bull cleanup (?) see samples.d/redis-cleanup
+ * handling redis and cassandra authentication
  * or even: look into replacing bull with bee-queue
- * hwth-watchmark should be driven by an actual(systemv / systemd) init script
+ * registering mail notifications (or even sms), if email different from
+   the one defined in users settings, we should send some confirmation email
+   and ask for some sort of validation BEFORE spamming someone ...
+ * add a name column to our healthchecks table? for clarity - so far identifying
+   them with the target being evaluated
  * actual tests --like controlling exit codes, database content. I suspect
    travis could be better here (bind+nsd combined with node4+6+8) (as opposed
    to my systematic use of circleci)
  * shinyness - CSS or frontend contributions most welcome
- * worker that re-schedules domains to different pools (lightening to load
-   on a cluster, or re-scheduling domains from a faulty pool)
  * packaging: DB update & schema versioning (based on debvers?)
  * DNSSEC keys rotation open to discussion, bearing in mind it implies
    publishing new DS records to registrar, we can't automate it unilaterally
@@ -101,18 +109,27 @@ utils to be installed.
 
 Before starting services, keep in mind to create your Cassandra keyspace and
 corresponding tables, using `db/cassandra.init` (having installed our debian
-package: `/usr/share/doc/highwaytohell/cassandra.init`)
+package: `/usr/share/doc/highwaytohell/cassandra.init`), bearing in mind the
+keyspace replication strategy depends on your Cassandra cluster configuration.
+
+Give a look to `/var/lib/highwaytohell/.profile-sample`. Install your own
+copy as `/var/lib/highwaytohell/.profile` updating variables according to
+your own setup (do not forget setting the ones related to email relaying,
+as you would not be able to register an account without clicking some
+confirmation link). Make sure the profile you installed can be read by
+`hwth` (`chmod 0644` should do, preferably `root` owned).
+
+Having started service, the apiGW worker should be listening on your loopback,
+port 8080. Setup some reverse proxy (see `samples.d/nginx.conf`). Access
+your virtualhost root to create your initial account and log in.
 
 ## Databases
 
 Using a Redis backend - as a jobs queue, pub/sub, sessions storage,
 2FA-establishing-token & 2FA-validated-token storage
 
-Using a Cassandra backend, with a keyspace created from `db/cassandra.init` -
-note that import creates a keyspace whose replication class is set to
-`SimpleStrategy`. Running a distributed setup, you may want to change it.
-
-Our Cassandra database would store the followings:
+Using a Cassandra backend storing pretty much everything else. The followings
+tables would be used:
 
  * users: account-specific settings
  * twofa: a collection of 2fa secrets and mapped to their owner
@@ -122,9 +139,11 @@ Our Cassandra database would store the followings:
    a timestamp and wether login succeeded or failed
  * nspools: inventory of ns pools
  * zones: zones inventory and global settings, mapped to their owner and nspool
- * records: DNS records definitions, mapped to their zone FIXME
+ * records: DNS records definitions, mapped to their zone
  * checks: health checks definitions, mapped to their zone
  * checkhistory: health checks history, mapped to a check
+ * notifications: a collection of conditions and target to notify, when service
+   health changes, mapped to a check
  * dnsseckeys: storing base64-encoded ZSK & KSK keys, mapped to a ZSK & KSK
    key names, as listed in the zones table
  * signedzones: storing base64-encoded DNSSEC zones, once they're signed, for
@@ -134,7 +153,7 @@ Our Cassandra database would store the followings:
 
 ### refreshZones
 
-A first class of worker is in charge of generating zones. `refreshZones.js`
+A first class of worker is in charge of generating zones. `refreshZones`
 connects to a couple of bull queue, and also opens a pair of
 publisher/subscriber to redis.
 Workers from a pool receive refresh notifications (from our API gw or
@@ -152,12 +171,24 @@ zones to the public. Said process would run as root, using `inotifywait`
 to reload `nsd` or `bind`, whenever a mark file gets updated in the process
 of refreshing zones.
 
+Assuming that either bind or nsd package was present while installing
+highwaytohell package, then either `/etc/systemd/system/hwth-watchmark.service`
+or `/etc/init.d/hwth-watchmark` would be installed. Just start and enable
+it:
+
 ```
-# hwth-watchmark status
-stopped
-# hwth-watchmark start
-Setting up watches.
-Watches established.
+# systemctl start hwth-watchmark #or service hwth-watchmark start
+# systemctl enable hwth-watchmark #or update-rc.d hwth-watchmark
+```
+
+If that service is not registered, you would find a copy of the systemd
+configuration in `/usr/share/doc/highwaytohell/hwth-watchmark.service`,
+while non-systemd users may just symlink `/usr/bin/hwth-matchmark` to
+`/etc/init.d/hwth-watchmark`.
+
+Ensure watchmark service is running:
+
+```
 # hwth-watchmark status
 watching via 22827
 ```
@@ -172,6 +203,12 @@ killed inotify on Thu Aug 10 14:25:43 UTC 2017
 started inotify on Thu Aug 10 14:26:01 UTC 2017
 ```
 
+FIXME: resolving NSs in charge for a zone, we have a
+       `SELECT fqdn FROM nspools WHERE tag IN ('master', 'backup')`. It gives
+       us the pair of nameserver FQDNs to include generating a zone. Now note
+       that when your nspool tag name alphabetically succeeds your bkppool tag
+       name, then SELECT would return nameserver FQDNs such as your bkppool
+       would actually be considered to be your nspool, and vice versa.
 DISCUSS: do we need keeping plaintext zones when using DNSSEC?
 DISCUSS: we assume running name server on that worker, we could split it
        so a worker generates (& signs) zones (without necessarily running
@@ -183,18 +220,29 @@ DISCUSS: we assume running name server on that worker, we could split it
 
 ### checkHealth
 
-A second class of worker is in charge of running health checks. `checkHealth.js`
+A second class of worker is in charge of running health checks. `checkHealth`
 setups a couple schedules.
 The first one iterates over the health checks declared in Cassandra, running
 those that need to be refreshed and adding records to our health checks history
 table.
 And the second one purges older records from that history table.
 
+### outboundNotifier
+
+This class of worker would be listening for events from our `checkHealth`
+worker, looking for notifications definitions that may involve the health
+check ID that just got processed. If that check health changed, a notification
+would eventually be sent (HTTP POST, HTTP GET, SMS or email).
+
+FIXME: setting up SMS or email notifications, we should check notification
+       target is known to belong to user - otherwise, send some confirmation
+       email or SMS, have user input a code or click some validation link,
+       before registering notification. - add a known-targets table, ...
+
 ### apiGW
 
 Minimalist API gateway (we've proven it can be done ... I don't necessarily
-enjoy customizing CSSs), with token authentication, sessions I can't manage to
-log out of right now ... Use at your own risks. ALPHA release.
+enjoy customizing CSSs), with token authentication, 2FA-capable.
 
 FIXME: dont res.send.(errorcode) if req.sessions.userid: instead render a
        common template {{errormsg}}
@@ -249,6 +297,12 @@ Usage: butters [OPTION]
       -m, --match	health check string match, defaults to none
 			which would rely on http code
 
+    options specific to notifications:
+      --notifydown	notifies after N unhealthy checks
+      --notifytarget    URL, email address or phone number (with country code)
+      --notifyup	notifies after N healthy checks
+      --notifyvia	either http-post, http-get, smtp or sms
+
     options specific to records:
       --priority        record priority, defaults to 10
       --setid		defines a set ID - dealing with multiple records
@@ -292,6 +346,16 @@ $ butters -d peerio.com -a del -R records --record totoplouf
 {}
 $ butters -d peerio.com -a get -R healthhistory --checkid e2f2dfb2-7928-11e7-91c1-ed90532c5f11
 [{"when":"1501879710062","value":true},{"when":"1501879785050","value":true}]
+$ butters -R notifications -d peerio.com -a add --checkid e2f2dfb0-7928-11e7-abc0-01fda1e91471 --notifytarget faust64@gmail.com --notifyvia mail
+invalid input adding notification
+$ butters -R notifications -d peerio.com -a add --checkid e2f2dfb0-7928-11e7-abc0-01fda1e91471 --notifytarget faust64@gmail.com --notifyvia smtp
+e2f2dfb0-7928-11e7-abc0-01fda1e91471
+$ butters -R notifications -d peerio.com -a del --checkid e2f2dfb0-7928-11e7-abc0-01fda1e91471
+OK
+$ butters -R notifications -d peerio.com
+[{"idcheck":"ab013e30-7941-11e7-a5d2-38dbe520a4b3","notifydownafter":2,"notifydriver":"http-post","notifytarget":"https://hooks.slack.com/services/SOMEINCOMINGWEBHOOKTARGETURL","notifyupafter":3}]
+$ butters -R notifications
+[]
 ```
 
 ## Special Thanks

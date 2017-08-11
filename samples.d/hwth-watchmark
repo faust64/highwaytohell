@@ -1,7 +1,15 @@
 #!/bin/sh
 
+### BEGIN INIT INFO
+# Provides:		hwth-watchmark
+# Required-Start:	$remote_fs $syslog
+# Required-Stop:	$remote_fs $syslog
+# Default-Start:	2 3 4 5
+# Default-Stop:		0 1 6
+# Short-Description:	HighWayToHell DNS driver
+### END INIT INFO
+
 HWTH=/var/lib/highwaytohell
-LOCK=/run/hwth-watch.pid
 if ! test `id -u` -eq 0; then
     echo must run as root >&2
     exit 1
@@ -13,12 +21,74 @@ fi
 if test -f $HWTH/.bash_profile; then
     . $HWTH/.bash_profile
 fi
-MARK=$NS_ZONES_DIR/.hwth-serial
-if ! test -s $MARK; then
-    echo helloworld >$MARK
-    chown hwth:hwth $MARK
-    chmod 644 $MARK
+if test -z "$DNS_DRIVER"; then
+    export DNS_DRIVER=nsd
 fi
+test -z "$NS_ROOT_DIR" && export NS_ROOT_DIR=/etc/$DNS_DRIVER
+test -z "$NS_KEYS_DIR" && export NS_KEYS_DIR=$NS_ROOT_DIR/keys.d
+test -z "$NS_ZONES_DIR" && export NS_ZONES_DIR=$NS_ROOT_DIR/zones.d
+
+check_pre()
+{
+    if test -d "$NS_ROOT_DIR"; then
+	chown -R :hwth $NS_ROOT_DIR
+	ALSO=
+	if test "$DNS_DRIVER" = nsd; then
+	    ALSO=$NS_ROOT_DIR/nsd.conf.d
+	fi
+	for d in $NS_ROOT_DIR $NS_KEYS_DIR $NS_ZONES_DIR $ALSO
+	do
+	    test -d $d
+	    chown root:hwth $d
+	    chmod 775 $d
+	done
+	if test "$DNS_DRIVER" = nsd; then
+	    if ! test -f $NS_ROOT_DIR/nsd.conf.d/highwaytohell-zones.conf; then
+		touch $NS_ROOT_DIR/nsd.conf.d/highwaytohell-zones.conf
+		chown hwth:hwth $NS_ROOT_DIR/nsd.conf.d/highwaytohell-zones.conf
+		chmod 664 $NS_ROOT_DIR/nsd.conf.d/highwaytohell-zones.conf
+	    fi
+	    if ! grep highwaytohell-zones $NS_ROOT_DIR/nsd.conf >/dev/null; then
+		cp -p $NS_ROOT_DIR/nsd.conf $NS_ROOT_DIR/nsd.hwth.conf
+		echo "include: \"$NS_ROOT_DIR/nsd.conf.d/highwaytohell-zones.conf\"" >>$NS_ROOT_DIR/nsd.hwth.conf
+		if nsd-checkconf $NS_ROOT_DIR/nsd.hwth.conf >/dev/null 2>&1; then
+		    mv $NS_ROOT_DIR/nsd.conf $NS_ROOT_DIR/nsd.pre-hwth.conf
+		    mv $NS_ROOT_DIR/nsd.hwth.conf $NS_ROOT_DIR/nsd.conf
+		    if test -x /bin/systemctl; then
+			systemctl restart nsd
+		    else
+			service restart nsd
+		    fi
+		fi
+	    fi
+	elif test "$NDS_DRIVER" = bind; then
+	    if ! test -f $NS_ROOT_DIR/highwaytohell-zones.conf; then
+		touch $NS_ROOT_DIR/highwaytohell-zones.conf
+		chown hwth:hwth $NS_ROOT_DIR/highwaytohell-zones.conf
+		chmod 664 $NS_ROOT_DIR/highwaytohell-zones.conf
+	    fi
+	    if ! grep highwaytohell-zones $NS_ROOT_DIR/named.conf.local >/dev/null; then
+		cp -p $NS_ROOT_DIR/named.conf.local $NS_ROOT_DIR/named.hwth.conf
+		echo "include \"$NS_ROOT_DIR/highwaytohell-zones.conf\";" >>$NS_ROOT_DIR/named.hwth.conf
+		if named-checkconf $NS_ROOT_DIR/named.hwth.conf >/dev/null 2>&1; then
+		    mv $NS_ROOT_DIR/named.conf.local $NS_ROOT_DIR/named.conf.pre-hwth.local
+		    mv $NS_ROOT_DIR/named.hwth.conf $NS_ROOT_DIR/named.conf.local
+		    if test -x /bin/systemctl; then
+			systemctl restart bind
+		    else
+			service restart bind
+		    fi
+		fi
+	    fi
+	fi
+    fi
+    MARK=$NS_ZONES_DIR/.hwth-serial
+    if ! test -s $MARK; then
+	echo helloworld >$MARK
+	chown hwth:hwth $MARK
+	chmod 644 $MARK
+    fi
+}
 
 LOGFILE=/var/log/highwaytohell/hwth-watch.log
 case "$1" in
@@ -27,6 +97,7 @@ case "$1" in
 	    echo already running
 	    exit 2
 	fi
+	check_pre
 	inotifywait -m $MARK | while read path action file
 	    do
 		echo reloading on `date` >>$LOGFILE

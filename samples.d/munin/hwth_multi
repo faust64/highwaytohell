@@ -21,15 +21,15 @@ if test "$1" = config; then
 	    checkHealth) match="checks" ;;
 	esac
 	if test "$match"; then
-	    cat <<EOF 
+	    cat <<EOF
 multigraph HWTH$worker
-graph_title 
+graph_title
 graph_vlabel HWTH usage
 graph_category HighWayToHell
 EOF
 	    for what in $match
 	    do
-		cat <<EOF 
+		cat <<EOF
 HWTH_${worker}_$what.label $what
 HWTH_${worker}_$what.min 0
 HWTH_${worker}_$what.draw LINE1
