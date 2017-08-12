@@ -26,6 +26,8 @@ Table of Contents
 | POST   | /domains/:domainName/del                 | api delete domain          |
 | GET    | /domains/:domainName/disablednssec       | 500                        |
 | POST   | /domains/:domainName/disablednssec       | api disable dnssec         |
+| GET    | /domains/:domainName/getdnssec           | 500                        |
+| POST   | /domains/:domainName/getdnssec           | api get domain DS records  |
 | GET    | /domains/:domainName/enablednssec        | 500                        |
 | POST   | /domains/:domainName/enablednssec        | api enable dnssec          |
 | GET    | /healthchecks/:domainName/add            | 500                        |

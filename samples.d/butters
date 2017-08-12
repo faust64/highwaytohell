@@ -56,6 +56,7 @@ Usage: $PRG [OPTION]
 
     options specific to domains:
       --enablednssec	enables DNSSEC on domain
+      --getdsrecords	fetches DS records for domain
       --disablednssec	disables DNSSEC on domain
 
     options specific to health checks:
@@ -128,6 +129,7 @@ do
 	--disablednssec) DNSSEC=disable		;;
 	-d|--domain)	DOMAIN=$2; shift	;;
 	--enablednssec)	DNSSEC=enable		;;
+	--getdsrecords) DNSSEC=get		;;
 	--header)	HEADERS=$2; shift	;;
 	--healthy)	CHECKHEALTHY=$2; shift	;;
 	-h|--help)	help; exit 0		;;
@@ -216,6 +218,9 @@ if test "$ACTION" = get; then
 	URI=$URI/get
     else
 	URI=$URI/$DOMAIN
+	if test "$DNSSEC" = get; then
+	    URI=$URI/getdnssec
+	fi
     fi
 elif test "$ACTION" = add; then
     if test "$WHAT" = domains; then

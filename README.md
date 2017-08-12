@@ -53,7 +53,6 @@ Any advices, contribution or feedback welcome.
  * proper ACL management restricting accesses within a zones (RO mode)
  * notifier (mail/hook/sms?) - outboundNotifier work in progress
  * failed logins should be able to trigger such notifications as well
- * api call returning with DS records (only show from web client)
  * updating his email address, we should have user click some confirmation
    link
  * for all queries, refactor the way we ensure user is allowed to proceed
@@ -359,6 +358,9 @@ $ butters -R notifications -d peerio.com
 [{"idcheck":"ab013e30-7941-11e7-a5d2-38dbe520a4b3","notifydownafter":2,"notifydriver":"http-post","notifytarget":"https://hooks.slack.com/services/SOMEINCOMINGWEBHOOKTARGETURL","notifyupafter":3}]
 $ butters -R notifications
 []
+$ butters -d peerio.com -a get --getdsrecords
+peerio.com.	259200	IN	DS	105 7 1 92776cd91c4c4a2de34c94a6526660a0ce070897
+peerio.com.	259200	IN	DS	105 7 2 e55e482c5b9782c7ac1f6e052bf5b37c3087600c8100d588a989570cec1dffa6
 ```
 
 ## Special Thanks
