@@ -54,7 +54,8 @@ Any advices, contribution or feedback welcome.
  * notifier (mail/hook/sms?) - outboundNotifier work in progress
  * failed logins should be able to trigger such notifications as well
  * api call returning with DS records (only show from web client)
- * allow client to change his password or email address (api routes ready)
+ * updating his email address, we should have user click some confirmation
+   link
  * for all queries, refactor the way we ensure user is allowed to proceed
  * bull cleanup (?) see samples.d/redis-cleanup
  * or even: look into replacing bull with bee-queue

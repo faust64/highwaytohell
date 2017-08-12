@@ -181,6 +181,16 @@ function editRecord(domainName, recName, recType, recPriority, recTarget, recSet
     showForm('Update Record');
 }
 
+function editSettings() {
+    var confForm = document.getElementById('passwordConfirm');
+    var emailForm = document.getElementById('emailaddr');
+    var passForm = document.getElementById('password');
+    confForm.value = '';
+    emailForm.value = '';
+    passForm.value = '';
+    showForm('Edit Settings');
+}
+
 function editToken(tokenId, tokenPerms, tokenSources) {
     var actionForm = document.getElementById('formtokens');
     var idForm = document.getElementById('tokenid');
@@ -257,6 +267,27 @@ function updateFormAction(where) {
 	}
     } else {
 	alert('could not locate form element');
+    }
+}
+
+function updateFormFields(what) {
+    if (what === "changepassword") {
+	var emailForm = document.getElementById('emailaddr');
+	emailForm.value = '';
+	var left = document.getElementById('password').value;
+	var right = document.getElementById('passwordConfirm').value;
+	if (left && right && left !== "" && right !== "") {
+	    if (left === right) {
+		if (left.length >= 12) { return true; }
+		else { alert('please try with a longer password (12 chars min)'); }
+	    } else { alert('mismatching passwords, try again'); }
+	} else { alert('password can not be empty'); }
+	return false;
+    } else if (what === "changeemail") {
+	var confForm = document.getElementById('passwordConfirm');
+	var passForm = document.getElementById('password');
+	confForm.value = '';
+	passForm.value = '';
     }
 }
 

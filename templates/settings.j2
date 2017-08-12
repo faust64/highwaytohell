@@ -28,8 +28,47 @@
 	<link href='/static/style.css' rel='stylesheet'/>
 	<script src='/static/script.js' type='application/javascript'></script>
     </head>
-    <body>
+    <body onLoad='load();'>
 	<div class='logout'><a href='/logout'>Logout {{ username }}</a></div>
+	<div id='overlay' ondrop='drop(event)' ondragover='allowDrop(event)'>
+	    <div id='droppable' class='nestedoverlay' draggable='true' ondragstart='drag(event)'>
+		<form id='formsettings' method='POST' action='/settings'>
+		    <a id='closeoverlay' onClick='hideForm()' href='#'></a>
+		    <table id='formadd'>
+			<tr>
+			    <td id='formname' class='addformtitle' colspan='2'>Edit Settings</td>
+			</tr>
+			<tr>
+			    <td class=inputlabel>New Password</td>
+			    <td class=inputdata>
+				<input id='password' type='password' size=20 name='password'/>
+			    </td>
+			</tr>
+			<tr>
+			    <td class=inputlabel>Confirm New Password</td>
+			    <td class=inputdata>
+				<input id='passwordConfirm' type='password' size=20 name='passwordConfirm'/>
+			    </td>
+			</tr>
+			<tr>
+			    <td class=inputsubmit colspan='2'><input type='submit' onClick='updateFormFields("changepassword");' value='Update Password'/></td>
+			</tr>
+			<tr>
+			    <td colspan='2'>&nbsp;</td>
+			</tr>
+			<tr>
+			    <td class=inputlabel>New Email Address</td>
+			    <td class=inputdata>
+				<input id='emailaddr' type='text' size=20 name='email'/>
+			    </td>
+			</tr>
+			<tr>
+			    <td class=inputsubmit colspan='2'><input type='submit' onClick='updateFormFields("changeemail");' value='Change Email Address'/></td>
+			</tr>
+		    </table>
+		</form>
+	    </div>
+	</div>
 	<table id='mainpanel'>
 	    <tr class='sections'>
 		<th class='section'><a href='/domains'>Domains</a></th>
@@ -42,7 +81,7 @@
 		<td colspan='5'>
 		    <table id='nestedpanel'>
 			<tr>
-			    <td class='additem' colspan='2'><a href='/tokens'>Manage Tokens</a></td>
+			    <td class='additem' colspan='2'><a href='/tokens'>Manage Tokens</a>&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;<a onClick='editSettings();' href='#'>Edit Settings</a></td>
 			</tr>
 			<tr>
 			    <th class='descname'>Username</th>

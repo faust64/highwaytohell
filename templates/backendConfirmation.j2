@@ -31,14 +31,13 @@
     <body>
 	<table id='mainpanel'>
 	    <tr class='sections'>
-		<th class='section'><a href='/domains'>Domains</a></th>
-		<td class='section'><div class='disabledsection'>Records</div></td>
-		<td class='section'><div class='disabledsection'>Health Checks</div></td>
-		<td class='section'><div class='disabledsection'>Notifications</div></td>
-		<th class='section'><a href='/settings'>Account Settings</a></th>
+		<th class='section'><a href='{{ previousis }}'>{{ previouslabel }}</a></th>
 	    </tr>
 	    <tr>
-		<td class='confmsg' colspan='5'>{{ confmsg }}</td>
+		<td>&nbsp;</td>
+	    </tr>
+	    <tr>
+		<td class='confmsg'>{{ confmsg }}</td>
 	    </tr>
 	</table>
     </body>

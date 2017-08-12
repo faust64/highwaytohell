@@ -17,7 +17,11 @@ module.exports = (cassandra, username, emailaddr, password) => {
 					    let token = buf.toString('hex');
 					    let pwHash = crypto.createHash('sha256').update(password).digest('hex');
 					    let userId = uuid.now();
-					    return new sendMail.SendMail(username, userId, token, emailaddr)
+					    let subst = {
+						    confirmUri: '/settings/confirm-address/' + userId + '/' + token,
+						    username: username
+						};
+					    return new sendMail.SendMail(emailaddr, 'registration', subst)
 						.then((ok) => {
 							let insertUser = "INSERT INTO users (uuid, username, emailaddress, pwhash, confirmcode) VALUES "
 							    +"('" + userId + "', '" + username + "', '" + emailaddr + "', '" + pwHash + "', '" + token + "')";

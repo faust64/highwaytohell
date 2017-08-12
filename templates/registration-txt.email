@@ -1,9 +1,9 @@
-Hi REWRITERCPT,
+Hi {{ username }},
 
 Thanks for joining HighWayToHell!
 
 Please confirm your email address to complete our registration process,
 following that link:
-REWRITELINK
+{{{ urlPrefix }}}{{{ confirmUri }}}
 
-Hope we'll see back you soon!
+Hope we'll see you back soon!
