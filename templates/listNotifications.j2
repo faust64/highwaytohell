@@ -29,7 +29,7 @@
 	<script src='/static/script.js' type='application/javascript'></script>
     </head>
     <body onLoad='load();'>
-	<div class='Logout'><a href='/logout'>Logout {{ username }}</a></div>
+	<div class='logout'><a href='/logout'>Logout {{ username }}</a></div>
 	<div id='overlay' ondrop='drop(event)' ondragover='allowDrop(event)'>
 	    <div id='droppable' class='nestedoverlay' draggable='true' ondragstart='drag(event)'>
 		<form id='formnotifications' method='POST'>
