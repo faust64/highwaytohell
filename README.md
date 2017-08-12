@@ -53,13 +53,15 @@ Any advices, contribution or feedback welcome.
  * proper ACL management restricting accesses within a zones (RO mode)
  * notifier (mail/hook/sms?) - outboundNotifier work in progress
  * failed logins should be able to trigger such notifications as well
- * api call querying authentication logs (only show from web client)
  * api call returning with DS records (only show from web client)
  * allow client to change his password or email address (api routes ready)
  * for all queries, refactor the way we ensure user is allowed to proceed
  * bull cleanup (?) see samples.d/redis-cleanup
- * handling redis and cassandra authentication
  * or even: look into replacing bull with bee-queue
+ * handling redis and cassandra authentication
+ * paging (?)
+ * zones import tool?
+ * remove idowner column from dsrecords table
  * registering mail notifications (or even sms), if email different from
    the one defined in users settings, we should send some confirmation email
    and ask for some sort of validation BEFORE spamming someone ...

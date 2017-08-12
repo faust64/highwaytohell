@@ -73,7 +73,7 @@ CREATE TABLE records (
 	type varchar,
 	setId varchar,
 	healthCheckId varchar,
-	PRIMARY KEY(origin, type, name, setId)
+	PRIMARY KEY(origin, name, type, setId)
     );
 
 CREATE TABLE checks (

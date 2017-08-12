@@ -162,7 +162,7 @@ elif test -z "$APIUSERID"; then
 elif ! echo "$ACTION" | grep -E '^(list|get|add|edit|del)$' >/dev/null; then
     echo invalid command $ACTION
     exit 3
-elif ! echo "$WHAT" | grep -E '^(records|domains|healthchecks|healthhistory|notifications)$' >/dev/null; then
+elif ! echo "$WHAT" | grep -E '^(records|domains|healthchecks|healthhistory|notifications|logs)$' >/dev/null; then
     echo invalid resource $WHAT
     exit 4
 elif test -z "$DOMAIN"; then
@@ -200,6 +200,8 @@ elif test "$WHAT" = notifications; then
 	    exit 42
 	fi
     fi
+elif test "$WHAT" = logs; then
+    URI=settings/logs
 else
     URI=$WHAT
 fi

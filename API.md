@@ -13,8 +13,9 @@ Table of Contents
 
 | Method | Path                                     | Desc                       |
 | -----: | :--------------------------------------: | :------------------------: |
-| GET    | /                                        | version string             |
+| GET    | /                                        | login|domains redirect     |
 | GET    | /ping                                    | worker health              |
+| GET    | /version                                 | hwth version string        |
 | GET    | /domains                                 | 500                        |
 | POST   | /domains                                 | api list zones             |
 | GET    | /domains/:domainName                     | 500                        |
@@ -74,6 +75,8 @@ Table of Contents
 | GET    | /settings/2fa/disable                    | 500                        |
 | POST   | /settings/2fa/disable                    | disable 2fa auth           |
 | GET    | /settings/confirm-address/:userId/:token | confirm registration email |
+| GET    | /settings/logs                           | 500                        |
+| POST   | /settings/logs                           | api list login history     |
 | GET    | /settings                                | browser user settings      |
 | POST   | /settings                                | update user settings       |
 
