@@ -118,9 +118,8 @@ CREATE TABLE signedzones (
 
 CREATE TABLE dsrecords (
 	origin varchar,
-	idowner varchar,
 	ds blob,
-	PRIMARY KEY (origin, idowner)
+	PRIMARY KEY (origin)
     );
 
 CREATE TABLE notifications (

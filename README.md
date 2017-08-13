@@ -59,7 +59,6 @@ Any advices, contribution or feedback welcome.
  * handling redis authentication
  * paging (?)
  * zones import tool?
- * remove idowner column from dsrecords table
  * registering mail notifications (or even sms), if email different from
    the one defined in users settings, we should send some confirmation email
    and ask for some sort of validation BEFORE spamming someone ...
