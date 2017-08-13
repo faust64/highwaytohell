@@ -34,15 +34,6 @@ if (process.env.TWILIO_SID && process.env.TWILIO_TOKEN && process.env.TWILIO_FRO
     }
 }
 
-/* made sense with bull - and yet did not work
-const schedule = require('node-schedule');
-const cleanupQueue = schedule.scheduleJob('*/5 * * * *', () => {
-    //FIXME: lock on elected master?
-	notifyQueue.clean(60000);
-	notifyQueue.clean(300000, 'failed');
-	logger.info('done cleaning notifications queue');
-    }); */
-
 notifyQueue.process((task, done) => {
     let shouldNotify = "SELECT * FROM notifications WHERE idcheck = '" + task.data.checkid + "'";
     client.execute(shouldNotify)

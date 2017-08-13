@@ -59,16 +59,6 @@ function pullDnssecKeys() {
 	});
 }
 
-/* made sense with bull - and yet did not work
-const cleanupQueues = schedule.scheduleJob('*/5 * * * *', () => {
-    //FIXME: lock on elected master?
-	confQueue.clean(60000);
-	confQueue.clean(300000, 'failed');
-	zonesQueue.clean(60000);
-	zonesQueue.clean(300000, 'failed');
-	logger.info('done cleaning config and zone refresh queues');
-    }); */
-
 const reloadKeys = schedule.scheduleJob('43 * * * *', () => {
 	if (neighbors.isElectedMaster() !== true) {
 	    logger.info('skipping keys retrieval on slaves');
