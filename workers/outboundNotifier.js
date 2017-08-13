@@ -5,18 +5,23 @@ const fs = require('fs');
 const logger = require('../lib/logger.js')('outbound-notifier');
 const outboundNotify = require('../lib/outboundNotify.js');
 const pmxProbe = require('pmx').probe();
-const redis = require('redis');
-
-const client = new cassandra.Client({ contactPoints: (process.env.CASSANDRA_HOST ? process.env.CASSANDRA_HOST.split(' ') : ['127.0.0.1']), keyspace: process.env.CASSANDRA_KEYSPACE || 'hwth' });
 const workerPool = process.env.HWTH_POOL || 'default';
 
+let cassandraOpts = {
+	contactPoints: (process.env.CASSANDRA_HOST ? process.env.CASSANDRA_HOST.split(' ') : ['127.0.0.1']),
+	keyspace: process.env.CASSANDRA_KEYSPACE || 'hwth'
+    };
+let smsHandle = false;
+if (process.env.CASSANDRA_AUTH_USER && process.env.CASSANDRA_AUTH_PASS) {
+    cassandraOpts.authProvider = new cassandra.auth.PlainTextAuthProvider(process.env.CASSANDRA_AUTH_USER, process.env.CASSANDRA_AUTH_PASS);
+}
+const bullProbe = pmxProbe.meter({ name: 'bull jobs per minute', sample: 60 });
+const client = new cassandra.Client(cassandraOpts);
 const redisBackend = process.env['REDIS_HOST_' + workerPool] || process.env.REDIS_HOST || '127.0.0.1';
 const redisPort = process.env['REDIS_PORT_' + workerPool] || process.env.REDIS_PORT || 6379;
 
-const bullProbe = pmxProbe.meter({ name: 'bull jobs per minute', sample: 60 });
 const notifyQueue = new Queue('outbound-notify-' + workerPool, { removeOnSuccess: true, isWorker: true, redis: { port: redisPort, host: redisBackend }});
 
-let smsHandle = false;
 if (process.env.AIRBRAKE_ID !== undefined && process.env.AIRBRAKE_KEY !== undefined) {
     try {
 	let airbrake = require('airbrake').createClient(process.env.AIRBRAKE_ID, process.env.AIRBRAKE_KEY);

@@ -50,13 +50,13 @@ Any advices, contribution or feedback welcome.
 ### Todolist
 
  * sharing zones management with third-party accounts (management entities)
- * proper ACL management restricting accesses within a zones (RO mode)
+ * proper ACL management restricting accesses within a zone (RO mode)
  * notifier (mail/hook/sms?) - outboundNotifier work in progress
  * failed logins should be able to trigger such notifications as well
  * updating his email address, we should have user click some confirmation
    link
  * for all queries, refactor the way we ensure user is allowed to proceed
- * handling redis and cassandra authentication
+ * handling redis authentication
  * paging (?)
  * zones import tool?
  * remove idowner column from dsrecords table

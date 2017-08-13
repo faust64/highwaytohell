@@ -1,50 +1,65 @@
 # /var/lib/highwaytohell/.profile.sample
-export CASSANDRA_HOST="cassandra1.example.com cassandra2.example.com cassandraN.example.com"
-export CASSANDRA_KEYSPACE=hwth
-export REDIS_HOST=elasticache.example.com
-export REDIS_PORT=6379
-export HWTH_POOL=default
-#export DEBUG=yay
-export NODE_ENV=production
+
+# Using Airbrake, Errbit, or alternatives:
 #export AIRBRAKE_ID=idstring
 #export AIRBRAKE_KEY=apikey
-export SOA_CONTACT=charlie.example.com #email address shown in SOA record
+#export AIRBRAKE_SERVER=myerrbit.example.com
+
+export NODE_ENV=production
+
+# set an SOA-formatted email address we would use generating zones
+export SOA_CONTACT=charlie.example.com
+
+# Connecting to Cassandra
+export CASSANDRA_HOST="cassandra1.example.com cassandra2.example.com cassandraN.example.com"
+export CASSANDRA_KEYSPACE=hwth
+#export CASSANDRA_AUTH_USER=hwth
+#export CASSANDRA_AUTH_PASS=secr3t
 
 # distributing your setup, you will want to use several pools
-# on your api GW, set the following so that new domains get created on two pools
-# (instead of only using the one defined by HWTH_POOL)
-#export HWTH_BACKUP_POOL=backup
-# depending on where your api GW is located, you would be setting distinct
-# HWTH_POOL & HWTH_BACKUP_POOL values. Whatever pool a domain is mapped with,
-# users would be able to manage its configuration from any API gateway. Their
-# zones,however, would only be served on the refreshZones workers whose
-# HWTH_POOL match any of the HWTH_POOL & HWTH_BACKUP_POOL set on api GW during
-# domain creation.
+# all workers would need to be assigned with a single pool
+export HWTH_POOL=default
+
+# based on that pool, we would have our workers share a redis backend
+export REDIS_HOST=elasticache.pooldefault.example.com
+export REDIS_PORT=6379
+
+# running a distributed setup, we would also configure our api GW so that
+# new domains get created on a backup pool as well
+export HWTH_BACKUP_POOL=backup
+# Whatever pool a domain is mapped with, users would be able to manage its
+# configuration from any API gateway. Their zones, however, would only be
+# served on the refreshZones workers whose HWTH_POOL match any of the
+# HWTH_POOL & HWTH_BACKUP_POOL set on api GW during domain creation.
 
 # also ensure your apiGW may connect to the redis queue handling your remote
-# pool # (so that records creation/modification/deletion triggers a notification
-# for # zones generation on remote site as well - otherwise gets
-# hourly-reloaded).
+# pools (so that records creation/modification/deletion triggers a notification
+# for zones generation on remote site as well - otherwise gets hourly-reloaded).
 # If no env var matches a nspool tag, then queue would be started against
 # the default REDIS_HOST / REDIS_PORT defined earlier
-#export REDIS_HOST_poolname1=redis.zone1.example.com
-#export REDIS_HOST_poolname2=redis.zone1.example.com
-#export REDIS_HOST_poolnameN=redis.zoneN.example.com
-#export REDIS_PORT_poolnameN=36379
+export REDIS_HOST_backup=elasticsearch.poolbackup.example.com
+export REDIS_PORT_backup=36379
 
-# Regestering new accounts, set a few defaults formating confirmation emails:
+# Regestering new accounts, set a few defaults formating URLs:
 export HWTH_HOSTNAME=api-ns.example.com
 export HWTH_PROTO=https
+
+# For both account registrations and email notifications, you would need
+# a working SMTP setup
 export MAIL_FROM=heyhey@example.com
 export MAIL_REPLYTO=noreply@example.com
 export SMTP_HOST=smtp.example.com
+#export SMTP_USER=toto@example.com
+#export SMTP_PASS=secr3t
+#export SMTP_SSL=yep
 
 # Sending SMS notifications, you would need a valid twilio account:
 #export TWILIO_FROM=myTwilioFromNumber
 #export TWILIO_SID=xxx
 #export TWILIO_TOKEN=yyy
 
-# Eventually, instances may be dedicated to specific processes:
+# Eventually, instances may be dedicated to specific processes - default would
+# start all processes, assuming a profile is installed:
 #export RUN_WORKERS="apiGW outboundNotifier checkHealth refreshZones"
 
 # Clustering processes:
@@ -66,10 +81,10 @@ fi
 export NS_KEYS_DIR=$NS_ROOT_DIR/keys.d
 export NS_ZONES_DIR=$NS_ROOT_DIR/zones.d
 if test "$DEBUG"; then
-    for var in CASSANDRA_HOST CASSANDRA_KEYSPACE REDIS_HOST REDIS_PORT \
-	HWTH_POOL HWTH_BACKUP_POOL NS SOA_NS SOA_CONTACT DNS_DRIVER \
-	NS_ROOT_DIR NS_KEYS_DIR NS_ZONES_DIR HWTH_HOSTNAME HWTH_PROTO \
-	MAIL_FROM MAIL_REPLYTO;
+    for var in CASSANDRA_HOST CASSANDRA_KEYSPACE CASSANDRA_AUTH_USER \
+	CASSANDRA_AUTH_PASS REDIS_HOST REDIS_PORT HWTH_POOL SOA_CONTACT \
+	HWTH_BACKUP_POOL DNS_DRIVER NS_ROOT_DIR NS_KEYS_DIR NS_ZONES_DIR \
+	HWTH_HOSTNAME HWTH_PROTO MAIL_FROM MAIL_REPLYTO;
     do
 	eval val=\$$var
 	echo "  $var => $val"

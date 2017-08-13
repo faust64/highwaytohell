@@ -5,17 +5,22 @@ const checkHealth = require('../lib/checkHealth.js');
 const logger = require('../lib/logger.js')('check-health-manager');
 const pmxProbe = require('pmx').probe();
 const schedule = require('node-schedule');
-
-const client = new cassandra.Client({ contactPoints: (process.env.CASSANDRA_HOST ? process.env.CASSANDRA_HOST.split(' ') : ['127.0.0.1']), keyspace: process.env.CASSANDRA_KEYSPACE || 'hwth' });
-const checksLookup = 'SELECT * FROM checks WHERE nspool = ?';
 const workerPool = process.env.HWTH_POOL || 'default';
 
 const redisBackend = process.env['REDIS_HOST_' + workerPool] || process.env.REDIS_HOST || '127.0.0.1';
 const redisPort = process.env['REDIS_PORT_' + workerPool] || process.env.REDIS_PORT || 6379;
-
-const neighbors = require('../lib/advertiseNeighbors.js')('check-health-' + workerPool);
+let cassandraOpts = {
+	contactPoints: (process.env.CASSANDRA_HOST ? process.env.CASSANDRA_HOST.split(' ') : ['127.0.0.1']),
+	keyspace: process.env.CASSANDRA_KEYSPACE || 'hwth'
+    };
+if (process.env.CASSANDRA_AUTH_USER && process.env.CASSANDRA_AUTH_PASS) {
+    cassandraOpts.authProvider = new cassandra.auth.PlainTextAuthProvider(process.env.CASSANDRA_AUTH_USER, process.env.CASSANDRA_AUTH_PASS);
+}
 const bullProbe = pmxProbe.meter({ name: 'checks per mintute', sample: 60 });
+const client = new cassandra.Client(cassandraOpts);
 const checkQueue = new Queue('health-checks-' + workerPool, { removeOnSuccess: true, isWorker: true, redis: { port: redisPort, host: redisBackend }});
+const checksLookup = 'SELECT * FROM checks WHERE nspool = ?';
+const neighbors = require('../lib/advertiseNeighbors.js')('check-health-' + workerPool);
 const notifyQueue = new Queue('outbound-notify-' + workerPool, { removeOnSuccess: true, isWorker: false, redis: { port: redisPort, host: redisBackend }});
 const refreshQueue = new Queue('zones-refresh-' + workerPool, { removeOnSuccess: true, isWorker: false, redis: { port: redisPort, host: redisBackend }});
 

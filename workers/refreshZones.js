@@ -12,7 +12,14 @@ const pmxProbe = require('pmx').probe();
 const redis = require('redis');
 const schedule = require('node-schedule');
 
-const client = new cassandra.Client({ contactPoints: (process.env.CASSANDRA_HOST ? process.env.CASSANDRA_HOST.split(' ') : ['127.0.0.1']), keyspace: process.env.CASSANDRA_KEYSPACE || 'hwth' });
+let cassandraOpts = {
+	contactPoints: (process.env.CASSANDRA_HOST ? process.env.CASSANDRA_HOST.split(' ') : ['127.0.0.1']),
+	keyspace: process.env.CASSANDRA_KEYSPACE || 'hwth'
+    };
+if (process.env.CASSANDRA_AUTH_USER && process.env.CASSANDRA_AUTH_PASS) {
+    cassandraOpts.authProvider = new cassandra.auth.PlainTextAuthProvider(process.env.CASSANDRA_AUTH_USER, process.env.CASSANDRA_AUTH_PASS);
+}
+const client = new cassandra.Client(cassandraOpts);
 const execAsync = Promise.promisify(exec);
 const lookupDomain = 'SELECT * from zones WHERE origin = ?';
 const nsRootDir = process.env.NS_ROOT_DIR || '.';

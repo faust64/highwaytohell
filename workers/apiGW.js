@@ -6,13 +6,20 @@ const express = require('express');
 const http = require('http');
 const logger = require('../lib/logger.js')('api-gateway');
 const session = require('express-session');
-
 const workerPool = process.env.HWTH_POOL || 'default';
+
+const app = express();
+let cassandraOpts = {
+	contactPoints: (process.env.CASSANDRA_HOST ? process.env.CASSANDRA_HOST.split(' ') : ['127.0.0.1']),
+	keyspace: process.env.CASSANDRA_KEYSPACE || 'hwth'
+    };
+if (process.env.CASSANDRA_AUTH_USER && process.env.CASSANDRA_AUTH_PASS) {
+    cassandraOpts.authProvider = new cassandra.auth.PlainTextAuthProvider(process.env.CASSANDRA_AUTH_USER, process.env.CASSANDRA_AUTH_PASS);
+}
+const client = new cassandra.Client(cassandraOpts);
+const listPools = "SELECT * FROM nspools";
 const redisBackend = process.env['REDIS_HOST_' + workerPool] || process.env.REDIS_HOST || '127.0.0.1';
 const redisPort = process.env['REDIS_PORT_' + workerPool] || process.env.REDIS_PORT || 6379;
-const app = express();
-const client = new cassandra.Client({ contactPoints: (process.env.CASSANDRA_HOST ? process.env.CASSANDRA_HOST.split(' ') : ['127.0.0.1']), keyspace: process.env.CASSANDRA_KEYSPACE || 'hwth' });
-const listPools = "SELECT * FROM nspools";
 const redisStore = require('connect-redis')(session);
 
 app.use(session({
@@ -21,8 +28,8 @@ app.use(session({
 	saveUninitialized: false,
 	secret: process.env.API_SESSION_SECRET || 'hwthapigw',
 	store: new redisStore({
-		host: process.env.REDIS_HOST || '127.0.0.1',
-		port: process.env.REDIS_PORT || 6379,
+		host: redisBackend,
+		port: redisPort,
 		db: process.env.REDIS_DBID || 0,
 		prefix: 'hwthsess:',
 		ttl: process.env.API_SESSION_TTL || 10800,
