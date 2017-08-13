@@ -56,8 +56,6 @@ Any advices, contribution or feedback welcome.
  * updating his email address, we should have user click some confirmation
    link
  * for all queries, refactor the way we ensure user is allowed to proceed
- * bull cleanup (?) see samples.d/redis-cleanup
- * or even: look into replacing bull with bee-queue
  * handling redis and cassandra authentication
  * paging (?)
  * zones import tool?
@@ -286,8 +284,9 @@ Usage: butters [OPTION]
       -t, --type	A, AAAA, CNAME, TXT, NS, defaults to A
 
     options specific to domains:
-      --enablednssec	enables DNSSEC on domain
       --disablednssec	disables DNSSEC on domain
+      --enablednssec	enables DNSSEC on domain
+      --getdsrecords	fetches DS records for domain
 
     options specific to health checks:
       --checkid		defines healthcheck to edit or remove

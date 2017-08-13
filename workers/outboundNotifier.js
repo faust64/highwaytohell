@@ -1,12 +1,11 @@
 const Promise = require('bluebird');
-const Queue = require('bull');
+const Queue = require('bee-queue');
 const cassandra = require('cassandra-driver');
 const fs = require('fs');
 const logger = require('../lib/logger.js')('outbound-notifier');
 const outboundNotify = require('../lib/outboundNotify.js');
 const pmxProbe = require('pmx').probe();
 const redis = require('redis');
-const schedule = require('node-schedule');
 
 const client = new cassandra.Client({ contactPoints: (process.env.CASSANDRA_HOST ? process.env.CASSANDRA_HOST.split(' ') : ['127.0.0.1']), keyspace: process.env.CASSANDRA_KEYSPACE || 'hwth' });
 const workerPool = process.env.HWTH_POOL || 'default';
@@ -15,7 +14,7 @@ const redisBackend = process.env['REDIS_HOST_' + workerPool] || process.env.REDI
 const redisPort = process.env['REDIS_PORT_' + workerPool] || process.env.REDIS_PORT || 6379;
 
 const bullProbe = pmxProbe.meter({ name: 'bull jobs per minute', sample: 60 });
-const notifyQueue = new Queue('outbound notify ' + workerPool, { removeOnComplete: true, redis: { port: redisPort, host: redisBackend }});
+const notifyQueue = new Queue('outbound-notify-' + workerPool, { removeOnSuccess: true, isWorker: true, redis: { port: redisPort, host: redisBackend }});
 
 let smsHandle = false;
 if (process.env.AIRBRAKE_ID !== undefined && process.env.AIRBRAKE_KEY !== undefined) {
@@ -34,6 +33,15 @@ if (process.env.TWILIO_SID && process.env.TWILIO_TOKEN && process.env.TWILIO_FRO
 	logger.error(e);
     }
 }
+
+/* made sense with bull - and yet did not work
+const schedule = require('node-schedule');
+const cleanupQueue = schedule.scheduleJob('*/5 * * * *', () => {
+    //FIXME: lock on elected master?
+	notifyQueue.clean(60000);
+	notifyQueue.clean(300000, 'failed');
+	logger.info('done cleaning notifications queue');
+    }); */
 
 notifyQueue.process((task, done) => {
     let shouldNotify = "SELECT * FROM notifications WHERE idcheck = '" + task.data.checkid + "'";

@@ -1,5 +1,5 @@
 const Promise = require('bluebird');
-const Queue = require('bull');
+const Queue = require('bee-queue');
 const cassandra = require('cassandra-driver');
 const checkHealth = require('../lib/checkHealth.js');
 const logger = require('../lib/logger.js')('check-health-manager');
@@ -15,17 +15,15 @@ const redisPort = process.env['REDIS_PORT_' + workerPool] || process.env.REDIS_P
 
 const neighbors = require('../lib/advertiseNeighbors.js')('check-health-' + workerPool);
 const bullProbe = pmxProbe.meter({ name: 'checks per mintute', sample: 60 });
-const checkQueue = new Queue('health checks ' + workerPool, { removeOnComplete: true, redis: { port: redisPort, host: redisBackend }});
-const notifyQueue = new Queue('outbound notify ' + workerPool, { removeOnComplete: true, redis: { port: redisPort, host: redisBackend }});
-const refreshQueue = new Queue('zones refresh ' + workerPool, { removeOnComplete: true, redis: { port: redisPort, host: redisBackend }});
+const checkQueue = new Queue('health-checks-' + workerPool, { removeOnSuccess: true, isWorker: true, redis: { port: redisPort, host: redisBackend }});
+const notifyQueue = new Queue('outbound-notify-' + workerPool, { removeOnSuccess: true, isWorker: false, redis: { port: redisPort, host: redisBackend }});
+const refreshQueue = new Queue('zones-refresh-' + workerPool, { removeOnSuccess: true, isWorker: false, redis: { port: redisPort, host: redisBackend }});
 
 if (process.env.AIRBRAKE_ID !== undefined && process.env.AIRBRAKE_KEY !== undefined) {
     try {
 	let airbrake = require('airbrake').createClient(process.env.AIRBRAKE_ID, process.env.AIRBRAKE_KEY);
 	airbrake.handleExceptions();
-    } catch(e) {
-	logger.info('WARNING: failed initializing airbrake');
-    }
+    } catch(e) { logger.info('WARNING: failed initializing airbrake'); }
 }
 
 const cleanupChecks = schedule.scheduleJob('*/15 * * * *', () => {
@@ -129,16 +127,10 @@ const cleanupLogs = schedule.scheduleJob('42 * * * *', () => {
 				    }));
 			    });
 			Promise.all(lookupPromise)
-			    .then(() => {
-				    logger.info('done cleaning up');
-				});
-		    } else {
-			logger.info('failed looking up health checks');
-		    }
+			    .then(() => { logger.info('done cleaning up'); });
+		    } else { logger.info('failed looking up health checks'); }
 		})
-	    .catch((e) => {
-		    logger.error('failed querying cassandra for health checks');
-		});
+	    .catch((e) => { logger.error('failed querying cassandra for health checks'); });
     });
 
 checkQueue.process((task, done) => {
@@ -146,7 +138,7 @@ checkQueue.process((task, done) => {
 	    return new checkHealth.CheckHealth(client, task.data)
 		.then(() => {
 			bullProbe.mark();
-			notifyQueue.add({ checkid: task.data.uuid })
+			notifyQueue.createJob({ checkid: task.data.uuid }).save();
 			logger.info('scheduling notification conditions evaluations checks');
 			let checkCond = "SELECT * FROM checks WHERE uuid = '" + task.data.uuid + "'";
 			client.execute(checkCond)
@@ -184,7 +176,7 @@ checkQueue.process((task, done) => {
 									.then((resp) => {
 										if (resp.rows !== undefined && resp.rows.length > 0 && resp.rows[0].origin) {
 										    logger.info('should schedule zone refresh for ' + origin);
-										    refreshQueue.add(resp.rows[0]);
+										    refreshQueue.createJob(resp.rows[0]).save();
 										} else {
 										    logger.info('unable to lookup domain refreshing zone on behalf of ' + task.data.uuid);
 										}
@@ -243,21 +235,15 @@ const refresh = schedule.scheduleJob('*/15 * * * * *', () => {
 							    logger.info('last check on ' + (parseInt(lastChecked.rows[0].when) + (ttl * 1000)));
 							    logger.info('now is ' + now);
 							}
-						    } else {
-							doCheck = true;
-						    }
+						    } else { doCheck = true; }
 						    if (doCheck) {
-							if (process.env.DEBUG) {
-							    logger.info('scheduling check ' + check.uuid);
-							}
-							return checkQueue.add(check);
+							if (process.env.DEBUG) { logger.info('scheduling check ' + check.uuid); }
+							return checkQueue.createJob(check).save();
 						    } else if (process.env.DEBUG) {
 							logger.info('should not check ' + check.uuid);
 						    }
 						})
-					    .then(() => {
-						    resolve(true);
-						})
+					    .then(() => { resolve(true); })
 					    .catch((e) => {
 						    logger.error('failed looking up checks for ' + check.uuid);
 						    logger.error(e);
@@ -266,14 +252,8 @@ const refresh = schedule.scheduleJob('*/15 * * * * *', () => {
 				    }));
 			    });
 			Promise.all(checkPromise)
-			    .then(() => {
-				    logger.info('done scheduling health checks');
-				});
-		    } else {
-			logger.info('failed listing health checks, cassandra returned' + JSON.stringify(result));
-		    }
+			    .then(() => { logger.info('done scheduling health checks'); });
+		    } else { logger.info('failed listing health checks, cassandra returned' + JSON.stringify(result)); }
 		})
-	    .catch((e) => {
-		    logger.error('failed looking up health checks');
-		});
+	    .catch((e) => { logger.error('failed looking up health checks'); });
     });

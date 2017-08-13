@@ -1,4 +1,4 @@
-const Queue = require('bull');
+const Queue = require('bee-queue');
 const apiRouter = require('../lib/apiRouter.js');
 const bodyParser = require('body-parser');
 const cassandra = require('cassandra-driver');
@@ -53,8 +53,8 @@ client.execute(listPools)
 		    let tagName = resp.rows[k].tag;
 		    let queueBackend = process.env['REDIS_HOST_' + tagName] || process.env.REDIS_HOST || '127.0.0.1';
 		    let queuePort = process.env['REDIS_PORT_' + tagName] || process.env.REDIS_PORT || 6379;
-		    confQueues[tagName] = new Queue('config refresh ' + tagName, { removeOnComplete: true, redis: { port: queuePort, host: queueBackend }});
-		    zonesQueues[tagName] = new Queue('zones refresh ' + tagName, { removeOnComplete: true, redis: { port: queuePort, host: queueBackend }});
+		    confQueues[tagName] = new Queue('config-refresh-' + tagName, { removeOnSuccess: true, isWorker: true, redis: { port: queuePort, host: queueBackend }});
+		    zonesQueues[tagName] = new Queue('zones-refresh-' + tagName, { removeOnSuccess: true, isWorker: true, redis: { port: queuePort, host: queueBackend }});
 		}
 		apiRouter(app, client, confQueues, zonesQueues);
 		httpServer.listen(listenPort, listenAddr, (err, res) => {

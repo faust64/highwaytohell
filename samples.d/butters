@@ -55,9 +55,9 @@ Usage: $PRG [OPTION]
       -t, --type	A, AAAA, CNAME, TXT, NS, defaults to A
 
     options specific to domains:
+      --disablednssec	disables DNSSEC on domain
       --enablednssec	enables DNSSEC on domain
       --getdsrecords	fetches DS records for domain
-      --disablednssec	disables DNSSEC on domain
 
     options specific to health checks:
       --checkid		defines healthcheck to edit or remove

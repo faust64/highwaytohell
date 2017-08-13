@@ -1,5 +1,5 @@
 const Promise = require('bluebird');
-const Queue = require('bull');
+const Queue = require('bee-queue');
 const cassandra = require('cassandra-driver');
 const dnssecUpdate = require('../lib/dnssecUpdate.js');
 const exec = require('child_process').exec;
@@ -24,13 +24,13 @@ const redisPort = process.env['REDIS_PORT_' + workerPool] || process.env.REDIS_P
 
 const bullProbe = pmxProbe.meter({ name: 'bull jobs per minute', sample: 60 });
 const confChannel = 'refresh-config-' + workerPool;
-const confQueue = new Queue('config refresh ' + workerPool, { removeOnComplete: true, redis: { port: redisPort, host: redisBackend }});
+const confQueue = new Queue('config-refresh-' + workerPool, { removeOnSuccess: true, isWorker: true, redis: { port: redisPort, host: redisBackend }});
 const confSub = redis.createClient(redisPort, redisBackend, { db: process.env.REDIS_DBID || '0' });
 const neighbors = require('../lib/advertiseNeighbors.js')('refresh-zones-' + workerPool + '-' + os.hostname());
 const publisher = redis.createClient(redisPort, redisBackend, { db: process.env.REDIS_DBID || '0' });
 const pubsubProbe = pmxProbe.meter({ name: 'pubsub events per minute', sample: 60 });
 const zonesChannel = 'refresh-zones-' + workerPool;
-const zonesQueue = new Queue('zones refresh ' + workerPool, { removeOnComplete: true, redis: { port: redisPort, host: redisBackend }});
+const zonesQueue = new Queue('zones-refresh-' + workerPool, { removeOnSuccess: true, isWorker: true, redis: { port: redisPort, host: redisBackend }});
 const zonesSub = redis.createClient(redisPort, redisBackend, { db: process.env.REDIS_DBID || '0' });
 
 function pullDnssecKeys() {
@@ -58,6 +58,16 @@ function pullDnssecKeys() {
 		    });
 	});
 }
+
+/* made sense with bull - and yet did not work
+const cleanupQueues = schedule.scheduleJob('*/5 * * * *', () => {
+    //FIXME: lock on elected master?
+	confQueue.clean(60000);
+	confQueue.clean(300000, 'failed');
+	zonesQueue.clean(60000);
+	zonesQueue.clean(300000, 'failed');
+	logger.info('done cleaning config and zone refresh queues');
+    }); */
 
 const reloadKeys = schedule.scheduleJob('43 * * * *', () => {
 	if (neighbors.isElectedMaster() !== true) {
