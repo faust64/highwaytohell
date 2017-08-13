@@ -45,7 +45,6 @@ install:
 	install -c -m 0644 samples.d/munin/hwth_multi $(DOC_DIR)/munin.hwth_multi
 	install -c -m 0644 samples.d/munin/hwth_multi.conf $(DOC_DIR)/munin.conf.sample
 	install -c -m 0644 samples.d/butters.cfg.sample $(DOC_DIR)/butters.cfg.sample
-	install -c -m 0644 samples.d/redis-cleanup $(DOC_DIR)/redis-cleanup.cron
 	install -c -m 0644 samples.d/nrpe/check_pm2 $(DOC_DIR)/nrpe-pm2-probe
 	install -c -m 0644 samples.d/nrpe/check_pm2.cfg $(DOC_DIR)/nrpe-pm2-conf
 	install -c -m 0644 samples.d/nrpe/sudoers-pm2 $(DOC_DIR)/nrpe-pm2-sudoers
