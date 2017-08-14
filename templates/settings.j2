@@ -59,7 +59,11 @@
 			<tr>
 			    <td class=inputlabel>New Email Address</td>
 			    <td class=inputdata>
-				<input id='emailaddr' type='text' size=20 name='email'/>
+				<select id='emailaddr' name='email'>
+{{#contacts}}
+				    <option value='{{ target }}'>{{ target }}</option>
+{{/contacts}}
+				</select>
 			    </td>
 			</tr>
 			<tr>
@@ -81,7 +85,7 @@
 		<td colspan='5'>
 		    <table id='nestedpanel'>
 			<tr>
-			    <td class='additem' colspan='2'><a href='/tokens'>Manage Tokens</a>&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;<a onClick='editSettings();' href='#'>Edit Settings</a></td>
+			    <td class='additem' colspan='2'><a href='/tokens'>Manage Tokens</a>&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;<a href='/settings/contacts'>Manage Contacts</a>&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;<a onClick='editSettings();' href='#'>Edit Settings</a></td>
 			</tr>
 			<tr>
 			    <th class='descname'>Username</th>

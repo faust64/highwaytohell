@@ -1,0 +1,15 @@
+Hi,
+
+Our user {{ username }} is trying to setup mail notifications sending alerts to
+your address. As this address is not bound to {{ username }}'s user account, we
+would like you to confirm with you, that you are indeed expecting such
+notifications.
+
+Please confirm we may start spamming this email address based on your defined
+health checks & notifications, following that link:
+{{{ urlPrefix }}}{{{ confirmUri }}}
+
+If you did not request this message, then we do appologize for the
+inconvenience, you may discard it.
+
+Thanks for using HighWayToHell

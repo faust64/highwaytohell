@@ -14,6 +14,14 @@ CREATE TABLE users (
 	PRIMARY KEY (uuid)
     );
 
+CREATE TABLE contactaddresses (
+	uuid varchar,
+	type varchar,
+	target varchar
+	confirmcode varchar,
+	PRIMARY KEY (uuid, target)
+    );
+
 CREATE TABLE twofa {
 	uuid varchar,
 	enabled boolean,

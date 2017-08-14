@@ -8,6 +8,7 @@ Table of Contents
     * [Registration Process](#registration-process)
     * [2FA Authentication Workflow](#2fa-authentication-workflow)
     * [Notes on Token-Based Authentication](#notes-on-token-based-authentication)
+    * [Notes on Mails and SMS Notifications](#notes-on-mails-and-sms-notifications)
 
 ## Routes Inventory
 
@@ -77,6 +78,13 @@ Table of Contents
 | GET    | /settings/2fa/disable                    | 500                        |
 | POST   | /settings/2fa/disable                    | disable 2fa auth           |
 | GET    | /settings/confirm-address/:userId/:token | confirm registration email |
+| GET    | /settings/confirm-contact/:userId/:token | confirm additional address |
+| GET    | /settings/contacts/add                   | 500                        |
+| POST   | /settings/contacts/add                   | add contact address        |
+| GET    | /settings/contacts/del                   | 500                        |
+| POST   | /settings/contacts/del                   | drop contact address       |
+| GET    | /settings/contacts                       | browser list contacts      |
+| POST   | /settings/contacts                       | api list contacts          |
 | GET    | /settings/logs                           | 500                        |
 | POST   | /settings/logs                           | api list login history     |
 | GET    | /settings                                | browser user settings      |
@@ -173,3 +181,20 @@ would be set to `*`, allowing anyone to log in using that token. Eventually,
 you may enter a comma-separated list of IPs or networks. In doing so, backend
 would refuse to authenticate users presenting with that token, unless client
 IP matches an item from that list.
+
+## Notes on Mails and SMS Notifications
+
+Setting up notifications, you may chose to send email or sms alerts based on
+health check status changes. To do so, you would first need to add the
+notification recipient (email or phone number) as a trusted contact, for the
+account that would then create your notification configuration.
+
+From the web client, in your settings, go to the Manage Contacts view - your
+registration email should already be listed - and use the Add Contact form
+adding new addresses.
+
+From the CLI client, use `butters -R contacts -a add -T address@fqdn.com`.
+
+In both cases, a confirmation email would be sent to you - similar to those
+sent during account registration. Click the link to confirm your address and
+eventually use it as recipient setting up notifications.

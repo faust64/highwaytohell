@@ -28,8 +28,36 @@
 	<link href='/static/style.css' rel='stylesheet'/>
 	<script src='/static/script.js' type='application/javascript'></script>
     </head>
-    <body>
+    <body onLoad='load();'>
 	<div class='logout'><a href='/logout'>Logout {{ username }}</a></div>
+	<div id='overlay' ondrop='drop(event)' ondragover='allowDrop(event)'>
+	    <div id='droppable' class='nestedoverlay' draggable='true' ondragstart='drag(event)'>
+		<form id='formcontacts' method='POST' action='/settings/contacts/add'>
+		    <a id='closeoverlay' onClick='hideForm()' href='#'></a>
+		    <table id='formadd'>
+			<tr>
+			    <td class='addformtitle' colspan='2'>Add Contact</td>
+			</tr>
+			<tr>
+			    <td class=inputlabel>type</td>
+			    <td class=inputdata>
+				<select id='contacttype' name='contactType'>
+				    <option value='smtp' selected>Mail</option>
+				    <option value='sms'>SMS</option>
+				</select>
+			    </td>
+			</tr>
+			<tr>
+			    <td class=inputlabel>Address</td>
+			    <td class=inputdata><input id='contacttarget' type=text size=32 name='contactTarget'/></td>
+			</tr>
+			<tr>
+			    <td class=inputsubmit colspan='2'><input type='submit' value='Add Contact Address'/></td>
+			</tr>
+		    </table>
+		</form>
+	    </div>
+	</div>
 	<table id='mainpanel'>
 	    <tr class='sections'>
 		<th class='section'><a href='/domains'>Domains</a></th>
@@ -42,34 +70,22 @@
 		<td colspan='5'>
 		    <table id='nestedpanel'>
 			<tr>
-			    <td class='additem' colspan='2'><a href='/tokens'>Manage Tokens</a>&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;<a href='/settings/contacts'>Manage Contacts</a>&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;<a onClick='editSettings();' href='#'>Edit Settings</a></td>
+			    <td class='toggleadd' colspan='5'><a onClick='showForm();' href='#'>Add Contact</a></td>
 			</tr>
 			<tr>
-			    <th class='descname'>Username</th>
-			    <td class='descdata'>{{ username }}</td>
+			    <th class='classifier'>Type</th>
+			    <th class='classifier'>Target</th>
+			    <th class='classifier'>Active</th>
+			    <th class='classifier'>Drop Contact</th>
 			</tr>
+{{#records}}
 			<tr>
-			    <th class='descname'>Email</th>
-			    <td class='descdata'>{{ email }}</td>
+			    <td class='record'>{{ type }}</td>
+			    <td class='record'>{{ target }}</td>
+			    <td class='record'>{{ active }}</td>
+			    <td class='record'><a onClick='dropContact("{{ target }}");' href='#' alt='Drop Contact'><img class='deletelogoimg' src='/static/remove.png'></a></td>
 			</tr>
-			<tr>
-			    <th class='descname'>User ID</th>
-			    <td class='descdata'>{{ userid }}</td>
-			</tr>
-			<tr>
-			    <th class='descname'>Scan to enable 2FA</th>
-			    <td class='descdata'><img src='{{ twofaurl }}' alt='Scan code to configure 2FA'/></td>
-			</tr>
-			<tr>
-			    <th class='descname'>Confirm 2FA Code</th>
-			    <td class='descdata'>
-				<form id='2faform' method='POST' action='/settings/2fa/confirm'>
-				    <input type=hidden name='makeitpersistent' value='mintberrycrunch'/>
-				    <input type=text size='6' name='confirmation'/><br/>
-				    <input type=submit value='Check and Enable 2FA'/>
-				</form>
-			    </td>
-			</tr>
+{{/records}}
 		    </table>
 		</td>
 	    </tr>

@@ -1,4 +1,5 @@
 const routerObject = {
+	addContact: require('./addContact.js'),
 	addHealthCheck: require('./addHealthCheck.js'),
 	addNotification: require('./addNotification.js'),
 	addRecord: require('./addRecord.js'),
@@ -7,6 +8,8 @@ const routerObject = {
 	check2fa: require('./check2fa.js'),
 	confirm2fa: require('./confirm2fa.js'),
 	confirmAddress: require('./confirmAddress.js'),
+	confirmContact: require('./confirmContact.js'),
+	delContact: require('./delContact.js'),
 	delHealthCheck: require('./delHealthCheck.js'),
 	delNotification: require('./delNotification.js'),
 	delRecord: require('./delRecord.js'),
@@ -22,6 +25,7 @@ const routerObject = {
 	getUser: require('./getUser.js'),
 	getZone: require('./getZone.js'),
 	getZoneDS: require('./getZoneDS.js'),
+	listContacts: require('./listContacts.js'),
 	listHealthChecks: require('./listHealthChecks.js'),
 	listHealthCheckHistory: require('./listHealthCheckHistory.js'),
 	listLogins: require('./listLogins.js'),

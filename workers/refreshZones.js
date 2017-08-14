@@ -155,8 +155,13 @@ zonesQueue.process((task, done) => {
 		    if (dom !== undefined && dom.rows !== undefined && dom.rows[0] !== undefined) {
 			return new generateZone.GenerateZone(client, dom.rows[0], true)
 			    .then(() => {
-				    logger.info('done refreshing ' + task.data.origin + ', notifying pool');
-				    publisher.publish(zonesChannel, task.data.origin);
+				    if (task.data.confReload !== undefined) {
+					logger.info('done refreshing ' + task.data.origin + ', reloading full configuration');
+					confQueue.createJob({ dummy: true }).save();
+				    } else {
+					logger.info('done refreshing ' + task.data.origin + ', notifying pool');
+					publisher.publish(zonesChannel, task.data.origin);
+				    }
 				    bullProbe.mark();
 				    done();
 				})

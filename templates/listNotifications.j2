@@ -32,6 +32,13 @@
 	<div class='logout'><a href='/logout'>Logout {{ username }}</a></div>
 	<div id='overlay' ondrop='drop(event)' ondragover='allowDrop(event)'>
 	    <div id='droppable' class='nestedoverlay' draggable='true' ondragstart='drag(event)'>
+		<form method='GET'>
+		    <select id='contactHelper' style='display:none;'>
+{{#contacts}}
+			<option value='{{ target }}'>{{ target }}</option>
+{{/contacts}}
+		    </select>
+		</form>
 		<form id='formnotifications' method='POST'>
 		    <a id='closeoverlay' onClick='hideForm()' href='#'></a>
 		    <table id='formadd'>
@@ -53,17 +60,16 @@
 			<tr>
 			    <td class=inputlabel>Type</td>
 			    <td class=inputdata>
-				<select id='notifytype' name='notifyType'>
+				<select id='notifytype' onChange='setNotificationTarget();' name='notifyType'>
 				    <option value='http-post' selected>HTTP POST</option>
 				    <option value='http-get'>HTTP GET</option>
-				    <option value='smtp'>SMTP</option>
-				    <option value='sms'>SMS</option>
+				    <option value='contacts'>Contact Addresses</option>
 				</select>
 			    </td>
 			</tr>
 			<tr>
 			    <td class=inputlabel>Target</td>
-			    <td class=inputdata><input id='notifytarget' type=text size=32 name='notifyTarget'/></td>
+			    <td class=inputdata id='notifycontainer'><input id='notifytarget' type=text size=32 name='notifyTarget'/></td>
 			</tr>
 			<tr>
 			    <td class=inputlabel>Notify Up After<br/>(0 to disable)</td>

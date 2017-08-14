@@ -59,14 +59,13 @@ Any advices, contribution or feedback welcome.
  * handling redis authentication
  * paging (?)
  * zones import tool?
- * registering mail notifications (or even sms), if email different from
-   the one defined in users settings, we should send some confirmation email
-   and ask for some sort of validation BEFORE spamming someone ...
+ * unclear yet how we'll trust phone numbers as contacts ...
  * add a name column to our healthchecks table? for clarity - so far identifying
    them with the target being evaluated
  * actual tests --like controlling exit codes, database content. I suspect
    travis could be better here (bind+nsd combined with node4+6+8) (as opposed
    to my systematic use of circleci)
+ * api-less mode?
  * shinyness - CSS or frontend contributions most welcome
  * packaging: DB update & schema versioning (based on debvers?)
  * DNSSEC keys rotation open to discussion, bearing in mind it implies
@@ -134,6 +133,8 @@ tables would be used:
  * twofa: a collection of 2fa secrets and mapped to their owner
  * tokens: a collection of tokens, mapped to their owner. TODO: a permissions
    string is defined, yet not used
+ * contactaddresses: collection of contact addresses (only emails so far,
+   could eventually include phone numbers) mapped to their owner
  * logins: a login history collection, associating an user ID to a client IP,
    a timestamp and wether login succeeded or failed
  * nspools: inventory of ns pools

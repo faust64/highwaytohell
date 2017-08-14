@@ -24,13 +24,13 @@ function addNotification(domainName) {
     var actionForm = document.getElementById('formAction');
     var downForm = document.getElementById('notifydown');
     var idForm = document.getElementById('checkid');
-    var targetForm = document.getElementById('notifytarget');
+    var targetForm = document.getElementById('notifycontainer');
     var typeForm = document.getElementById('notifytype');
     var upForm = document.getElementById('notifyup');
     actionForm.value = 'add';
     downForm.value = 2;
     idForm.value = '';
-    targetForm.value = '';
+    targetForm.innerHTML = "<input id='notifytarget' type='text' size=32 name='notifyTarget'/>";
     typeForm.value = 'http-post';
     upForm.value = 3;
     showForm('Add Notification');
@@ -86,6 +86,13 @@ function drop(ev) {
     d.style.position = 'absolute';
     d.style.left = ev.clientX + 'px';
     d.style.top = ev.clientY + 'px';
+}
+
+function dropContact(target) {
+    var usure = confirm('Drop contact ' + target + '? This can not be un-done');
+    if (usure === true) {
+	post('/settings/contacts/del', { contactTarget: target });
+    }
 }
 
 function dropDomain(domainName) {
@@ -149,13 +156,28 @@ function editNotification(domainName, checkId, checkType, checkTarget, checkHeal
     var actionForm = document.getElementById('formAction');
     var downForm = document.getElementById('notifydown');
     var idForm = document.getElementById('checkid');
-    var targetForm = document.getElementById('notifytarget');
+    var targetForm = document.getElementById('notifycontainer');
     var typeForm = document.getElementById('notifytype');
     var upForm = document.getElementById('notifyup');
     actionForm.value = 'edit';
-    downFrom.value = checkUnhealthy;
+    downForm.value = checkUnhealthy;
     idForm.value = checkId;
-    targetForm.value = checkTarget;
+    if (checkType === 'contacts') {
+	var contactHelper = document.getElementById('contactHelper');
+	var res = "<select id='notifytarget' name='notifyTarget'>";
+	res += contactHelper.innerHTML;
+	res += "</select>";
+	targetForm.innerHTML = res;
+	var notifyForm = document.getElementById('notifytarget');
+	for (var i = 0; i < notifyForm.length; i++) {
+	    if (notifyForm[i].value === checkTarget) {
+		notifyForm[i].selected = true;
+		break;
+	    }
+	}
+    } else {
+	targetForm.innerHTML = "<input id='notifytarget' type='text' size=32 name='notifyTarget' value='" + checkTarget + "'/>";
+    }
     typeForm.value = checkType;
     upForm.value = checkHealthy;
     showForm('Edit Notification');
@@ -233,6 +255,22 @@ function post(path, params, method) {
     }
     document.body.appendChild(my);
     my.submit();
+}
+
+function setNotificationTarget() {
+    var selectForm = document.getElementById('notifytype');
+    var targetForm = document.getElementById('notifycontainer');
+    if (selectForm.value === 'contacts') {
+	var contactHelper = document.getElementById('contactHelper');
+	var res = "<select id='notifytarget' name='notifyTarget'>";
+	res += contactHelper.innerHTML;
+	res += "</select>";
+	targetForm.innerHTML = res;
+	var notifyForm = document.getElementById('notifytarget');
+	notifyForm[0].selected = true;
+    } else {
+	targetForm.innerHTML = "<input id='notifytarget' type='text' size=32 name='notifyTarget'/>";
+    }
 }
 
 function showForm(title) {

@@ -1,6 +1,6 @@
 const Promise = require('bluebird');
 
-module.exports = (cassandra, userId, domain) => {
+module.exports = (cassandra, domain) => {
 	return new Promise ((resolve, reject) => {
 		let queryDS = "SELECT ds FROM dsrecords WHERE origin = '" + domain + "'";
 		cassandra.execute(queryDS)
