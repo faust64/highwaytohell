@@ -14,13 +14,14 @@ CHECKID=
 CHECKHEALTHY=3
 CHECKUNHEALTHY=2
 CHECKTYPE=http
+CONTACTTYPE=smtp
 DEBUG=false
 DNSSEC=
 DOMAIN=example.com
 HEADERS=
 INVERT=false
 MATCH=
-NOTIFYTYPE=smtp
+NOTIFYTYPE=contacts
 NOTIFYTARGET= #https://myservice
 NOTIFYUP=3
 NOTIFYDOWN=2
@@ -55,13 +56,17 @@ Usage: $PRG [OPTION]
       -t, --type	A, AAAA, CNAME, TXT, NS, defaults to A
 
     options specific to domains:
-      --disablednssec	disables DNSSEC on domain
       --enablednssec	enables DNSSEC on domain
       --getdsrecords	fetches DS records for domain
+      --disablednssec	disables DNSSEC on domain
+
+    options specitic to contacts:
+      --contacttype     contact type, smtp or sms, defaults to smtp
+      -T, --target	email or phone number
 
     options specific to health checks:
       --checkid		defines healthcheck to edit or remove
-      --checktype	defines healthchecks type, defaults to http
+      --checktype	defines healthcheck type, defaults to http
       --header		defines healthcheck Host header
       --healthy		defines healthcheck healthy threshold
       --unhealthy	defines healthcheck unhealthy threshold
@@ -92,6 +97,7 @@ CHECKID=$CHECKID
 CHECKHEALTHY=$CHECKHEALTHY
 CHECKUNHEALTHY=$CHECKUNHEALTHY
 CHECKTYPE=$CHECKTYPE
+CONTACTTYPE=$CONTACTTYPE
 DOMAIN=$DOMAIN
 DNSSEC=$DNSSEC
 HEADERS=$HEADERS
@@ -124,6 +130,7 @@ do
 	--token)	APITOKEN=$2; shift	;;
 	-a|--action)	ACTION=$2; shift	;;
 	--checktype)	CHECKTYPE=$2; shift	;;
+	--contacttype)	CONTACTTYPE=$2; shift	;;
 	--checkid)	CHECKID=$2; shift	;;
 	--debug)	DEBUG=true		;;
 	--disablednssec) DNSSEC=disable		;;
@@ -164,7 +171,7 @@ elif test -z "$APIUSERID"; then
 elif ! echo "$ACTION" | grep -E '^(list|get|add|edit|del)$' >/dev/null; then
     echo invalid command $ACTION
     exit 3
-elif ! echo "$WHAT" | grep -E '^(records|domains|healthchecks|healthhistory|notifications|logs)$' >/dev/null; then
+elif ! echo "$WHAT" | grep -E '^(records|domains|healthchecks|healthhistory|notifications|logs|contacts)$' >/dev/null; then
     echo invalid resource $WHAT
     exit 4
 elif test -z "$DOMAIN"; then
@@ -203,7 +210,22 @@ elif test "$WHAT" = notifications; then
 	fi
     fi
 elif test "$WHAT" = logs; then
+    if test "$ACTION" != list; then
+	echo unsupported action for logs
+	exit 42
+    fi
     URI=settings/logs
+elif test "$WHAT" = contacts; then
+    if test "$ACTION" != list; then
+	if test -z "$TARGET"; then
+	    echo missing contact target
+	    exit 42
+	elif test "$ACTION" = get -o "$ACTION" = edit; then
+	    echo unsupported action for contacts
+	    exit 42
+	fi
+    fi
+    URI=settings/contacts
 else
     URI=$WHAT
 fi
@@ -268,6 +290,8 @@ if test "$ACTION" = del; then
 	else
 	    POSTBODY="$POSTBODY, \"setId\": \"$RECORD\""
 	fi
+    elif test "$WHAT" = contacts; then
+	POSTBODY=", \"contactTarget\": \"$TARGET\""
     fi
 elif test "$ACTION" = add -o "$ACTION" = edit; then
     if test "$WHAT" = records; then
@@ -343,6 +367,8 @@ elif test "$ACTION" = add -o "$ACTION" = edit; then
 	else
 	    POSTBODY="$POSTBODY, \"notifyDown\": 2"
 	fi
+    elif test "$WHAT" = contacts; then
+	POSTBODY=", \"contactType\": \"$CONTACTTYPE\", \"contactTarget\": \"$TARGET\""
     fi
 fi
 
