@@ -195,6 +195,23 @@ install_snyk()
     fi
 }
 
+lastminute_check()
+{
+    if test -s /var/lib/highwaytohell/.profile; then
+	(
+	    . /var/lib/highwaytohell/.profile
+	    test -z "$APIGW_PORT" && APIGW_PORT=8080
+	    test -z "$APIGW_HOST" && APIGW_HOST=127.0.0.1
+	    sleep 10
+	    if curl http://$APIGW_HOST:$APIGW_PORT/ping 2>/dev/null | grep '^OK$' >/dev/null; then
+		notify_msg $APIGW_HOST:$APIGW_PORT healthy
+	    else
+		notify_msg $APIGW_HOST:$APIGW_PORT ping failed
+	    fi
+	)
+    fi
+}
+
 logrotate_configure()
 {
     if test -d /etc/logrotate.d; then
@@ -415,6 +432,7 @@ case "$1" in
 	munin_configure
 	rsyslog_configure
 	watchmark_configure
+	lastminute_check
 	;;
 
     abort-upgrade|abort-remove|abort-deconfigure) ;;

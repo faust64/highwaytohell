@@ -12,83 +12,85 @@ Table of Contents
 
 ## Routes Inventory
 
-| Method | Path                                     | Desc                       |
-| -----: | :--------------------------------------: | :------------------------: |
-| GET    | /                                        | login|domains redirect     |
-| GET    | /ping                                    | worker health              |
-| GET    | /version                                 | hwth version string        |
-| GET    | /domains                                 | 500                        |
-| POST   | /domains                                 | api list zones             |
-| GET    | /domains/:domainName                     | 500                        |
-| POST   | /domains/:domainName                     | api zone record            |
-| GET    | /domains/:domainName/add                 | 500                        |
-| POST   | /domains/:domainName/add                 | api add domain             |
-| GET    | /domains/:domainName/del                 | 500                        |
-| POST   | /domains/:domainName/del                 | api delete domain          |
-| GET    | /domains/:domainName/disablednssec       | 500                        |
-| POST   | /domains/:domainName/disablednssec       | api disable dnssec         |
-| GET    | /domains/:domainName/getdnssec           | 500                        |
-| POST   | /domains/:domainName/getdnssec           | api get domain DS records  |
-| GET    | /domains/:domainName/enablednssec        | 500                        |
-| POST   | /domains/:domainName/enablednssec        | api enable dnssec          |
-| GET    | /healthchecks/:domainName/add            | 500                        |
-| POST   | /healthchecks/:domainName/add            | api adds healthcheck       |
-| GET    | /healthchecks/:domainName/del/:checkId   | 500                        |
-| POST   | /healthchecks/:domainName/del/:checkId   | api delete healthcheck     |
-| GET    | /healthchecks/:domainName/edit/:checkId  | 500                        |
-| POST   | /healthchecks/:domainName/edit/:checkId  | api edit healthcheck       |
-| GET    | /healthchecks/:domainName/get/:checkId   | browser get healthcheck    |
-| POST   | /healthchecks/:domainName/get/:checkId   | api get healthcheck        |
-| GET    | /healthchecks/:domainName                | browser list healthchecks  |
-| POST   | /healthchecks/:domainName                | api list healthchecks      |
-| GET    | /healthhistory/:domainName/get/:checkId  | browser checks history     |
-| POST   | /healthhistory/:domainName/get/:checkId  | api checks history         |
-| GET    | /notifications/:domainName/add/:checkId  | 500                        |
-| POST   | /notifications/:domainName/add/:checkId  | api add notification       |
-| GET    | /notifications/:domainName/del/:checkId  | 500                        |
-| POST   | /notifications/:domainName/del/:checkId  | api drop notification      |
-| GET    | /notifications/:domainName/edit/:checkId | 500                        |
-| POST   | /notifications/:domainName/edit/:checkId | api edit notification      |
-| GET    | /notifications/:domainName/get/:checkId  | browser get notifications  |
-| POST   | /notifications/:domainName/get/:checkId  | api get notifications      |
-| GET    | /notifications/:domainName               | browser list notifications |
-| POST   | /notifications/:domainName               | api list notifications     |
-| GET    | /records/:domainName/add/:recordName     | 500                        |
-| POST   | /records/:domainName/add/:recordName     | api add record             |
-| GET    | /records/:domainName/del/:recordName     | 500                        |
-| POST   | /records/:domainName/del/:recordName     | api drop record            |
-| GET    | /records/:domainName/edit/:recordName    | 500                        |
-| POST   | /records/:domainName/edit/:recordName    | api edit record            |
-| GET    | /records/:domainName/get/:recordName     | browser get records        |
-| POST   | /records/:domainName/get/:recordName     | api get records            |
-| GET    | /records/:domainName                     | browser list tokens        |
-| POST   | /records/:domainName                     | api list records           |
-| GET    | /tokens/add                              | 500                        |
-| POST   | /tokens/add                              | api generate token         |
-| GET    | /tokens/edit                             | 500                        |
-| POST   | /tokens/edit                             | edit api token             |
-| GET    | /tokens/del                              | 500                        |
-| POST   | /tokens/del                              | api drop token             |
-| GET    | /tokens                                  | browser list tokens        |
-| POST   | /tokens                                  | api list tokens            |
-| GET    | /settings/2fa/enable                     | 500                        |
-| POST   | /settings/2fa/enable                     | enable 2fa auth            |
-| GET    | /settings/2fa/confirm                    | 500                        |
-| POST   | /settings/2fa/confirm                    | confirm 2fa code           |
-| GET    | /settings/2fa/disable                    | 500                        |
-| POST   | /settings/2fa/disable                    | disable 2fa auth           |
-| GET    | /settings/confirm-address/:userId/:token | confirm registration email |
-| GET    | /settings/confirm-contact/:userId/:token | confirm additional address |
-| GET    | /settings/contacts/add                   | 500                        |
-| POST   | /settings/contacts/add                   | add contact address        |
-| GET    | /settings/contacts/del                   | 500                        |
-| POST   | /settings/contacts/del                   | drop contact address       |
-| GET    | /settings/contacts                       | browser list contacts      |
-| POST   | /settings/contacts                       | api list contacts          |
-| GET    | /settings/logs                           | 500                        |
-| POST   | /settings/logs                           | api list login history     |
-| GET    | /settings                                | browser user settings      |
-| POST   | /settings                                | update user settings       |
+| Method | Path                                     | Desc                         |
+| -----: | :--------------------------------------: | :--------------------------: |
+| GET    | /                                        | login|domains redirect       |
+| GET    | /ping                                    | worker health                |
+| GET    | /version                                 | hwth version string          |
+| GET    | /domains                                 | 500                          |
+| POST   | /domains                                 | api list zones               |
+| GET    | /domains/:domainName                     | 500                          |
+| POST   | /domains/:domainName                     | api zone record              |
+| GET    | /domains/:domainName/add                 | 500                          |
+| POST   | /domains/:domainName/add                 | api add domain               |
+| GET    | /domains/:domainName/del                 | 500                          |
+| POST   | /domains/:domainName/del                 | api delete domain            |
+| GET    | /domains/:domainName/disablednssec       | 500                          |
+| POST   | /domains/:domainName/disablednssec       | api disable dnssec           |
+| GET    | /domains/:domainName/getdnssec           | 500                          |
+| POST   | /domains/:domainName/getdnssec           | api get domain DS records    |
+| GET    | /domains/:domainName/enablednssec        | 500                          |
+| POST   | /domains/:domainName/enablednssec        | api enable dnssec            |
+| GET    | /healthchecks/:domainName/add            | 500                          |
+| POST   | /healthchecks/:domainName/add            | api adds healthcheck         |
+| GET    | /healthchecks/:domainName/del/:checkId   | 500                          |
+| POST   | /healthchecks/:domainName/del/:checkId   | api delete healthcheck       |
+| GET    | /healthchecks/:domainName/edit/:checkId  | 500                          |
+| POST   | /healthchecks/:domainName/edit/:checkId  | api edit healthcheck         |
+| GET    | /healthchecks/:domainName/get/:checkId   | browser get healthcheck      |
+| POST   | /healthchecks/:domainName/get/:checkId   | api get healthcheck          |
+| GET    | /healthchecks/:domainName                | browser list healthchecks    |
+| POST   | /healthchecks/:domainName                | api list healthchecks        |
+| GET    | /healthhistory/:domainName/get/:checkId  | browser checks history       |
+| POST   | /healthhistory/:domainName/get/:checkId  | api checks history           |
+| GET    | /notifications/:domainName/add/:checkId  | 500                          |
+| POST   | /notifications/:domainName/add/:checkId  | api add notification         |
+| GET    | /notifications/:domainName/del/:checkId  | 500                          |
+| POST   | /notifications/:domainName/del/:checkId  | api drop notification        |
+| GET    | /notifications/:domainName/edit/:checkId | 500                          |
+| POST   | /notifications/:domainName/edit/:checkId | api edit notification        |
+| GET    | /notifications/:domainName/get/:checkId  | browser get notifications    |
+| POST   | /notifications/:domainName/get/:checkId  | api get notifications        |
+| GET    | /notifications/:domainName               | browser list notifications   |
+| POST   | /notifications/:domainName               | api list notifications       |
+| GET    | /records/:domainName/add/:recordName     | 500                          |
+| POST   | /records/:domainName/add/:recordName     | api add record               |
+| GET    | /records/:domainName/del/:recordName     | 500                          |
+| POST   | /records/:domainName/del/:recordName     | api drop record              |
+| GET    | /records/:domainName/edit/:recordName    | 500                          |
+| POST   | /records/:domainName/edit/:recordName    | api edit record              |
+| GET    | /records/:domainName/get/:recordName     | browser get records          |
+| POST   | /records/:domainName/get/:recordName     | api get records              |
+| GET    | /records/:domainName                     | browser list tokens          |
+| POST   | /records/:domainName                     | api list records             |
+| GET    | /tokens/add                              | 500                          |
+| POST   | /tokens/add                              | api generate token           |
+| GET    | /tokens/edit                             | 500                          |
+| POST   | /tokens/edit                             | edit api token               |
+| GET    | /tokens/del                              | 500                          |
+| POST   | /tokens/del                              | api drop token               |
+| GET    | /tokens                                  | browser list tokens          |
+| POST   | /tokens                                  | api list tokens              |
+| GET    | /settings/2fa/enable                     | 500                          |
+| POST   | /settings/2fa/enable                     | enable 2fa auth              |
+| GET    | /settings/2fa/confirm                    | 500                          |
+| POST   | /settings/2fa/confirm                    | confirm 2fa code             |
+| GET    | /settings/2fa/disable                    | 500                          |
+| POST   | /settings/2fa/disable                    | disable 2fa auth             |
+| GET    | /settings/confirm-address/:userId/:token | confirm registration email   |
+| GET    | /settings/confirm-contact/:userId/:token | confirm additional address   |
+| GET    | /settings/contacts/add                   | 500                          |
+| POST   | /settings/contacts/add                   | add contact address          |
+| GET    | /settings/contacts/del                   | 500                          |
+| POST   | /settings/contacts/del                   | drop contact address         |
+| GET    | /settings/contacts                       | browser list contacts        |
+| POST   | /settings/contacts                       | api list contacts            |
+| GET    | /settings/logs                           | 500                          |
+| POST   | /settings/logs                           | api list login history       |
+| GET    | /settings/notify/login                   | 500                          |
+| POST   | /settings/notify/login                   | setup notifications on login |
+| GET    | /settings                                | browser user settings        |
+| POST   | /settings                                | update user settings         |
 
 ## Registration Process
 
@@ -125,6 +127,10 @@ export SMTP_HOST=smtp.example.com
 ```
 
 ## 2FA Authentication Workflow
+
+First and foremost: note the whole thing relies on backend and client clocks
+being somewhat synchronized. If you didn't already: make sure your NodeJS
+workers are running some kind of NTP client.
 
 Using widely-spread libraries (`speakeasy`, `qrcode`). Being connected to our
 apiGW frontend from a browser, a user may access his account settings and click

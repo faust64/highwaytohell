@@ -22,6 +22,8 @@ const redisBackend = process.env['REDIS_HOST_' + workerPool] || process.env.REDI
 const redisPort = process.env['REDIS_PORT_' + workerPool] || process.env.REDIS_PORT || 6379;
 const redisStore = require('connect-redis')(session);
 
+const notifyQueue = new Queue('outbound-notify-' + workerPool, { removeOnSuccess: true, isWorker: false, redis: { port: redisPort, host: redisBackend }});
+
 app.use(session({
 	//cookie: { secure: (process.env.NODE_ENV === 'production' || process.env.HWTH_PROTO === 'https') },
 	resave: false,
@@ -63,7 +65,7 @@ client.execute(listPools)
 		    confQueues[tagName] = new Queue('config-refresh-' + tagName, { removeOnSuccess: true, isWorker: true, redis: { port: queuePort, host: queueBackend }});
 		    zonesQueues[tagName] = new Queue('zones-refresh-' + tagName, { removeOnSuccess: true, isWorker: true, redis: { port: queuePort, host: queueBackend }});
 		}
-		apiRouter(app, client, confQueues, zonesQueues);
+		apiRouter(app, client, confQueues, zonesQueues, notifyQueue);
 		httpServer.listen(listenPort, listenAddr, (err, res) => {
 			if (err) {
 			    logger.error('failed starting http server');

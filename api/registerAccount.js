@@ -21,10 +21,10 @@ module.exports = (cassandra, username, emailaddr, password) => {
 						    confirmUri: '/settings/confirm-address/' + userId + '/' + token,
 						    username: username
 						};
-					    return new sendMail.SendMail(emailaddr, 'registration', subst)
+					    sendMail(emailaddr, 'registration', subst)
 						.then((ok) => {
-							let insertUser = "INSERT INTO users (uuid, username, emailaddress, pwhash, confirmcode) VALUES "
-							    +"('" + userId + "', '" + username + "', '" + emailaddr + "', '" + pwHash + "', '" + token + "')";
+							let insertUser = "INSERT INTO users (uuid, username, emailaddress, pwhash, confirmcode, notifyfailed, notifylogin) VALUES "
+							    +"('" + userId + "', '" + username + "', '" + emailaddr + "', '" + pwHash + "', '" + token + "', false, false)";
 							cassandra.execute(insertUser)
 							    .then((resp) => { resolve('user ' + username + ' created with uuid ' + userId); })
 							    .catch((e) => { reject('failed querying cassandra'); });

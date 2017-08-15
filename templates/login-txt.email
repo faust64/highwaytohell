@@ -1,0 +1,10 @@
+Hi {{ username }},
+
+Login activity ({{ action }}) recorded recently.
+
+Last login logs:
+{{#history}}
+{{ date }} {{ result }}{{ fromip }}
+{{/history}}
+
+Note you may disable these notifications at any time from your account settings.

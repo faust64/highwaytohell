@@ -143,7 +143,7 @@ checkQueue.process((task, done) => {
 	    return new checkHealth.CheckHealth(client, task.data)
 		.then(() => {
 			bullProbe.mark();
-			notifyQueue.createJob({ checkid: task.data.uuid }).save();
+			notifyQueue.createJob({ what: 'healthcheck', checkid: task.data.uuid }).save();
 			logger.info('scheduling notification conditions evaluations checks');
 			let checkCond = "SELECT * FROM checks WHERE uuid = '" + task.data.uuid + "'";
 			client.execute(checkCond)

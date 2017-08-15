@@ -10,53 +10,67 @@ module.exports = (cassandra, request, userId, code, token) => {
 			    if (resp.rows !== undefined && resp.rows[0] !== undefined) {
 				let validObject = { secret: resp.rows[0].secret.toString(), encoding: 'base32', token: code };
 				if (require('speakeasy').totp.verify(validObject)) {
-				    let getUserData = "SELECT username, emailaddress FROM users WHERE uuid = '" + userId + "'";
+				    let getUserData = "SELECT username, emailaddress, notifylogin, notifyfailed FROM users WHERE uuid = '" + userId + "'";
 				    cassandra.execute(getUserData)
 					.then((nresp) => {
 						if (nresp.rows !== undefined && nresp.rows[0] !== undefined && nresp.rows[0].emailaddress !== undefined) {
 						    let clientIP = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
+						    let notifyLogin = nresp.rows[0].notifylogin || false;
+						    let notifyFailed = nresp.rows[0].notifyfailed || false;
 						    redisToken.getToken(nresp.rows[0].emailaddress, true)
 							.then((ourToken) => {
 								if (ourToken === token) {
+								    let logConnection = "INSERT INTO logins (uuid, clientip, time, succeeded) VALUES ('" + userId +"', '" + clientIP + "', '" + Date.now() + "', true);"
 								    redisToken.setToken('2fa:' + userId, clientIP, '36000')
 									.then((r) => {
-										let logConnection = "INSERT INTO logins (uuid, clientip, time, succeeded) VALUES ('" + userId +"', '" + clientIP + "', '" + Date.now() + "', true);"
 										cassandra.execute(logConnection)
 										    .then((log) => {
-											    resolve({ email: resp.rows[0].emailaddress, username: resp.rows[0].username });
+											    resolve({ email: resp.rows[0].emailaddress, username: resp.rows[0].username, notifyLogin: notifyLogin });
 											})
 										    .catch((e) => {
 											    logger.error('failed logging connection from ' + clientIP + ' for ' + userId);
-											    resolve({ email: resp.rows[0].emailaddress, username: resp.rows[0].username });
+											    resolve({ email: resp.rows[0].emailaddress, username: resp.rows[0].username, notifyLogin: notifyLogin });
 											});
 									    })
-									.catch((de) => { reject(de); });
+									.catch((de) => {
+										logger.error('failed creating 2fa auth-success token, login succeeded nevertheless');
+										logger.error(de);
+										cassandra.execute(logConnection)
+										    .then((log) => {
+											    resolve({ email: resp.rows[0].emailaddress, username: resp.rows[0].username, notifyLogin: notifyLogin });
+											})
+										    .catch((e) => {
+											    logger.error('failed logging connection from ' + clientIP + ' for ' + userId);
+											    resolve({ email: resp.rows[0].emailaddress, username: resp.rows[0].username, notifyLogin: notifyLogin });
+											});
+									    });
 								} else {
-								    reject('mismatching 2FA token');
 								    let logConnection = "INSERT INTO logins (uuid, clientip, time, succeeded) VALUES ('" + userId +"', '" + clientIP + "', '" + Date.now() + "', false);"
 								    cassandra.execute(logConnection)
-									.then((log) => { reject('mismatching 2FA token'); })
+									.then((log) => { reject({ reason: 'mismatching 2FA token', notifyFailed: notifyFailed }); })
 									.catch((e) => {
 										logger.error('failed logging failed 2FA connection from ' + clientIP + ' for ' + userId);
-										reject('mismatching 2FA token');
+										logger.error(e);
+										reject({ reason: 'mismatching 2FA token', notifyFailed: notifyFailed });
 									    });
 								}
 							    })
 							.catch((e) => {
 								let logConnection = "INSERT INTO logins (uuid, clientip, time, succeeded) VALUES ('" + userId +"', '" + clientIP + "', '" + Date.now() + "', false);"
 								cassandra.execute(logConnection)
-								    .then((log) => { reject('failed fetching token'); })
+								    .then((log) => { reject({ reason: 'failed fetching token', notifyFailed: notifyFailed }); })
 								    .catch((e) => {
 									    logger.error('failed logging failed 2FA connection from ' + clientIP + ' for ' + userId);
-									    reject('failed fetching token');
+									    logger.error(e);
+									    reject({ reason: 'failed fetching token', notifyFailed });
 									});
 							    });
-						} else { reject('failed retrieving user account data from cassandra'); }
+						} else { reject({ reason: 'failed retrieving user account data from cassandra', notifyFailed: false }); }
 					    })
-					.catch((e) => { reject('failed querying cassandra for user account data'); });
-				} else { reject('wrong 2FA code'); }
-			    } else { reject('2FA not configured'); }
+					.catch((e) => { reject({ reason: 'failed querying cassandra for user account data', notifyFailed: false }); });
+				} else { reject({ reason: 'wrong 2FA code', notifyFailed: false }); }
+			    } else { reject({ reason: '2FA not configured', notifyFailed: false }); }
 			})
-		    .catch((e) => { reject('failed querying cassandra'); });
+		    .catch((e) => { reject({ reason: 'failed querying cassandra', notifyFailed: false }); });
 	    });
     };

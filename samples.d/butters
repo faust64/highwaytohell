@@ -287,6 +287,8 @@ if test "$ACTION" = del; then
 	POSTBODY=", \"recordType\": \"$TYPE\""
 	if test "$SETID"; then
 	    POSTBODY="$POSTBODY, \"setId\": \"$SETID\""
+	elif test "$RECORD" = @; then
+	    POSTBODY="$POSTBODY, \"setId\": \"root-$TYPE\""
 	else
 	    POSTBODY="$POSTBODY, \"setId\": \"$RECORD\""
 	fi
@@ -303,6 +305,8 @@ elif test "$ACTION" = add -o "$ACTION" = edit; then
 	fi
 	if test "$SETID"; then
 	    POSTBODY="$POSTBODY, \"setId\": \"$SETID\""
+	elif test "$RECORD" = @; then
+	    POSTBODY="$POSTBODY, \"setId\": \"root-$TYPE\""
 	else
 	    POSTBODY="$POSTBODY, \"setId\": \"$RECORD\""
 	fi

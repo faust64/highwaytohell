@@ -19,7 +19,9 @@ Table of Contents
 
 ## Introducing HWTH
 
-![HWTH Illustrated](samples.d/diags/hwth.png)
+![HWTH Pool Illustrated](samples.d/diags/hwth.png)
+
+![Scaling out HWTH](samples.d/diags/hwth-distribution.png)
 
 Some hopefully-scalable, DNSSEC-capable, DNS manager featuring health checks
 & alerts configuration (HTTP POST/GET, SMS or email).
@@ -32,27 +34,29 @@ Any advices, contribution or feedback welcome.
    service would be started. Upgrading packages, services would be reloaded.
  * having a running Cassandra & Redis setup, and installed service profile
    configuration (`/var/lib/highwaytohell/.profile`, see setup instructions),
-   you may start several workers, depending on the features you want to run.
+   you may start several workers, depending on the features you want to run
  * starting the refreshZones worker, you would be able to generate NSD or
    BIND configurations & corresponding zones files. Note before doing so,
    you would have to start a `hwth-watchmark` service in charge of reloading
    your nameserver configuration - as root, while NodeJS user can't.
  * starting the checkHealth worker, you would be able to run health checks
-   that may eventually be used as conditions, generating your DNS zones
- * starting the outboundNotifier worker, you should be able to configure
-   POST/GET/email/SMS notifications based on your health check statuses
+   that may eventually be used as conditions generating your DNS zones or
+   scheduling notifications
  * starting the apiGW worker - and configuring some SSL-capable reverse
    proxy forwarding connections to your lookpack on port 8080, you would
    have access to a web client declaring domains, records, health checks,
    creating API tokens for CLI usage (see `samples.d/butters`), enabling
    2FA protection via authenticator such as Authy.
+ * starting the outboundNotifier worker, you should be able to configure
+   POST/GET/email/SMS notifications based on your health check statuses,
+   as well as notifications on login and/or failed login accessing our
+   web service
 
 ### Todolist
 
  * sharing zones management with third-party accounts (management entities)
  * proper ACL management restricting accesses within a zone (RO mode)
  * notifier (mail/hook/sms?) - outboundNotifier work in progress
- * failed logins should be able to trigger such notifications as well
  * for all queries, refactor the way we ensure user is allowed to proceed
  * handling redis authentication
  * paging (?)
@@ -205,6 +209,8 @@ FIXME: resolving NSs in charge for a zone, we have a
        that when your nspool tag name alphabetically succeeds your bkppool tag
        name, then SELECT would return nameserver FQDNs such as your bkppool
        would actually be considered to be your nspool, and vice versa.
+FIXME: ensure confQueue & zonesQueue are not applying some change simultaneously
+       (some kind of lock ...)
 DISCUSS: do we need keeping plaintext zones when using DNSSEC?
 DISCUSS: we assume running name server on that worker, we could split it
        so a worker generates (& signs) zones (without necessarily running
@@ -225,15 +231,16 @@ And the second one purges older records from that history table.
 
 ### outboundNotifier
 
-This class of worker would be listening for events from our `checkHealth`
-worker, looking for notifications definitions that may involve the health
-check ID that just got processed. If that check health changed, a notification
-would eventually be sent (HTTP POST, HTTP GET, SMS or email).
+This class of worker would be listening for events from our other workers,
+eventually sending HTTP POST, GET, SMS or email notifications.
 
-FIXME: setting up SMS or email notifications, we should check notification
-       target is known to belong to user - otherwise, send some confirmation
-       email or SMS, have user input a code or click some validation link,
-       before registering notification. - add a known-targets table, ...
+The `checkHealth` worker may schedule notification settings to be checked for
+matching configurations, having refreshed a check status.
+
+The `apiGW` worker may schedule login history to be checked notifying user
+his account was accessed.
+
+FIXME: SMS
 
 ### apiGW
 
@@ -241,7 +248,8 @@ Minimalist API gateway (we've proven it can be done ... I don't necessarily
 enjoy customizing CSSs), with token authentication, 2FA-capable.
 
 FIXME: dont res.send.(errorcode) if req.sessions.userid: instead render a
-       common template {{errormsg}}
+       common template
+FIXME: error & confirmation pages back links & labels
 
 ## CLI
 
@@ -283,6 +291,10 @@ Usage: butters [OPTION]
       --disablednssec	disables DNSSEC on domain
       --enablednssec	enables DNSSEC on domain
       --getdsrecords	fetches DS records for domain
+
+    options specitic to contacts:
+      --contacttype     contact type, smtp or sms, defaults to smtp
+      -T, --target	email or phone number
 
     options specific to health checks:
       --checkid		defines healthcheck to edit or remove
@@ -343,9 +355,11 @@ $ butters -d peerio.com -a del -R records --record totoplouf
 {}
 $ butters -d peerio.com -a get -R healthhistory --checkid e2f2dfb2-7928-11e7-91c1-ed90532c5f11
 [{"when":"1501879710062","value":true},{"when":"1501879785050","value":true}]
-$ butters -R notifications -d peerio.com -a add --checkid e2f2dfb0-7928-11e7-abc0-01fda1e91471 --notifytarget faust64@gmail.com --notifyvia mail
-invalid input adding notification
-$ butters -R notifications -d peerio.com -a add --checkid e2f2dfb0-7928-11e7-abc0-01fda1e91471 --notifytarget faust64@gmail.com --notifyvia smtp
+$ butters -R contacts -a add -T myaddress@example.com
+check your emails
+$ butters -R contacts
+[{"type":"smtp","target":"myaddress@example.com","active":"yes"}]
+$ butters -R notifications -d peerio.com -a add --checkid e2f2dfb0-7928-11e7-abc0-01fda1e91471 --notifytarget myaddress@example.com --notifyvia smtp
 e2f2dfb0-7928-11e7-abc0-01fda1e91471
 $ butters -R notifications -d peerio.com -a del --checkid e2f2dfb0-7928-11e7-abc0-01fda1e91471
 OK

@@ -19,7 +19,7 @@ module.exports = (cassandra, userId, username, type, target) => {
 							confirmUri: '/settings/confirm-contact/' + userId + '/' + token,
 							username: username
 						    };
-						return new sendMail.SendMail(target, 'acknotify', subst)
+						sendMail(target, 'acknotify', subst)
 						    .then((ok) => {
 							    let insertContact = "INSERT INTO contactaddresses (uuid, type, target, confirmcode) VALUES "
 								+"('" + userId + "', 'smtp', '" + target + "', '" + token + "')";

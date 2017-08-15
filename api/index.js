@@ -35,9 +35,10 @@ const routerObject = {
 	listZones: require('./listZones.js'),
 	login: require('./login.js'),
 	login2fa: require('./login2fa.js'),
-	registerAccount: require('./registerAccount'),
-	updateAddress: require('./updateAddress'),
-	updatePassword: require('./updatePassword')
+	registerAccount: require('./registerAccount.js'),
+	updateAddress: require('./updateAddress.js'),
+	updateLoginNotification: require('./updateLoginNotification.js'),
+	updatePassword: require('./updatePassword.js')
     };
 
 module.exports = routerObject;

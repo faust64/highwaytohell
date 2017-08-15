@@ -24,6 +24,7 @@ const execAsync = Promise.promisify(exec);
 const lookupDomain = 'SELECT * from zones WHERE origin = ?';
 const nsRootDir = process.env.NS_ROOT_DIR || '.';
 const nsZonesDir = process.env.NS_ZONES_DIR || (nsRootDir + '/zones.d');
+const stalledCheckInterval = ((process.env.BEE_RETRY_DELAY || 60) * 1000);
 const workerPool = process.env.HWTH_POOL || 'default';
 
 const redisBackend = process.env['REDIS_HOST_' + workerPool] || process.env.REDIS_HOST || '127.0.0.1';
@@ -210,6 +211,18 @@ execAsync('sleep 15')
 		    logger.info('WARNING: failed initializing airbrake');
 		}
 	    }
+	    confQueue.checkStalledJobs(stalledCheckInterval, (err, num) => {
+		    if (err) {
+			logger.error('failed checking for stalled jobs in conf queue');
+			logger.error(err);
+		    } else { logger.info('has ' + num + ' stalled jobs in conf queue'); }
+		});
+	    zonesQueue.checkStalledJobs(stalledCheckInterval, (err, num) => {
+		    if (err) {
+			logger.error('failed checking for stalled jobs in zones queue');
+			logger.error(err);
+		    } else { logger.info('has ' + num + ' stalled jobs in zones queue'); }
+		});
 	})
     .catch((e) => {
 	    logger.error(e);
