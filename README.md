@@ -1,5 +1,7 @@
 # HighWayToHell
 
+[![CircleCI build status](https://circleci.com/gh/faust64/highwaytohell/tree/master.svg?style=shield)](https://circleci.com/gh/faust64/highwaytohell/tree/master)
+
 Table of Contents
 =================
 
