@@ -28,13 +28,20 @@ rewrap:
 dbinit:
 	test -f db/cassandra.init || return 0
 	test "$$CASSANDRA_HOST" || return 0
-	cat db/cassandra.init | cqlsh $$CASSANDRA_HOST
+	if test "$$CIRCLECI"; then \
+	    grep -vE '^(#|$$)' db/cassandra.init | cqlsh --cqlversion=3.4.0 $$CASSANDRA_HOST; \
+	else \
+	    grep -vE '^(#|$$)' db/cassandra.init | cqlsh $$CASSANDRA_HOST; \
+	fi
 
 dbinittest: dbinit
 	test -f db/cassandra.test || return 0
 	test "$$CASSANDRA_HOST" || return 0
-	cat db/cassandra.test | cqlsh $$CASSANDRA_HOST
-
+	if test "$$CIRCLECI"; then \
+	    grep -v '^(#|$$)' db/cassandra.test | cqlsh --cqlversion=3.4.0 $$CASSANDRA_HOST; \
+	else \
+	    grep -v '^(#|$$)' db/cassandra.test | cqlsh $$CASSANDRA_HOST; \
+	fi
 
 install:
 	test -d $(DOC_DIR) || mkdir -p $(DOC_DIR)
@@ -115,11 +122,15 @@ clean:
 		    rm -fr ./$$line; \
 		done; \
 	fi
-	rm -fr *log node_modules
+	rm -fr *log
 
-cleanCI: clean
-	rm -rf zones.d keys.d nsd.conf.d
-
+reset:
+	git reset; \
+	for item in api *.md *.yml *.json .gitignore db debian lib LICENSE Makefile node_shrinkwrap samples.d static templates tests workers; \
+	do \
+	    rm -fr $$item; \
+	    git checkout -- $$item; \
+	done
 
 createdebsource:
 	LANG=C debuild -S -sa
@@ -127,7 +138,7 @@ createdebsource:
 createdebbin:
 	LANG=C dpkg-buildpackage -us -uc
 
-createinitialarchive: sourceismissing
+createinitialarchive: clean sourceismissing
 	if test -d .git; then \
 	    case "`git branch | awk '/^\*/{print $$2}'`" in \
 		master|production|oldbear-prod)	suffix=		;; \
@@ -138,17 +149,14 @@ createinitialarchive: sourceismissing
 	else \
 	    suffix=; \
 	fi; \
-	if test -s .gitignore; then \
-	    grep -vE '^(#|$$)' .gitignore | while read line; \
-		do \
-		    rm -fr ./$$line; \
-		done; \
-	fi; \
 	git rev-parse HEAD >revision 2>/dev/null || echo alpha >revision; \
 	rm -fr .git .gitignore .gitrelease circle.yml samples.d/diags debian/highwaytohell debian/highwaytohell.debhelper.log; \
 	sed -i "s|(\([0-9]*\.[0-9]*\.[0-9]*-\)\([0-9]*\)) unstable;|(\1$${suffix}\2) unstable;|" debian/changelog
 	version=`awk '/^highwaytohell/{print $$2;exit}' debian/changelog | sed -e 's|^[^0-9]*\([0-9]*\.[0-9]*\.[0-9]*\)-.*|\1|'`; \
 	( cd .. ; tar -czf highwaytohell_$$version.orig.tar.gz highwaytohell )
+
+test:
+	./tests/butters.sh
 
 release:
 ifeq ($(GITHUB_USER),)

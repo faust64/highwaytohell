@@ -8,12 +8,18 @@ machine:
     NS_ZONES_DIR: /home/ubuntu/highwaytohell/zones.d
     REDIS_HOST: 127.0.0.1
     REDIS_PORT: 6379
+  node:
+    version: 6.9.1
   services:
     - cassandra
 test:
   override:
     - make test
-    - make cleanCI
+    - pm2 delete apiGW
+    - pm2 delete checkHealth
+    - pm2 delete outboundNotifier
+    - pm2 delete refreshZones
+    - make reset
     - make createinitialarchive
     - make createdebbin
   pre:
@@ -30,6 +36,16 @@ test:
 # //
     - sudo apt-get install -y gcc g++ make rsync build-essential ldnsutils nsd
     - cp -p samples.d/nsd/nsd.conf samples.d/nsd/server.conf .
-    - mkdir zones.d keys.d nsd.conf.d
+    - cp -p samples.d/butters.cfg.sample /home/ubuntu/.butters.cfg
+    - mkdir zones.d keys.d nsd.conf.d logs
+    - touch ./nsd.conf.d/highwaytohell-zones.conf
+# wtf?
+    - sudo pip install --upgrade cqlsh
+# //
+    - npm install -g pm2
     - make dbinittest
-    - npm install
+    - pm2 start workers/apiGW.js
+    - pm2 start workers/checkHealth.js
+    - pm2 start workers/outboundNotifier.js
+    - pm2 start workers/refreshZones.js
+    - sleep 20

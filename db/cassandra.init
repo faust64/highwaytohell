@@ -17,12 +17,12 @@ CREATE TABLE users (
 CREATE TABLE contactaddresses (
 	uuid varchar,
 	type varchar,
-	target varchar
+	target varchar,
 	confirmcode varchar,
 	PRIMARY KEY (uuid, target)
     );
 
-CREATE TABLE twofa {
+CREATE TABLE twofa (
 	uuid varchar,
 	enabled boolean,
 	secret varchar,
@@ -33,7 +33,7 @@ CREATE TABLE logins (
 	uuid varchar,
 	clientip varchar,
 	time varchar,
-        succeeded bool,
+        succeeded boolean,
 	PRIMARY KEY (uuid, time)
     );
 

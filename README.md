@@ -53,8 +53,6 @@ Any advices, contribution or feedback welcome.
  * proper ACL management restricting accesses within a zone (RO mode)
  * notifier (mail/hook/sms?) - outboundNotifier work in progress
  * failed logins should be able to trigger such notifications as well
- * updating his email address, we should have user click some confirmation
-   link
  * for all queries, refactor the way we ensure user is allowed to proceed
  * handling redis authentication
  * paging (?)
@@ -62,9 +60,7 @@ Any advices, contribution or feedback welcome.
  * unclear yet how we'll trust phone numbers as contacts ...
  * add a name column to our healthchecks table? for clarity - so far identifying
    them with the target being evaluated
- * actual tests --like controlling exit codes, database content. I suspect
-   travis could be better here (bind+nsd combined with node4+6+8) (as opposed
-   to my systematic use of circleci)
+ * moar tests
  * api-less mode?
  * shinyness - CSS or frontend contributions most welcome
  * packaging: DB update & schema versioning (based on debvers?)

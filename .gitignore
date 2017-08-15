@@ -1,6 +1,7 @@
-highwaytohell-zones.conf
-keys.d*
-node_modules
+/keys.d
+/logs
+/node_modules
 /nsd.conf
+/nsd.conf.d
 /server.conf
-zones.d*
+/zones.d
