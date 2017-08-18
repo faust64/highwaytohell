@@ -1,0 +1,38 @@
+#!/bin/sh
+
+kill_unattended_updates()
+{
+    ps ax | awk '/pm2 update/{print $1}' | while read pid
+	do
+	    if ! kill $pid; then
+		sleep 2
+		kill -9 $pid
+	    fi
+	done >/dev/null 2>&1
+}
+
+if grep hwth /etc/passwd >/dev/null; then
+    if test -x /usr/local/bin/pm2 -a -s /var/lib/highwaytohell/.profile; then
+	( (
+	    RANDOM_NUMBER=`od -An -N2 -d /dev/random`
+	    WAIT_TIME=`expr 1 + $RANDOM_NUMBER % \( 20 - 1 \)`
+	    sleep `expr $WAIT_TIME '*' 600`
+	    kill_unattended_updates
+	    if su -l hwth -s /usr/local/bin/pm2 list 2>&1 | grep 'In-memory PM2 is out-of-date' >/dev/null; then
+		origUmask=`umask`
+		umask 022
+		if npm install -g pm2@latest >/dev/null 2>&1; then
+		    umask $origUmask
+		    if ! timeout 300 su -l hwth -s /usr/local/bin/pm2 update >/var/log/highwaytohell/pm2-update.log 2>&1; then
+			kill_unattended_updates
+			/usr/bin/hwth refresh
+		    fi
+		else
+		    umask $origUmask
+		fi
+	    fi
+	) & )
+    fi
+fi
+
+exit 0

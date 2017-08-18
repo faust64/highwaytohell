@@ -77,11 +77,11 @@ Any advices, contribution or feedback welcome.
  * zones import tool?
  * unclear yet how we'll trust phone numbers as contacts ...
  * add a name column to our healthchecks table? for clarity - so far identifying
-   them with the target being evaluated
+   them with the target being evaluated, which I would argue is clear enough ...
+   until we consider multiple Host headers on a single LB, ... FML...
  * moar tests
  * api-less mode?
  * shinyness - CSS or frontend contributions most welcome
- * packaging: DB update & schema versioning (based on debvers?)
  * DNSSEC keys rotation open to discussion, bearing in mind it implies
    publishing new DS records to registrar, we can't automate it unilaterally
  * reproducible benchmarks & gnuplot magic ...
@@ -125,9 +125,18 @@ Note that scaling out, only our `refreshZones` workers would require these DNS
 utils to be installed.
 
 Before starting services, keep in mind to create your Cassandra keyspace and
-corresponding tables, using `db/cassandra.init` (having installed our debian
-package: `/usr/share/doc/highwaytohell/cassandra.init`), bearing in mind the
-keyspace replication strategy depends on your Cassandra cluster configuration.
+corresponding tables. Running from a Git clone, run `make dbinit`. Having
+installed our Debian package, use a copy of
+`/usr/share/highwaytohell/db/cassandra.init` (setting replication strategy
+strategy options and keyspace name according to your setup) to initialize your
+setup. Then, run `/usr/share/highwaytohell/db/updateScript` to apply
+whatever patches we introduced since first frozen version, ...
+
+If you do not have a Cassandra setup running yet, see
+https://wiki.apache.org/cassandra/DebianPackaging
+
+If you do not have a Redis server running yet, consider installing
+`redis-server` on some instance your workers would have access to.
 
 Give a look to `/var/lib/highwaytohell/.profile-sample`. Install your own
 copy as `/var/lib/highwaytohell/.profile` updating variables according to
@@ -136,8 +145,70 @@ as you would not be able to register an account or trust email addresses
 without clicking some confirmation link). Make sure the profile you installed
 can be read by `hwth` (`chmod 0644` should do, preferably `root` owned).
 
+Assuming your Cassandra database is running on some separate instance(s), you
+may still need to install Cassandra packages on your NodeJS workers: lately,
+pulling `cqlsh` from `pip` would result in failures dumping or importing
+tables to or from a CSV - which is how we would proceed upgrading database
+layout. Make sure you may run something like:
+
+```
+$ . /var/lib/pm2/.profile
+$ echo 'use hwth; COPY records TO STDOUT;' | cqlsh $CASSANDRA_HOST
+```
+
+If the previous fails with something like:
+```
+Connection error: ('Unable to connect to any servers', {'a.b.c.d':
+    ProtocolError("cql_version '3.3.1' is not supported by remote (w/ native protocol).
+    Supported versions: [u'3.4.4']",)})
+```
+
+Then you would need to update `/var/lib/pm2/.profile`, setting
+`CQLSH_VERSION=3.4.4`. You may try again:
+
+```
+$ . /var/lib/pm2/.profile
+$ echo 'use hwth; COPY records TO STDOUT;' | cqlsh --cqlversion=$CQLSH_VERSION $CASSANDRA_HOST
+```
+
+Once you're done configuring your worker, you may start workers using `hwth`:
+
+```
+# hwth start
+[...]
+# hwth status
+[info] checkHealth is running
+[info] apiGW is running
+[info] refreshZones is running
+[info] outboundNotifier is running
+# systemctl status pm2-hwth
+[...]
+# hwth restart refreshZones
+```
+
+You may use `pm2` commands assuming our runtime user privileges:
+
+```
+# su hwth -s /bin/bash
+$ pm2 list
+┌──────────────────┬────┬─────────┬───────┬────────┬─────────┬────────┬─────┬───────────┬──────┬──────────┐
+│ App name         │ id │ mode    │ pid   │ status │ restart │ uptime │ cpu │ mem       │ user │ watching │
+├──────────────────┼────┼─────────┼───────┼────────┼─────────┼────────┼─────┼───────────┼──────┼──────────┤
+│ apiGW            │ 30 │ cluster │ 19330 │ online │ 0       │ 5h     │ 0%  │ 54.0 MB   │ hwth │ disabled │
+│ apiGW            │ 31 │ cluster │ 19336 │ online │ 0       │ 5h     │ 0%  │ 56.3 MB   │ hwth │ disabled │
+│ checkHealth      │ 4  │ cluster │ 16942 │ online │ 0       │ 7h     │ 0%  │ 60.3 MB   │ hwth │ disabled │
+│ checkHealth      │ 5  │ cluster │ 16948 │ online │ 0       │ 7h     │ 0%  │ 55.2 MB   │ hwth │ disabled │
+│ outboundNotifier │ 2  │ cluster │ 16893 │ online │ 0       │ 7h     │ 0%  │ 55.2 MB   │ hwth │ disabled │
+│ outboundNotifier │ 3  │ cluster │ 16899 │ online │ 0       │ 7h     │ 0%  │ 53.0 MB   │ hwth │ disabled │
+│ refreshZones     │ 8  │ cluster │ 17126 │ online │ 0       │ 7h     │ 0%  │ 49.3 MB   │ hwth │ disabled │
+│ refreshZones     │ 9  │ cluster │ 17132 │ online │ 0       │ 7h     │ 0%  │ 45.0 MB   │ hwth │ disabled │
+└──────────────────┴────┴─────────┴───────┴────────┴─────────┴────────┴─────┴───────────┴──────┴──────────┘
+ Use `pm2 show <id|name>` to get more details about an app
+```
+
 Having started service, the apiGW worker should be listening on your loopback,
-port 8080. Setup some reverse proxy (see `samples.d/nginx.conf`). Access
+port 8080. Setup some reverse proxy (see `samples.d/nginx.conf` or
+`/usr/share/doc/highwaytohell/nginx-vhost.conf.sample`). Access
 your virtualhost root to create your initial account and log in.
 
 ## Databases
@@ -168,6 +239,8 @@ tables would be used:
    key names, as listed in the zones table
  * signedzones: storing base64-encoded DNSSEC zones, once they're signed, for
    our neighbors to get their copy. mapped to a domain
+ * config: a dummy table we would keep our schema verion into, so our database
+   upgrade script can identify which patches to skip or apply.
 
 ## Workers
 

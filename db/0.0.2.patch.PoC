@@ -1,0 +1,11 @@
+# assuming an existing tale with matching name, mismatching schema
+# something we couldn't just sort with an ALTER TABLE (like changing PK)
+CREATE TABLE upgtest (
+	idname varchar,
+	count varchar,
+	value varchar,
+	smthelse varchar,
+	PRIMARY KEY (idname, count)
+    );
+
+INSERT INTO config (name, version) VALUES ('core', '0.0.2');

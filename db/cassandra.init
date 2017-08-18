@@ -147,3 +147,10 @@ CREATE TABLE notifications (
 	notifyTarget varchar,
 	PRIMARY KEY (idcheck)
     );
+
+CREATE TABLE config (
+	name varchar,
+	version varchar,
+	PRIMARY KEY (name)
+    );
+INSERT INTO config ( name, version ) VALUES ( 'core', '0.0.1' );

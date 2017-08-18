@@ -1,0 +1,69 @@
+#!/bin/sh
+
+PATCHDIR=`dirname $0`
+. $PATCHDIR/common.sh || exit $?
+
+process_patch()
+{
+    test -z "$1" && exit 1
+    test -s "$1" || exit 1
+    MIGRATE_SCRIPT=`echo "$1" | sed 's|\.patch|\.migrate|'`
+    if test -x "$MIGRATE_SCRIPT"; then
+	if ! "$MIGRATE_SCRIPT"; then
+	    echo failed running $MIGRATE_SCRIPT >&2
+	    exit 1
+	fi
+    elif ! grep -vE '^(#|$$)' "$1" | cqlsh $CQLSH_ARGS; then
+	echo failed importing "$1" >&2
+	exit 1
+    fi
+}
+
+TOVERS=`( ls $PATCHDIR/*.patch 2>/dev/null || echo ) | sort | tail -1 | while read patch; do test "$patch" -a -s "$patch" || continue; grep -iE "^[ \t]*INSERT[ \t]+INTO[ \t]+config[ \t]+.*VALUES.*'core'," "$patch" | tail -1 | sed "s|.*'core',[ \t]*'\([^']*\)'.*|\1|"; done`
+if test -z "$TOVERS"; then
+    echo no patch to be applied
+    exit 0
+elif ! echo "use $CASSANDRA_KEYSPACE ; SELECT version FROM config;" | cqlsh $CQLSH_ARGS >/dev/null 2>&1; then
+    echo failed querying version >&2
+    exit 1
+fi
+
+FROMVERS=`echo "use $CASSANDRA_KEYSPACE ; SELECT version FROM config WHERE name = 'core';" | cqlsh $CQLSH_ARGS 2>&1 | awk '/^[0-9\. \t]+$/{print $1}'`
+if test "$FROMVERS" = "$TOVERS"; then
+    echo database is up-to-date
+    exit 0
+fi
+
+eval `echo "$FROMVERS" | sed 's|^\([^\.]*\)\.\([^\.]*\)\.\(.*\)$|frommaj=\1 frommin=\2 fromrev=\3|'`
+if test -z "$frommaj" -o -z "$frommin" -o -z "$fromrev"; then
+    echo failed parsing current version >&2
+    exit 1
+fi
+
+echo "=== UPGRADING $CASSAHDRA_KEYSPACE (@$CASSANDRA_HOST) from $FROMVERS to $TOVERS on `date`"
+ls $PATCHDIR/*.patch 2>/dev/null | sort | while read patch
+    do
+	ISVERS=`grep -iE "^[ \t]*INSERT[ \t]+INTO[ \t]+config[ \t]+.*VALUES.*'core'," "$patch" | tail -1 | sed "s|.*'core',[ \t]*'\([^']*\)'.*|\1|"`
+	eval `echo "$ISVERS" | sed 's|^\([^\.]*\)\.\([^\.]*\)\.\(.*\)$|ismaj=\1 ismin=\2 isrev=\3|'`
+	if test "$ismaj" -a "$ismin" -a "$isrev"; then
+	    do_apply=false
+	    if test "$ismaj" -ge "$frommaj"; then
+		if test "$ismin" -ge "$frommin"; then
+		    if test "$isrev" -gt "$fromrev"; then
+			do_apply=true
+		    fi
+		fi
+	    fi
+	    if $do_apply; then
+		if ! process_patch $patch; then
+		    exit 1
+		fi
+	    else
+		echo NOTICE: skipping "$patch"
+	    fi
+	else
+	    echo WARNING: failed parsing "$patch" target version >&2
+	fi
+    done
+
+exit $?

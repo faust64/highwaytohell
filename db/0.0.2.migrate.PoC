@@ -1,0 +1,33 @@
+#!/bin/sh
+
+`dirname $0`/common.sh || exit $?
+
+PATCH=`echo $0 | sed 's|\.migrate|\.patch|'`
+if ! test -s "$PATCH"; then
+    echo no patch "$PATCH" >&2
+    exit 1
+fi
+TMPFILE=/tmp/hwth-patch.cql.$$
+if ! echo "use $CASSANDRA_KEYSPACE ; COPY upgtest TO STDOUT;" | cqlsh $CQLSH_ARGS >$TMPFILE; then
+    echo ERROR: failed dumping upgtest table >&2
+    rm -f $TMPFILE
+    exit 1
+elif ! tr -d '^\015' <$TMPFILE | awk -F, '{print $1 "," $3 "," $2 ",default"}' >$TMPFILE.post; then
+    echo ERROR: failed transforming upgtest table >&2
+elif ! echo "use $CASSANDRA_KEYSPACE ; DROP TABLE upgtest;" | cqlsh $CQLSH_ARGS; then
+    echo ERROR: failed purging deprecated objects >&2
+    if ! cat "$TMPFILE" | cqlsh $CQLSH_ARGS -e "use $CASSANDRA_KEYSPACE ; COPY upgtest FROM STDIN;"; then
+	echo EPIC: also failed to revert, ... >&2
+    fi
+elif ! ( echo "use $CASSANDRA_KEYSPACE ;" ; cat "$PATCH" ) | cqlsh $CQLSH_ARGS; then
+    echo ERROR: failed applying new layout >&2
+elif ! cat "$TMPFILE.post" | cqlsh $CQLSH_ARGS -e "use $CASSANDRA_KEYSPACE ; COPY upgtest FROM STDIN;"; then
+    echo ERROR: failed importing transformed table >&2
+else
+    rm -f $TMPFILE $TMPFILE.post
+    echo NOTICE: done with upgtest
+    exit 0
+fi
+
+echo WARNING: keeping $TMPFILE and $TMPFILE.post for further debugging >&2
+exit 1

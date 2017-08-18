@@ -3,6 +3,15 @@
 
 set -e
 
+drop_cqlsh()
+{
+    if test -x /usr/local/bin/cqlsh; then
+	if ! pip uninstall cqlsh; then
+	    notify_msg WARNING: failed uninstalling CQLSH client
+	fi
+    fi
+}
+
 drop_munin()
 {
     rm -f /etc/munin/plugin-conf.d/hwth_multi.conf /etc/munin/plugins/hwth_multi /usr/share/munin/plugins/hwth_multi
@@ -84,6 +93,7 @@ drop_node_modules()
 
 case "$1" in
     purge|remove|abort-install|disappear)
+	#drop_cqlsh
 	drop_munin
 	drop_nagios
 	drop_pm2

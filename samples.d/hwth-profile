@@ -16,6 +16,14 @@ export CASSANDRA_KEYSPACE=hwth
 #export CASSANDRA_AUTH_USER=hwth
 #export CASSANDRA_AUTH_PASS=secr3t
 
+# Cassandra - initializing & upgrading schema
+# sometimes (using PIP), Cassandra client won't connect to your backend cluster
+# unless specifying the right cqlversion option. Our scripts would rely on this
+# being properly set. Note that pulling Cassandra client from PIP may not work
+# depending on your backend version, see
+# https://stackoverflow.com/questions/40289324/cqlsh-client-module-object-has-no-attribute-parse-options
+#export CQLSH_VERSION=3.4.4
+
 # distributing your setup, you will want to use several pools
 # all workers would need to be assigned with a single pool
 export HWTH_POOL=default

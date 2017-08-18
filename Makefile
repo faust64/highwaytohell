@@ -28,17 +28,22 @@ rewrap:
 dbinit:
 	test -f db/cassandra.init || return 0
 	test "$$CASSANDRA_HOST" || return 0
-	if test "$$CIRCLECI"; then \
-	    grep -vE '^(#|$$)' db/cassandra.init | cqlsh --cqlversion=3.4.0 $$CASSANDRA_HOST; \
+	if test "$$CQLSH_VERSION"; then \
+	    grep -vE '^(#|$$)' db/cassandra.init | cqlsh --cqlversion=$$CQLSH_VERSION $$CASSANDRA_HOST; \
 	else \
 	    grep -vE '^(#|$$)' db/cassandra.init | cqlsh $$CASSANDRA_HOST; \
+	fi
+	if test -x ./db/updateScript; then \
+	    if ! ./db/updateScript; then \
+		exit 1; \
+	    fi; \
 	fi
 
 dbinittest: dbinit
 	test -f db/cassandra.test || return 0
 	test "$$CASSANDRA_HOST" || return 0
-	if test "$$CIRCLECI"; then \
-	    grep -v '^(#|$$)' db/cassandra.test | cqlsh --cqlversion=3.4.0 $$CASSANDRA_HOST; \
+	if test "$$CQLSH_VERSION"; then \
+	    grep -v '^(#|$$)' db/cassandra.test | cqlsh --cqlversion=$$CQLSH_VERSION $$CASSANDRA_HOST; \
 	else \
 	    grep -v '^(#|$$)' db/cassandra.test | cqlsh $$CASSANDRA_HOST; \
 	fi
@@ -61,17 +66,21 @@ install:
 		test -s $$potentialDoc || continue; \
 		install -c -m 0644 $$potentialDoc $(DOC_DIR)/$$potentialDoc; \
 	    done
-	find db -type f | sed 's|^db/||' | while read file; \
-	    do \
-		install -c -m 0644 db/$$file $(DOC_DIR)/$$file; \
-	    done
-	for d in api lib templates static/fav workers node_shrinkwrap; \
+	for d in api db lib templates static/fav workers node_shrinkwrap; \
 	    do \
 		test -d $(SHARE_DIR)/$$d || mkdir -p $(SHARE_DIR)/$$d; \
 	    done
 	find api lib templates static workers node_shrinkwrap -type f | while read file; \
 	    do \
 		install -c -m 0644 $$file $(SHARE_DIR)/$$file; \
+	    done
+	find db -type f | while read file; \
+	    do \
+		if echo $$file | grep -E '(updateScript|\.migrate|\.sh)$$' >/dev/null; then \
+		    install -c -m 0755 $$file $(SHARE_DIR)/$$file; \
+		else \
+		    install -c -m 0644 $$file $(SHARE_DIR)/$$file; \
+		fi; \
 	    done
 	for file in revision package.json npm-shrinkwrap.json; \
 	    do \
@@ -81,9 +90,11 @@ install:
 	test -d $(LIB_DIR) || mkdir -p $(LIB_DIR)
 	install -c -m 0644 samples.d/hwth-profile $(LIB_DIR)/.profile-sample
 	test -d $(BIN_DIR) || mkdir -p $(BIN_DIR)
+	install -c -m 0755 samples.d/butters $(BIN_DIR)/butters
 	install -c -m 0755 samples.d/hwth-control $(BIN_DIR)/hwth
 	install -c -m 0755 samples.d/hwth-watchmark $(BIN_DIR)/hwth-watchmark
-	install -c -m 0755 samples.d/butters $(BIN_DIR)/butters
+	test -d $(ETC_DIR)/cron.weekly || mkdir -p $(ETC_DIR)/cron.weekly
+	install -c -m 0755 samples.d/pm2.cron $(ETC_DIR)/cron.weekly/pm2-update
 
 build:
 	@/bin/echo nothing to be done
@@ -150,7 +161,7 @@ createinitialarchive: clean sourceismissing
 	    suffix=; \
 	fi; \
 	git rev-parse HEAD >revision 2>/dev/null || echo alpha >revision; \
-	rm -fr .git .gitignore .gitrelease circle.yml samples.d/diags debian/highwaytohell debian/highwaytohell.debhelper.log; \
+	rm -fr .git .gitignore .gitrelease circle.yml db/*PoC samples.d/diags debian/highwaytohell debian/highwaytohell.debhelper.log; \
 	sed -i "s|(\([0-9]*\.[0-9]*\.[0-9]*-\)\([0-9]*\)) unstable;|(\1$${suffix}\2) unstable;|" debian/changelog
 	version=`awk '/^highwaytohell/{print $$2;exit}' debian/changelog | sed -e 's|^[^0-9]*\([0-9]*\.[0-9]*\.[0-9]*\)-.*|\1|'`; \
 	( cd .. ; tar -czf highwaytohell_$$version.orig.tar.gz highwaytohell )

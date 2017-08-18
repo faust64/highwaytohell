@@ -88,6 +88,20 @@ fail2ban_configure()
     fi
 }
 
+install_cqlsh()
+{
+# see https://stackoverflow.com/questions/40289324/cqlsh-client-module-object-has-no-attribute-parse-options
+# currently, I would recommend installing cassandra packages matching our backend
+    if ! test -x /usr/local/bin/cqlsh; then
+	notify_msg installing CQLSH from PIP
+	if ! pip install --upgrade cqlsh; then
+	    notify_msg may not be able to init or upgrade Cassandra schemas
+	else
+	    chmod 755 /usr/local/bin/cqlsh
+	fi
+    fi
+}
+
 install_node_modules()
 {
     cd /usr/share/highwaytohell
@@ -391,6 +405,21 @@ rsyslog_configure()
     fi
 }
 
+upgrade_db()
+{
+    if test -x /usr/share/highwaytohell/db/updateScript; then
+	if test -s /var/lib/highwaytohell/.profile; then
+	    if ! /usr/share/highwaytohell/db/updateScript >>/var/log/highwaytohell/db-update.log 2>&1; then
+		notify_msg WARNING: failed upgrading database - see /var/log/highwaytohell/db-update.log
+	    elif tail -1 /var/log/highwaytohell/db-update.log | grep 'database is up-to-date' >/dev/null; then
+		notify_msg NOTICE: database already up-to-date
+	    else
+		notify_msg NOTICE: database layout updated - make sure to upgrade all your workers
+	    fi
+	fi
+    fi
+}
+
 watchmark_configure()
 {
     if dpkg -l | grep -E ' (nsd|bind9|bind10) ' >/dev/null; then
@@ -425,6 +454,8 @@ case "$1" in
 	install_pm2
 	install_snyk
 	install_node_modules
+	#install_cqlsh
+	upgrade_db
 	pm2_reload
 	fail2ban_configure
 	logrotate_configure

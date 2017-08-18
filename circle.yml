@@ -2,6 +2,7 @@ machine:
   environment:
     CASSANDRA_HOST: 127.0.0.1
     CASSANDRA_KEYSPACE: hwth
+    CQLSH_VERSION: 3.4.0
     DNS_DRIVER: nsd
     NS_ROOT_DIR: /home/ubuntu/highwaytohell
     NS_KEYS_DIR: /home/ubuntu/highwaytohell/keys.d
@@ -40,6 +41,8 @@ test:
     - mkdir zones.d keys.d nsd.conf.d logs
     - touch ./nsd.conf.d/highwaytohell-zones.conf
 # wtf?
+# likely to be a problem upgrade layout from initial dump
+# see https://stackoverflow.com/questions/40289324/cqlsh-client-module-object-has-no-attribute-parse-options
     - sudo pip install --upgrade cqlsh
 # //
     - npm install -g pm2
