@@ -24,7 +24,6 @@ const execAsync = Promise.promisify(exec);
 const lookupDomain = 'SELECT * from zones WHERE origin = ?';
 const nsRootDir = process.env.NS_ROOT_DIR || '.';
 const nsZonesDir = process.env.NS_ZONES_DIR || (nsRootDir + '/zones.d');
-const stalledCheckInterval = ((process.env.BEE_RETRY_DELAY || 60) * 1000);
 const workerPool = process.env.HWTH_POOL || 'default';
 
 const redisBackend = process.env['REDIS_HOST_' + workerPool] || process.env.REDIS_HOST || '127.0.0.1';
@@ -134,6 +133,12 @@ zonesSub.on('message', (chan, msg) => {
 confSub.subscribe(confChannel);
 zonesSub.subscribe(zonesChannel);
 
+confQueue.on('ready', () => { logger.info('conf queue ready'); });
+confQueue.on('error', (e) => {
+	logger.error('conf queue errored');
+	logger.error(e);
+	process.exit(1);
+    });
 confQueue.process((task, done) => {
 	return pullDnssecKeys()
 	    .then(() => { return generateNsConf(client); })
@@ -148,6 +153,12 @@ confQueue.process((task, done) => {
 		    logger.error(e);
 		    done(); // should we send an alert?
 		});
+    });
+zonesQueue.on('ready', () => { logger.info('zone queue ready'); });
+zonesQueue.on('error', (e) => {
+	logger.error('zones queue errored');
+	logger.error(e);
+	process.exit(1);
     });
 zonesQueue.process((task, done) => {
 	if (task.data.origin !== undefined) {
@@ -185,6 +196,27 @@ zonesQueue.process((task, done) => {
 	}
     });
 
+const checkStalledJobs = schedule.scheduleJob('* * * * *', () => {
+	if (neighbors.isElectedMaster() !== true) {
+	    logger.info('skipping keys retrieval on slaves');
+	    return true;
+	}
+	confQueue.checkStalledJobs((err, num) => {
+		const sfx = ' stalled jobs in conf queue, ' + workerPool + ' pool';
+		if (err) {
+		    logger.error('failed checking for' + sfx);
+		    logger.error(err);
+		} else { logger.info('has ' + num + sfx); }
+	    });
+	zonesQueue.checkStalledJobs((err, num) => {
+		const sfx = ' stalled jobs in zones queue, ' + workerPool + ' pool';
+		if (err) {
+		    logger.error('failed checking for' + sfx);
+		    logger.error(err);
+		} else { logger.info('has ' + num + sfx); }
+	    });
+    });
+
 logger.info('waiting for neighbors');
 execAsync('sleep 15')
     .then(() => {
@@ -211,18 +243,6 @@ execAsync('sleep 15')
 		    logger.info('WARNING: failed initializing airbrake');
 		}
 	    }
-	    confQueue.checkStalledJobs(stalledCheckInterval, (err, num) => {
-		    if (err) {
-			logger.error('failed checking for stalled jobs in conf queue');
-			logger.error(err);
-		    } else { logger.info('has ' + num + ' stalled jobs in conf queue'); }
-		});
-	    zonesQueue.checkStalledJobs(stalledCheckInterval, (err, num) => {
-		    if (err) {
-			logger.error('failed checking for stalled jobs in zones queue');
-			logger.error(err);
-		    } else { logger.info('has ' + num + ' stalled jobs in zones queue'); }
-		});
 	})
     .catch((e) => {
 	    logger.error(e);

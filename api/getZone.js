@@ -1,8 +1,8 @@
 const Promise = require('bluebird');
 
-module.exports = (cassandra, userId, domain) => {
+module.exports = (cassandra, domain) => {
 	return new Promise ((resolve, reject) => {
-		let queryDomain = "SELECT * FROM zones WHERE idowner = '" + userId + "' AND origin = '" + domain + "'";
+		let queryDomain = "SELECT * FROM zones WHERE origin = '" + domain + "'";
 		cassandra.execute(queryDomain)
 		    .then((resp) => {
 			    if (resp.rows !== undefined && resp.rows[0] !== undefined) {

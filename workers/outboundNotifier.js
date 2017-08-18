@@ -5,6 +5,7 @@ const fs = require('fs');
 const logger = require('../lib/logger.js')('outbound-notifier');
 const outboundNotify = require('../lib/outboundNotify.js');
 const pmxProbe = require('pmx').probe();
+const schedule = require('node-schedule');
 const sendMail = require('../lib/sendMail.js');
 const workerPool = process.env.HWTH_POOL || 'default';
 
@@ -18,9 +19,9 @@ if (process.env.CASSANDRA_AUTH_USER && process.env.CASSANDRA_AUTH_PASS) {
 }
 const bullProbe = pmxProbe.meter({ name: 'bull jobs per minute', sample: 60 });
 const client = new cassandra.Client(cassandraOpts);
+const neighbors = require('../lib/advertiseNeighbors.js')('notifiy-' + workerPool);
 const redisBackend = process.env['REDIS_HOST_' + workerPool] || process.env.REDIS_HOST || '127.0.0.1';
 const redisPort = process.env['REDIS_PORT_' + workerPool] || process.env.REDIS_PORT || 6379;
-const stalledCheckInterval = ((process.env.BEE_RETRY_DELAY || 60) * 1000);
 
 const notifyQueue = new Queue('outbound-notify-' + workerPool, { removeOnSuccess: true, isWorker: true, redis: { port: redisPort, host: redisBackend }});
 
@@ -41,6 +42,12 @@ if (process.env.TWILIO_SID && process.env.TWILIO_TOKEN && process.env.TWILIO_FRO
     }
 }
 
+notifyQueue.on('ready', () => { logger.info('ready'); });
+notifyQueue.on('error', (e) => {
+	logger.error('queue errored');
+	logger.error(e);
+	process.exit(1);
+    });
 notifyQueue.process((task, done) => {
 	logger.info('processing ' + task.data.what || 'undefined');
 	if (task.data.what === 'healthcheck') {
@@ -139,9 +146,16 @@ notifyQueue.process((task, done) => {
 	}
     });
 
-notifyQueue.checkStalledJobs(stalledCheckInterval, (err, num) => {
-	if (err) {
-	    logger.error('failed checking for stalled jobs');
-	    logger.error(err);
-	} else { logger.info('has ' + num + ' stalled jobs'); }
+const checkStalledJobs = schedule.scheduleJob('* * * * *', () => {
+	if (neighbors.isElectedMaster() !== true) {
+	    logger.info('skipping keys retrieval on slaves');
+	    return true;
+	}
+	notifyQueue.checkStalledJobs((err, num) => {
+		const sfx = ' stalled jobs in notify queue, ' + workerPool + ' pool';
+		if (err) {
+		    logger.error('failed checking for' + sfx);
+		    logger.error(err);
+		} else { logger.info('has ' + num + sfx); }
+	    });
     });

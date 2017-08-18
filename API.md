@@ -9,6 +9,7 @@ Table of Contents
     * [2FA Authentication Workflow](#2fa-authentication-workflow)
     * [Notes on Token-Based Authentication](#notes-on-token-based-authentication)
     * [Notes on Mails and SMS Notifications](#notes-on-mails-and-sms-notifications)
+    * [Notes on Roles](#notes-on-roles)
 
 ## Routes Inventory
 
@@ -21,6 +22,12 @@ Table of Contents
 | POST   | /domains                                 | api list zones               |
 | GET    | /domains/:domainName                     | 500                          |
 | POST   | /domains/:domainName                     | api zone record              |
+| GET    | /domains/:domainName/admin/add           | 500                          |
+| POST   | /domains/:domainName/admin/add           | api add authorization        |
+| GET    | /domains/:domainName/admin/del           | 500                          |
+| POST   | /domains/:domainName/admin/del           | api delete authorization     |
+| GET    | /domains/:domainName/admin               | list authorizations          |
+| POST   | /domains/:domainName/admin               | api list authorizations      |
 | GET    | /domains/:domainName/add                 | 500                          |
 | POST   | /domains/:domainName/add                 | api add domain               |
 | GET    | /domains/:domainName/del                 | 500                          |
@@ -61,16 +68,8 @@ Table of Contents
 | POST   | /records/:domainName/edit/:recordName    | api edit record              |
 | GET    | /records/:domainName/get/:recordName     | browser get records          |
 | POST   | /records/:domainName/get/:recordName     | api get records              |
-| GET    | /records/:domainName                     | browser list tokens          |
+| GET    | /records/:domainName                     | browser list records         |
 | POST   | /records/:domainName                     | api list records             |
-| GET    | /tokens/add                              | 500                          |
-| POST   | /tokens/add                              | api generate token           |
-| GET    | /tokens/edit                             | 500                          |
-| POST   | /tokens/edit                             | edit api token               |
-| GET    | /tokens/del                              | 500                          |
-| POST   | /tokens/del                              | api drop token               |
-| GET    | /tokens                                  | browser list tokens          |
-| POST   | /tokens                                  | api list tokens              |
 | GET    | /settings/2fa/enable                     | 500                          |
 | POST   | /settings/2fa/enable                     | enable 2fa auth              |
 | GET    | /settings/2fa/confirm                    | 500                          |
@@ -89,6 +88,14 @@ Table of Contents
 | POST   | /settings/logs                           | api list login history       |
 | GET    | /settings/notify/login                   | 500                          |
 | POST   | /settings/notify/login                   | setup notifications on login |
+| GET    | /settings/tokens/add                     | 500                          |
+| POST   | /settings/tokens/add                     | api generate token           |
+| GET    | /settings/tokens/edit                    | 500                          |
+| POST   | /settings/tokens/edit                    | edit api token               |
+| GET    | /settings/tokens/del                     | 500                          |
+| POST   | /settings/tokens/del                     | api drop token               |
+| GET    | /settings/tokens                         | browser list tokens          |
+| POST   | /settings/tokens                         | api list tokens              |
 | GET    | /settings                                | browser user settings        |
 | POST   | /settings                                | update user settings         |
 
@@ -204,3 +211,21 @@ From the CLI client, use `butters -R contacts -a add -T address@fqdn.com`.
 In both cases, a confirmation email would be sent to you - similar to those
 sent during account registration. Click the link to confirm your address and
 eventually use it as recipient setting up notifications.
+
+## Notes on Roles
+
+A newly created user comes with no permissions, limiting his access to his
+own settings.
+
+Creating a zone, an user becomes administrator for that domain. From the
+domain view, he may then grant third-party users with roles, accessing
+resources from this domain.
+
+The following roles could be used on a per-user, per-domain basis:
+
+ * admin: would have all privileges on a zone and its resources - including
+   editing permissions, or deleting the zone.
+ * manager: would have global read and write privileges over our zone
+   resources - including enabling or disabling DNSSEC
+ * operator: would have read and write privileges over records and health checks
+ * viewer: would have read accesses over resources from our zone

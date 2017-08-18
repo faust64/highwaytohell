@@ -7,6 +7,8 @@ Table of Contents
 
   * [HighWayToHell](#high-way-to-hell)
     * [Introducing HWTH](#introducing-hwth)
+      * [Pool](#pool)
+      * [Scaling Out](#scaling-out)
       * [What does it do](#what-does-it-do)
       * [Todolist](#todolist)
       * [QuickStart](#quickstart)
@@ -21,26 +23,38 @@ Table of Contents
 
 ## Introducing HWTH
 
-![HWTH Pool Illustrated](samples.d/diags/hwth.png)
-
-![Scaling out HWTH](samples.d/diags/hwth-distribution.png)
-
 Some hopefully-scalable, DNSSEC-capable, DNS manager featuring health checks
 & alerts configuration (HTTP POST/GET, SMS or email).
 Let's be honest, the point is to replace Route53 where I can, if I can, ...
 Any advices, contribution or feedback welcome.
 
+### Pool
+
+![HWTH Pool Illustrated](samples.d/diags/hwth.png)
+
+### Scaling out
+
+![Scaling out HWTH](samples.d/diags/hwth-distribution.png)
+
 ### What does it do
 
- * debian packages can be generated via Makefile. Installing package, no
-   service would be started. Upgrading packages, services would be reloaded.
- * having a running Cassandra & Redis setup, and installed service profile
-   configuration (`/var/lib/highwaytohell/.profile`, see setup instructions),
-   you may start several workers, depending on the features you want to run
+ * debian packages can be generated via Makefile. Installing package will pull
+   NodeJS 6.9.1 (in `/usr/local/nodejs`, from NodeJS binaries), as well as
+   `PM2` (NodeJS process manager we would use driving our services). A runtime
+   user would be created (`hwth`), our NodeJS code shouldn't run as root. You
+   may find a sample nginx configuration in `/usr/share/doc/highwaytohell`,
+   should you want to start our API gateway service - having a valid x509
+   certificate here is recommended.
+ * package will install `/var/lib/highwaytohell/.profile.sample`. Write your own
+   `/var/lib/highwaytohell/.profile` pointing your workers to the proper Redis,
+   Cassandra, SMTP, ... services. Distributing your setup, make sure workers
+   from different zones would be assigned with varying `HWTH_POOL` and
+   `HWTH_BACKUP_POOL`values. You may also specialize instances to run a single
+   kind of worker (`RUN_WORKERS`), or to fork more than 2 processes (`FORK`).
  * starting the refreshZones worker, you would be able to generate NSD or
    BIND configurations & corresponding zones files. Note before doing so,
    you would have to start a `hwth-watchmark` service in charge of reloading
-   your nameserver configuration - as root, while NodeJS user can't.
+   your nameserver configuration - as root, while our NodeJS user can't.
  * starting the checkHealth worker, you would be able to run health checks
    that may eventually be used as conditions generating your DNS zones or
    scheduling notifications
@@ -48,7 +62,8 @@ Any advices, contribution or feedback welcome.
    proxy forwarding connections to your lookpack on port 8080, you would
    have access to a web client declaring domains, records, health checks,
    creating API tokens for CLI usage (see `samples.d/butters`), enabling
-   2FA protection via authenticator such as Authy.
+   2FA protection via authenticator such as Authy, sharing your zones
+   management with other users.
  * starting the outboundNotifier worker, you should be able to configure
    POST/GET/email/SMS notifications based on your health check statuses,
    as well as notifications on login and/or failed login accessing our
@@ -56,10 +71,7 @@ Any advices, contribution or feedback welcome.
 
 ### Todolist
 
- * sharing zones management with third-party accounts (management entities)
- * proper ACL management restricting accesses within a zone (RO mode)
  * notifier (mail/hook/sms?) - outboundNotifier work in progress
- * for all queries, refactor the way we ensure user is allowed to proceed
  * handling redis authentication
  * paging (?)
  * zones import tool?
@@ -86,8 +98,13 @@ $ git clone https://github.com/faust64/highwaytohell.git
 $ cd highwaytohell
 $ make createinitialarchive
 $ make createdebbin
-$ ls ../
-highwaytohell  highwaytohell_0.0.1-alpha1_all.deb  highwaytohell_0.0.1-alpha1_amd64.changes  highwaytohell_0.0.1-alpha1.debian.tar.gz  highwaytohell_0.0.1-alpha1.dsc  highwaytohell_0.0.1.orig.tar.gz
+$ ls -1 ../
+highwaytohell
+highwaytohell_0.0.1-alpha1_all.deb
+highwaytohell_0.0.1-alpha1_amd64.changes
+highwaytohell_0.0.1-alpha1.debian.tar.gz
+highwaytohell_0.0.1-alpha1.dsc
+highwaytohell_0.0.1.orig.tar.gz
 ```
 
 Later on, you may install this package alongside nsd:
@@ -115,9 +132,9 @@ keyspace replication strategy depends on your Cassandra cluster configuration.
 Give a look to `/var/lib/highwaytohell/.profile-sample`. Install your own
 copy as `/var/lib/highwaytohell/.profile` updating variables according to
 your own setup (do not forget setting the ones related to email relaying,
-as you would not be able to register an account without clicking some
-confirmation link). Make sure the profile you installed can be read by
-`hwth` (`chmod 0644` should do, preferably `root` owned).
+as you would not be able to register an account or trust email addresses
+without clicking some confirmation link). Make sure the profile you installed
+can be read by `hwth` (`chmod 0644` should do, preferably `root` owned).
 
 Having started service, the apiGW worker should be listening on your loopback,
 port 8080. Setup some reverse proxy (see `samples.d/nginx.conf`). Access
@@ -140,7 +157,8 @@ tables would be used:
  * logins: a login history collection, associating an user ID to a client IP,
    a timestamp and wether login succeeded or failed
  * nspools: inventory of ns pools
- * zones: zones inventory and global settings, mapped to their owner and nspool
+ * zones: zones inventory and global settings, mapped to their nspool
+ * rbaclookalike: maps users to zones to a role
  * records: DNS records definitions, mapped to their zone
  * checks: health checks definitions, mapped to their zone
  * checkhistory: health checks history, mapped to a check
@@ -149,7 +167,7 @@ tables would be used:
  * dnsseckeys: storing base64-encoded ZSK & KSK keys, mapped to a ZSK & KSK
    key names, as listed in the zones table
  * signedzones: storing base64-encoded DNSSEC zones, once they're signed, for
-   our neighbors to get their copy. mapped to a domain (FIXME: map to owner)
+   our neighbors to get their copy. mapped to a domain
 
 ## Workers
 
@@ -158,7 +176,7 @@ tables would be used:
 A first class of worker is in charge of generating zones. `refreshZones`
 connects to a couple of bull queue, and also opens a pair of
 publisher/subscriber to redis.
-Workers from a pool receive refresh notifications (from our API gw or
+Workers from a pool receive refresh notifications (from our API gateway or
 health check workers) via the bull queues.
 Upon completion, we send the corresponding domain name into our pubsub, so
 that our neighbors eventually reload their own zones as well.
@@ -168,10 +186,9 @@ when zone gets updated - and that copy gets installed to neighbors.
 
 NOTE: the `refreshZones` worker, running from an unprivileged user, would
 not be able to reload your name servers. To address this, there is a second
-service you would need to enable on any `refreshZones` also serving DNS
-zones to the public. Said process would run as root, using `inotifywait`
-to reload `nsd` or `bind`, whenever a mark file gets updated in the process
-of refreshing zones.
+service you would need to enable on any `refreshZones` worker that serves DNS
+zones. Said process would run as root, using `inotifywait` to reload `nsd` or
+`bind`, whenever a mark file gets updated in the process of refreshing zones.
 
 Assuming that either bind or nsd package was present while installing
 highwaytohell package, then either `/etc/systemd/system/hwth-watchmark.service`
@@ -211,9 +228,12 @@ FIXME: resolving NSs in charge for a zone, we have a
        that when your nspool tag name alphabetically succeeds your bkppool tag
        name, then SELECT would return nameserver FQDNs such as your bkppool
        would actually be considered to be your nspool, and vice versa.
+
 FIXME: ensure confQueue & zonesQueue are not applying some change simultaneously
        (some kind of lock ...)
+
 DISCUSS: do we need keeping plaintext zones when using DNSSEC?
+
 DISCUSS: we assume running name server on that worker, we could split it
        so a worker generates (& signs) zones (without necessarily running
        a name server locally), while an other one would only gets stuff we
@@ -225,11 +245,12 @@ DISCUSS: we assume running name server on that worker, we could split it
 ### checkHealth
 
 A second class of worker is in charge of running health checks. `checkHealth`
-setups a couple schedules.
+setups a few schedules.
 The first one iterates over the health checks declared in Cassandra, running
 those that need to be refreshed and adding records to our health checks history
 table.
-And the second one purges older records from that history table.
+A couple others purges older records from that history table, and checks that
+might be referring to domains end-users would have purged.
 
 ### outboundNotifier
 
@@ -251,22 +272,23 @@ enjoy customizing CSSs), with token authentication, 2FA-capable.
 
 FIXME: dont res.send.(errorcode) if req.sessions.userid: instead render a
        common template
+
 FIXME: error & confirmation pages back links & labels
 
 ## CLI
 
 Having deployed an API gateway, a sample API client can be found in
-`samples.d/butters`. Install it where you would be able to execute it - debian
-packaging currently installs it as `/usr/bin/butter`.
+`samples.d/butters`. Debian packaging would install it as `/usr/bin/butter`.
 
 That client assumes you have a valid API token. This may be created via the
 apiGW web UI - or by inserting a user in your Cassandra keyspace - refer to
-./db/cassandra.test for a concrete sample - you do not necessarily need the
+`./db/cassandra.test` for a concrete sample - you do not necessarily need the
 account record in Cassandra to involve a valid email address or passphrase...
 
 Token and endpoint configuration should be defined in your `~/.butters.cfg`.
-Use `samples.d/butters.cfg.sample` configuring your token, user ID, gateway
-address and proto.
+Use `samples.d/butters.cfg.sample` (or
+`/usr/share/doc/highwaytohell/butters.cfg.sample`) configuring your token, user
+ID, gateway address, port and proto.
 
 ```
 $ butters -h
@@ -320,13 +342,13 @@ Usage: butters [OPTION]
 			with identic names
       --ttl		sets record TTL, defaults to 3600
 $ butters
-[{"origin":"peerio.com","idowner":42,"authrefresh":null,"failrefresh":null,"ksk":"Kpeerio.com.+007+21300","kskdata":null,"lastttl":1,"negrefresh":null,"ns":null,"nspool":"default","refresh":null,"serial":"150178821015","zsk":"Kpeerio.com.+007+12410","zskdata":null},{"origin":"peerio.biz","idowner":42,"authrefresh":null,"failrefresh":null,"ksk":"Kpeerio.biz.+007+46485","kskdata":null,"lastttl":1,"negrefresh":null,"ns":null,"nspool":"default","refresh":null,"serial":"150161166270","zsk":"Kpeerio.biz.+007+39278","zskdata":null}]
+[{"origin":"peerio.com","authrefresh":null,"failrefresh":null,"ksk":"Kpeerio.com.+007+21300","kskdata":null,"lastttl":1,"negrefresh":null,"ns":null,"nspool":"default","refresh":null,"serial":"150178821015","zsk":"Kpeerio.com.+007+12410","zskdata":null},{"origin":"peerio.biz","authrefresh":null,"failrefresh":null,"ksk":"Kpeerio.biz.+007+46485","kskdata":null,"lastttl":1,"negrefresh":null,"ns":null,"nspool":"default","refresh":null,"serial":"150161166270","zsk":"Kpeerio.biz.+007+39278","zskdata":null}]
 $ butters -d example.com -a add
 domain example.com created
 $ butters -d example.com -a del
 domain example.com dropped
 $ butters -d peerio.com -a get
-{"origin":"peerio.com","idowner":42,"authrefresh":null,"failrefresh":null,"ksk":"Kpeerio.com.+007+21300","kskdata":null,"lastttl":1,"negrefresh":null,"ns":null,"nspool":"default","refresh":null,"serial":"150178821015","zsk":"Kpeerio.com.+007+12410","zskdata":null}
+{"origin":"peerio.com","authrefresh":null,"failrefresh":null,"ksk":"Kpeerio.com.+007+21300","kskdata":null,"lastttl":1,"negrefresh":null,"ns":null,"nspool":"default","refresh":null,"serial":"150178821015","zsk":"Kpeerio.com.+007+12410","zskdata":null}
 $ butters -d peerio.biz -a get -R records -r account
 [{"origin":"peerio.biz","type":"A","name":"account","setid":"icebear-account-A","healthcheckid":0,"priority":0,"target":"54.198.78.160","ttl":null},{"origin":"peerio.biz","type":"A","name":"account","setid":"icebear-account-B","healthcheckid":0,"priority":0,"target":"52.72.185.246","ttl":null}]
 $ butters -d peerio.com -a edit --disablednssec

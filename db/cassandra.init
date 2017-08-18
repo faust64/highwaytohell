@@ -16,6 +16,8 @@ CREATE TABLE users (
 	PRIMARY KEY (uuid)
     );
 
+CREATE INDEX idx_email on users(emailaddress);
+
 CREATE TABLE contactaddresses (
 	uuid varchar,
 	type varchar,
@@ -38,8 +40,6 @@ CREATE TABLE logins (
         succeeded boolean,
 	PRIMARY KEY (uuid, time)
     );
-
-CREATE INDEX idx_email on users(emailaddress);
 
 CREATE TABLE tokens (
 	idowner varchar,
@@ -66,13 +66,20 @@ CREATE TABLE zones (
 	zsk varchar,
 	nspool varchar,
 	bkppool varchar,
-	idowner varchar,
-	PRIMARY KEY (origin, idowner)
+	PRIMARY KEY (origin)
     );
 
 CREATE INDEX idx_pool on zones(nspool);
 CREATE INDEX idx_bkppool on zones(bkppool);
-CREATE INDEX idx_owner on zones(idowner);
+
+CREATE TABLE rbaclookalike (
+	domain varchar,
+	uuid varchar,
+	role varchar,
+	PRIMARY KEY (domain, uuid)
+    );
+
+CREATE INDEX idx_owner on rbaclookalike(uuid);
 
 CREATE TABLE records (
 	origin varchar,

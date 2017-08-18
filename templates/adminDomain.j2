@@ -28,8 +28,38 @@
 	<link href='/static/style.css' rel='stylesheet'/>
 	<script src='/static/script.js' type='application/javascript'></script>
     </head>
-    <body>
+    <body onLoad='load();'>
 	<div class='logout'><a href='/logout'>Logout {{ username }}</a></div>
+	<div id='overlay' ondrop='drop(event)' ondragover='allowDrop(event)'>
+	    <div id='droppable' class='nestedoverlay' draggable='true' ondragstart='drag(event)'>
+		<form id='formhealthchecks' method='POST' action='/domains/{{ domain }}/admin/add'>
+		    <a id='closeoverlay' onClick='hideForm()' href='#'></a>
+		    <table id='formadd'>
+			<tr>
+			    <td id='formname' class='addformtitle' colspan='2'>Add Authorization</td>
+			</tr>
+			<tr>
+			    <td class=inputlabel>User ID<br/>or Primary Address</td>
+			    <td class=inputdata><input id='mgtuser' type=text size=32 name='thirdParty'/></td>
+			</tr>
+			<tr>
+			    <td class=inputlabel>Role</td>
+			    <td class=inputdata>
+				<select id='mgtrole' name='assumesRole'>
+				    <option value='admin' selected>Admin</option>
+				    <option value='manager'>Manager</option>
+				    <option value='operator'>Operator</option>
+				    <option value='viewer'>Viewer</option>
+				</select>
+			    </td>
+			</tr>
+			<tr>
+			    <td class=inputsubmit colspan='2'><input id='hacksubmit' type='submit' value='Register Authorization'/></td>
+			</tr>
+		    </table>
+		</form>
+	    </div>
+	</div>
 	<table id='mainpanel'>
 	    <tr class='sections'>
 		<th class='section'><a href='/domains'>Domains</a></th>
@@ -42,22 +72,24 @@
 		<td colspan='5'>
 		    <table id='nestedpanel'>
 			<tr>
-			    <th class='descname'>Origin</th>
-			    <td class='descdata'>{{ origin }}</td>
+			    <td class='toggleadd' colspan='5'><a onClick='addAuthorization("{{ domain }}");' href='#'>Add Authorization</a></td>
 			</tr>
 			<tr>
-			    <th class='descname'>Nameservers</th>
-			    <td class='descdata'>{{{ nspool }}}</td>
+			    <th class='descname'>User ID</th>
+			    <th class='descname'>Username</th>
+			    <th class='descname'>Primary Address</th>
+			    <th class='descname'>Role</th>
+			    <th class='descname'>Drop privileges</th>
 			</tr>
+{{#records}}
 			<tr>
-			    <th class='descname'>Serial</th>
-			    <td class='descdata'>{{ serial }}</td>
+			    <td onClick='editAuthorization("{{ domain }}", "{{ uuid }}", "{{ role }}");' class='descdata'>{{ uuid }}</td>
+			    <td onClick='editAuthorization("{{ domain }}", "{{ uuid }}", "{{ role }}");' class='descdata'>{{ username }}</td>
+			    <td onClick='editAuthorization("{{ domain }}", "{{ uuid }}", "{{ role }}");' class='descdata'>{{ emailaddr }}</td>
+			    <td onClick='editAuthorization("{{ domain }}", "{{ uuid }}", "{{ role }}");' class='descdata'>{{ role }}</td>
+			    <td class='record'><a onClick='dropAuthorization("{{ domain }}", "{{ uuid }}");' href='#' alt='Drop Authorization'><img class='deletelogoimg' src='/static/remove.png'></a></td>
 			</tr>
-			<tr>
-			    <th class='descname'>DNSSEC</th>
-			    <td class='descdata'>{{{ dnssec }}}</td>
-			</tr>
-			{{{ admMagic }}}
+{{/records}}
 		    </table>
 		</td>
 	    </tr>

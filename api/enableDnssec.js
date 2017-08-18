@@ -18,7 +18,7 @@ const nsKeysDir = process.env.NS_KEYS_DIR || (nsRootDir + '/keys.d');
 
 const execAsync = Promise.promisify(exec);
 
-module.exports = (cassandra, domain, idowner) => {
+module.exports = (cassandra, domain) => {
 	return new Promise ((resolve, reject) => {
 		this._log = require('../lib/logger.js')('dnssec-init');
 		let self = this;
@@ -41,7 +41,7 @@ module.exports = (cassandra, domain, idowner) => {
 				};
 			    if (ksk !== '' && zsk !== '') {
 				if (process.env.DEBUG) { self._log.info('generated zsk:' + zsk + ' & ksk:' + ksk); }
-				let command = "UPDATE zones SET ksk = '" + ksk + "', zsk = '" + zsk + "' WHERE origin = '" + domain + "' AND idowner = '" + idowner + "'";
+				let command = "UPDATE zones SET ksk = '" + ksk + "', zsk = '" + zsk + "' WHERE origin = '" + domain + "'";
 				cassandra.execute(command)
 				    .then((resp) => {
 					    self._log.info('dnssec initialized for ' + domain);
