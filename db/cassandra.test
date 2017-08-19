@@ -3,6 +3,9 @@ USE hwth;
 INSERT INTO users (uuid, pwhash, username) VALUES ('8f9b0211-7929-11e7-a6e4-efbce86a12e1', 'adminhash', 'charlie');
 INSERT INTO users (uuid, pwhash, username, confirmcode, emailaddress, notifylogin, notifyfailed) VALUES ('8f9b2921-7929-11e7-bac8-d68f558a7005', '65502b192335dc809264572479800824cb8443b783ede735175e1ba40a016e35', 'syn', 'true', 'samuel@peerio.com', true, true);
 
+INSERT INTO contactaddresses (uuid, type, target, confirmcode) VALUES ('8f9b2921-7929-11e7-bac8-d68f558a7005', 'smtp', 'samuel@peerio.com', 'true');
+INSERT INTO contactaddresses (uuid, type, target, confirmcode) VALUES ('8f9b2921-7929-11e7-bac8-d68f558a7005', 'sms', '033141401100', 'true');
+
 INSERT INTO tokens (idowner, tokenstring, permissions, trusted) VALUES ('8f9b2921-7929-11e7-bac8-d68f558a7005', 'abctoken1234', '*', '192.168.0.0/16,10.0.0.0/8,127.0.0.1');
 INSERT INTO tokens (idowner, tokenstring, permissions, trusted) VALUES ('8f9b2921-7929-11e7-bac8-d68f558a7005', 'abcreadonly1234', '*:ro', '*');
 
@@ -15,10 +18,10 @@ INSERT INTO zones (origin, nspool, bkppool, serial) VALUES ('peerio.com', 'defau
 INSERT INTO rbaclookalike (domain, uuid, role) VALUES ('peerio.biz', '8f9b2921-7929-11e7-bac8-d68f558a7005', 'admin');
 INSERT INTO rbaclookalike (domain, uuid, role) VALUES ('peerio.com', '8f9b2921-7929-11e7-bac8-d68f558a7005', 'admin');
 
-INSERT INTO checks (uuid, origin, type, target, headers, match, nspool, requireHealthy, requireUnhealthy, invert) VALUES ('e2f2b8a0-7928-11e7-ae80-88f52efeea60', 'peerio.com', 'http', 'https://54.198.78.160/ping', 'icebear.peerio.com', 'OK', 'default', 3, 2, false);
-INSERT INTO checks (uuid, origin, type, target, headers, match, nspool, requireHealthy, requireUnhealthy, invert) VALUES ('e2f2dfb0-7928-11e7-abc0-01fda1e91471', 'peerio.com', 'http', 'https://52.72.185.246/ping', 'icebear.peerio.com', 'OK', 'backup', 3, 2, false);
-INSERT INTO checks (uuid, origin, type, target, headers, match, nspool, requireHealthy, requireUnhealthy, invert) VALUES ('e2f2dfb1-7928-11e7-8053-9262b9b8e1d4', 'peerio.com', 'http', 'https://54.198.78.160/ping', 'iceblobvirginia.peerio.com', 'OK', 'default', 3, 2, false);
-INSERT INTO checks (uuid, origin, type, target, headers, match, nspool, requireHealthy, requireUnhealthy, invert) VALUES ('e2f2dfb2-7928-11e7-91c1-ed90532c5f11', 'peerio.com', 'http', 'https://52.72.185.246/ping', 'iceblobvirginia.peerio.com', 'OK', 'backup', 3, 2, false);
+INSERT INTO checks (uuid, origin, name, type, target, headers, match, nspool, requireHealthy, requireUnhealthy, invert) VALUES ('e2f2b8a0-7928-11e7-ae80-88f52efeea60', 'peerio.com', 'label1', 'http', 'https://54.198.78.160/ping', 'icebear.peerio.com', 'OK', 'default', 3, 2, false);
+INSERT INTO checks (uuid, origin, name, type, target, headers, match, nspool, requireHealthy, requireUnhealthy, invert) VALUES ('e2f2dfb0-7928-11e7-abc0-01fda1e91471', 'peerio.com', 'label2', 'http', 'https://52.72.185.246/ping', 'icebear.peerio.com', 'OK', 'backup', 3, 2, false);
+INSERT INTO checks (uuid, origin, name, type, target, headers, match, nspool, requireHealthy, requireUnhealthy, invert) VALUES ('e2f2dfb1-7928-11e7-8053-9262b9b8e1d4', 'peerio.com', 'label3', 'http', 'https://54.198.78.160/ping', 'iceblobvirginia.peerio.com', 'OK', 'default', 3, 2, false);
+INSERT INTO checks (uuid, origin, name, type, target, headers, match, nspool, requireHealthy, requireUnhealthy, invert) VALUES ('e2f2dfb2-7928-11e7-91c1-ed90532c5f11', 'peerio.com', 'label4', 'http', 'https://52.72.185.246/ping', 'iceblobvirginia.peerio.com', 'OK', 'backup', 3, 2, false);
 
 INSERT INTO records (origin, name, priority, target, ttl, type, setId, healthCheckId) VALUES ('peerio.com', 'icebear', 0, '54.198.78.160', 3600, 'A', 'icebear-ws-A', 'e2f2b8a0-7928-11e7-ae80-88f52efeea60');
 INSERT INTO records (origin, name, priority, target, ttl, type, setId, healthCheckId) VALUES ('peerio.com', 'icebear', 0, '52.72.185.246', 3600, 'A', 'icebear-ws-B', 'e2f2dfb0-7928-11e7-abc0-01fda1e91471');
@@ -28,3 +31,8 @@ INSERT INTO records (origin, name, priority, target, ttl, type, setId, healthChe
 INSERT INTO records (origin, name, priority, target, ttl, type, setId, healthCheckId) VALUES ('peerio.com', 'mail', 0, '52.72.185.246', 3600, 'A', 'icebear-mail-B', null);
 INSERT INTO records (origin, name, priority, target, ttl, type, setId, healthCheckId) VALUES ('peerio.com', 'account', 0, '54.198.78.160', 3600, 'A', 'icebear-account-A', null);
 INSERT INTO records (origin, name, priority, target, ttl, type, setId, healthCheckId) VALUES ('peerio.com', 'account', 0, '52.72.185.246', 3600, 'A', 'icebear-account-B', null);
+
+INSERT INTO checkhistory (uuid, when, value) VALUES ('e2f2dfb0-7928-11e7-abc0-01fda1e91471', '1234568786000', false);
+INSERT INTO checkhistory (uuid, when, value) VALUES ('e2f2dfb0-7928-11e7-abc0-01fda1e91471', '1234568787000', true);
+INSERT INTO checkhistory (uuid, when, value) VALUES ('e2f2dfb0-7928-11e7-abc0-01fda1e91471', '1234568788000', false);
+INSERT INTO checkhistory (uuid, when, value) VALUES ('e2f2dfb0-7928-11e7-abc0-01fda1e91471', '1234568789000', true);
