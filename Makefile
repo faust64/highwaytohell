@@ -161,7 +161,7 @@ createinitialarchive: clean sourceismissing
 	    suffix=; \
 	fi; \
 	git rev-parse HEAD >revision 2>/dev/null || echo alpha >revision; \
-	rm -fr .git .gitignore .gitrelease circle.yml db/*PoC samples.d/diags debian/highwaytohell debian/highwaytohell.debhelper.log; \
+	rm -fr .git .gitignore .gitrelease circle.yml db/*PoC samples.d/diags samples.d/screens debian/highwaytohell debian/highwaytohell.debhelper.log; \
 	sed -i "s|(\([0-9]*\.[0-9]*\.[0-9]*-\)\([0-9]*\)) unstable;|(\1$${suffix}\2) unstable;|" debian/changelog
 	version=`awk '/^highwaytohell/{print $$2;exit}' debian/changelog | sed -e 's|^[^0-9]*\([0-9]*\.[0-9]*\.[0-9]*\)-.*|\1|'`; \
 	( cd .. ; tar -czf highwaytohell_$$version.orig.tar.gz highwaytohell )
