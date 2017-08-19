@@ -135,6 +135,7 @@ sadly there is no client-only package ...
 Consider the following sample list of name servers:
 
 | IP      | FQDN            | pool  |
+| :-----: | :-------------: | :---: |
 | 1.1.1.1 | ns1.example.com | poolA |
 | 1.1.1.2 | ns1.example.com | poolA |
 | 1.1.2.1 | ns2.example.com | poolB |

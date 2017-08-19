@@ -61,7 +61,7 @@ install:
 	install -c -m 0644 samples.d/nrpe/check_pm2.cfg $(DOC_DIR)/nrpe-pm2-conf
 	install -c -m 0644 samples.d/nrpe/sudoers-pm2 $(DOC_DIR)/nrpe-pm2-sudoers
 	install -c -m 0644 samples.d/hwth-watchmark.service $(DOC_DIR)/hwth-watchmark.service
-	for potentialDoc in API.md README.md; \
+	for potentialDoc in API.md README.md QUICKSTART.md; \
 	    do \
 		test -s $$potentialDoc || continue; \
 		install -c -m 0644 $$potentialDoc $(DOC_DIR)/$$potentialDoc; \
