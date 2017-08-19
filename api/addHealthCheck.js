@@ -4,10 +4,10 @@ const uuid = require('cassandra-driver').types.TimeUuid;
 module.exports = (cassandra, domain, checkObject) => {
 	return new Promise ((resolve, reject) => {
 		let checkId = checkObject.uuid || uuid.now();
-		let insertCheck = "INSERT INTO checks (uuid, origin, type, target, headers, "
+		let insertCheck = "INSERT INTO checks (uuid, origin, type, name, target, headers, "
 			+ "match, nspool, requireHealthy, requireUnhealthy, invert) VALUES "
 			+ "('" + checkId + "', '" + domain + "', '" + checkObject.type + "', '"
-			+ checkObject.target + "', ";
+			+ checkObject.name + "', '" + checkObject.target + "', ";
 		if (checkObject.headers !== false && checkObject.headers !== "") {
 		    insertCheck += "'" + checkObject.headers + "'"
 		} else { insertCheck += "null" }

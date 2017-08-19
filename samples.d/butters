@@ -12,6 +12,7 @@ PRG=`basename $0`
 ACTION=list
 CHECKID=
 CHECKHEALTHY=3
+CHECKNAME=my-check
 CHECKUNHEALTHY=2
 CHECKTYPE=http
 CONTACTTYPE=smtp
@@ -69,6 +70,7 @@ Usage: $PRG [OPTION]
       --checktype	defines healthcheck type, defaults to http
       --header		defines healthcheck Host header
       --healthy		defines healthcheck healthy threshold
+      --name            defines healthcheck label
       --unhealthy	defines healthcheck unhealthy threshold
       -i, --invert	invert health check return value
       -m, --match	health check string match, defaults to none
@@ -95,6 +97,7 @@ ACTION=$ACTION
 DEBUG=$DEBUG
 CHECKID=$CHECKID
 CHECKHEALTHY=$CHECKHEALTHY
+CHECKNAME=$CHECKNAME
 CHECKUNHEALTHY=$CHECKUNHEALTHY
 CHECKTYPE=$CHECKTYPE
 CONTACTTYPE=$CONTACTTYPE
@@ -130,6 +133,7 @@ do
 	--token)	APITOKEN=$2; shift	;;
 	-a|--action)	ACTION=$2; shift	;;
 	--checktype)	CHECKTYPE=$2; shift	;;
+	--checkname)	CHECKNAME=$2; shift	;;
 	--contacttype)	CONTACTTYPE=$2; shift	;;
 	--checkid)	CHECKID=$2; shift	;;
 	--debug)	DEBUG=true		;;
@@ -326,7 +330,7 @@ elif test "$ACTION" = add -o "$ACTION" = edit; then
 	    POSTBODY="$POSTBODY, \"recordPriority\": 10"
 	fi
     elif test "$WHAT" = healthchecks; then
-	POSTBODY=", \"checkType\": \"$CHECKTYPE\""
+	POSTBODY=", \"checkName\": \"$CHECKNAME\", \"checkType\": \"$CHECKTYPE\""
 	if test "$CHECKID"; then
 	    POSTBODY="$POSTBODY, \"checkId\": \"$CHECKID\""
 	fi

@@ -21,6 +21,7 @@ module.exports = (cassandra, domain) => {
 							if (retWith[o].uuid === users.rows[k].uuid) {
 							    retWith[o].emailaddr = users.rows[k].emailaddress;
 							    retWith[o].username = users.rows[k].username;
+							    break ;
 							}
 						    }
 						}

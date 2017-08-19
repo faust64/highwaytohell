@@ -96,6 +96,7 @@ CREATE TABLE records (
 CREATE TABLE checks (
 	uuid varchar,
 	origin varchar,
+	name varchar,
 	type varchar,
 	target varchar,
 	headers varchar,

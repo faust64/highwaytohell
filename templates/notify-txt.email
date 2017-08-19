@@ -1,1 +1,1 @@
-Service {{{ target }}} is {{ state }}
+Service {{{ checkname }}} ({{{ target }}}) is {{ state }}

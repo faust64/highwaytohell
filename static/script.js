@@ -13,6 +13,7 @@ function addHealthCheck(domainName) {
     var idForm = document.getElementById('checkid');
     var invertForm = document.getElementById('checkinvert');
     var matchForm = document.getElementById('checkmatch');
+    var nameForm = document.getElementById('checkname');
     var targetForm = document.getElementById('checktarget');
     var typeForm = document.getElementById('checktype');
     var unhealthyForm = document.getElementById('checkunhealthy');
@@ -22,6 +23,7 @@ function addHealthCheck(domainName) {
     idForm.value = '';
     invertForm.checked = false;
     matchForm.value = '';
+    nameForm.value = '';
     targetForm.value = '';
     typeForm.value = 'http';
     unhealthyForm.value = 2;
@@ -153,22 +155,24 @@ function editAuthorization(domainName, userId, role) {
     showForm('Edit Authorization');
 }
 
-function editHealthCheck(domainName, checkId, checkType, checkHeaders, checkTarget, checkMatch, checkHealthy, checkUnhealthy, checkInvert) {
+function editHealthCheck(domainName, checkId, checkName, checkType, checkHeaders, checkTarget, checkMatch, checkHealthy, checkUnhealthy, checkInvert) {
     var actionForm = document.getElementById('formhealthchecks');
     var headersForm = document.getElementById('checkheaders');
     var healthyForm = document.getElementById('checkhealthy');
     var idForm = document.getElementById('checkid');
     var invertForm = document.getElementById('checkinvert');
     var matchForm = document.getElementById('checkmatch');
+    var nameForm = document.getElementById('checkname');
     var targetForm = document.getElementById('checktarget');
     var typeForm = document.getElementById('checktype');
     var unhealthyForm = document.getElementById('checkunhealthy');
     actionForm.action = '/healthchecks/' + domainName + '/edit/' + checkId;
-    headersForm.value = checkHeaders;
+    headersForm.value = (checkHeaders !== '-' ? checkHeaders : '');
     healthyForm.value = checkHealthy;
     idForm.value = checkId;
     invertForm.checked = (checkInvert !== 'no');
-    matchForm.value = checkMatch;
+    matchForm.value = (checkMatch !== '-' ? checkMatch : '');
+    nameForm.value = checkName;
     targetForm.value = checkTarget;
     typeForm.value = checkType;
     unhealthyForm.value = checkUnhealthy;
@@ -304,6 +308,18 @@ function showForm(title) {
 	if (formTitle) { formTitle.innerHTML = title; }
 	var submitForm = document.getElementById('hacksubmit');
 	if (submitForm) { submitForm.value = title; }
+	var setSize = false;
+	if (title.indexOf('Authorization') >= 0) { setSize = '150px'; }
+	else if (title.indexOf('Settings') >= 0) { setSize = '200px'; }
+	else if (title.indexOf('Contact') >= 0) { setSize = '130px'; }
+	else if (title.indexOf('Health Check') >= 0) { setSize = '280px'; }
+	else if (title.indexOf('Notification') >= 0) { setSize = '230px'; }
+	else if (title.indexOf('Record') >= 0) { setSize = '240px'; }
+	else if (title.indexOf('Token') >= 0) { setSize = '150px'; }
+	if (setSize !== false) {
+	    var nstd = document.getElementById('droppable');
+	    if (nstd) { nstd.style.height = setSize; }
+	}
     }
 }
 

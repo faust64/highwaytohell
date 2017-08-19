@@ -106,8 +106,8 @@ body {
     background-repeat: no-repeat;
     background-size: 24px 24px;
     border-radius: 15px;
+    height: 50%;
     left: 30%;
-    min-height: 45%;
     overflow: auto;
     position: absolute;
     top: 20%;

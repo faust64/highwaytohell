@@ -52,7 +52,7 @@
 				<input type='hidden' id='formHelper' name='domainName' value='{{ domain }}' />
 				<select id='checkid' name='checkId'>
 {{#checks}}
-				    <option value='{{ checkid }}'>{{ checktarget }}</option>
+				    <option value='{{ checkid }}'>{{ checktarget }} {{ checklabel }}</option>
 {{/checks}}
 				</select>
 			    </td>
@@ -126,10 +126,11 @@
 		<td colspan='5'>
 		    <table id='nestedpanel'>
 			<tr>
-			    <td class='toggleadd' colspan='10'><a onClick='addNotification("{{ domain }}", "");' href='#'>Add Notification</a></td>
+			    <td class='toggleadd' colspan='7'><a onClick='addNotification("{{ domain }}", "");' href='#'>Add Notification</a></td>
 			</tr>
 			<tr>
 			    <th class='classifier'>Check ID</th>
+			    <th class='classifier'>Check Label</th>
 			    <th class='classifier'>Notification Type</th>
 			    <th class='classifier'>Notifies Target</th>
 			    <th class='classifier'>Notifies Up After<br/>(n healthy checks)</th>
@@ -139,6 +140,7 @@
 {{#records}}
 			<tr>
 			    <td onClick='editNotification("{{ domain }}", "{{ checkid }}", "{{ driver }}", "{{{ target }}}", {{ up }}, {{ down }});' class='record'><a href='/healthhistory/{{ domain }}/get/{{ checkid }}'>{{ checkid }}</a></td>
+			    <td onClick='editNotification("{{ domain }}", "{{ checkid }}", "{{ driver }}", "{{{ target }}}", {{ up }}, {{ down }});' class='record'>{{{ label }}}</td>
 			    <td onClick='editNotification("{{ domain }}", "{{ checkid }}", "{{ driver }}", "{{{ target }}}", {{ up }}, {{ down }});' class='record'>{{ driver }}</td>
 			    <td onClick='editNotification("{{ domain }}", "{{ checkid }}", "{{ driver }}", "{{{ target }}}", {{ up }}, {{ down }});' class='record'>{{{ target }}}</td>
 			    <td onClick='editNotification("{{ domain }}", "{{ checkid }}", "{{ driver }}", "{{{ target }}}", {{ up }}, {{ down }});' class='record'>{{ up }}</td>

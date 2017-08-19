@@ -5,8 +5,8 @@ module.exports = (cassandra, domain) => {
 		let queryChecks = "SELECT * FROM checks WHERE origin = '" + domain + "'";
 		cassandra.execute(queryChecks)
 		    .then((resp) => {
-			    if (resp.rows !== undefined) { resolve(resp.rows);
-			    } else { resolve({}); }
+			    if (resp.rows !== undefined) { resolve(resp.rows); }
+			    else { resolve([]); }
 			})
 		    .catch((e) => { reject('failed querying cassandra'); });
 	    });

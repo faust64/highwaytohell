@@ -7,7 +7,7 @@
 	<table style="background-color: #d8f0f3; display: table; margin: 0; padding: 0; text-align: center; vertical-align: center; width: 100%">
 	    <tr>
 		<td>
-		    <p>Service {{{ target }}} is {{ state }}</p>
+		    <p>Service {{{ checkname }}} ({{{ target }}}) is {{ state }}</p>
 		</td>
 	    </tr>
 	</table>
