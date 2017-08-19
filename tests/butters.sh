@@ -49,7 +49,7 @@ fi
 if ! ./samples.d/butters -d peerio.com -R healthchecks -a get --checkid e2f2dfb2-7928-11e7-91c1-ed90532c5f11 | grep requireunhealthy; then
     echo failed fetching health check
     ret=`expr $ret + 1`
-
+fi
 if ! ./samples.d/butters -d peerio.com -R healthchecks -a del --checkid e2f2dfb2-7928-11e7-91c1-ed90532c5f11; then
     echo failed dropping health check
     ret=`expr $ret + 1`
