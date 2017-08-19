@@ -339,6 +339,7 @@ Usage: butters [OPTION]
 
     options specific to health checks:
       --checkid		defines healthcheck to edit or remove
+      --checkname       defines healthcheck label
       --checktype	defines healthchecks type, defaults to http
       --header		defines healthcheck Host header
       --healthy		defines healthcheck healthy threshold
