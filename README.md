@@ -116,12 +116,12 @@ that our neighbors eventually reload their own zones as well.
 If a zone is subject to DNSSEC, then a signed copy is uploaded to Cassandra
 when zone gets updated - and that copy gets installed to neighbors.
 
-NOTE: the `refreshZones` worker, running from an unprivileged user, would
-not be able to reload your name servers. To address this, there is a second
-service you would need to enable on any `refreshZones` worker that serves DNS
-zones. Said process would run as root, using `inotifywait` to reload `nsd` or
-`bind`, whenever a mark file gets updated in the process of refreshing zones.
-See [QuickStart](QUICKSTART.md) for further details, ...
+Note the `refreshZones` worker, running from an unprivileged user, would not be
+able to reload your name servers. To address this, there is a second service you
+would need to enable on any `refreshZones` worker that serves DNS zones. Said
+process would run as root, using `inotifywait` to reload `nsd` or `bind`,
+whenever a mark file gets updated in the process of refreshing zones. See
+[QuickStart](QUICKSTART.md) for further details setting up your workers.
 
 FIXME:
 
@@ -165,10 +165,6 @@ matching configurations, having refreshed a check status.
 The `apiGW` worker may schedule login history to be checked notifying user
 his account was accessed.
 
-FIXME:
-
- * SMS registration (hypertext-free-confirmation-link)
-
 ### apiGW
 
 Minimalist API gateway (we've proven it can be done ... I don't necessarily
@@ -180,6 +176,7 @@ FIXME:
  * dont res.send.(errorcode) if req.sessions.userid: instead render a common
    template
  * error & confirmation pages back links & labels
+ * SMS registration (hypertext-free-confirmation-link)
 
 ## Special Thanks
 
