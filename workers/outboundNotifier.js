@@ -13,7 +13,6 @@ let cassandraOpts = {
 	contactPoints: (process.env.CASSANDRA_HOST ? process.env.CASSANDRA_HOST.split(' ') : ['127.0.0.1']),
 	keyspace: process.env.CASSANDRA_KEYSPACE || 'hwth'
     };
-let smsHandle = false;
 if (process.env.CASSANDRA_AUTH_USER && process.env.CASSANDRA_AUTH_PASS) {
     cassandraOpts.authProvider = new cassandra.auth.PlainTextAuthProvider(process.env.CASSANDRA_AUTH_USER, process.env.CASSANDRA_AUTH_PASS);
 }
@@ -33,14 +32,6 @@ if (process.env.AIRBRAKE_ID !== undefined && process.env.AIRBRAKE_KEY !== undefi
 	logger.info('WARNING: failed initializing airbrake');
     }
 }
-if (process.env.TWILIO_SID && process.env.TWILIO_TOKEN && process.env.TWILIO_FROM) {
-    try {
-	smsHandle = require('twilio')(process.env.TWILIO_SID, PROCESS.env.TWILIO_TOKEN);
-    } catch(e) {
-	logger.error('WARNING: failed initializing twilio client');
-	logger.error(e);
-    }
-}
 
 notifyQueue.on('ready', () => { logger.info('ready'); });
 notifyQueue.on('error', (e) => {
@@ -57,7 +48,7 @@ notifyQueue.process((task, done) => {
 			if (notifs.rows !== undefined && notifs.rows[0] !== undefined) {
 			    let promises = [];
 			    for (let k = 0; k < notifs.rows.length; k++) {
-				promises.push(outboundNotify(client, smsHandle, notifs.rows[k]));
+				promises.push(outboundNotify(client, notifs.rows[k]));
 			    }
 			    Promise.all(promises)
 				.then((ret) => {
