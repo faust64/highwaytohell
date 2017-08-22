@@ -138,7 +138,7 @@
 			</tr>
 {{#records}}
 			<tr>
-			    <td onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{{ checkname }}}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'><a href='/healthhistory/{{ domain }}/get/{{ checkid }}'>{{ checkid }}</a></td>
+			    <td class='record'><a href='/healthhistory/{{ domain }}/get/{{ checkid }}'>{{ checkid }}</a></td>
 			    <td onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{{ checkname }}}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{{ checkname }}}</td>
 			    <td onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{{ checkname }}}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ type }}</td>
 			    <td onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{{ checkname }}}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ headers }}</td>
