@@ -400,7 +400,7 @@ $ butters -d peerio.com -a get -R healthhistory --checkid e2f2dfb2-7928-11e7-91c
 $ butters -R contacts -a add -T myaddress@example.com
 check your emails
 $ butters -R contacts
-[{"type":"smtp","target":"myaddress@example.com","active":"yes"}]
+[{"type":"smtp","target":"myaddress@example.com","active":"confirmed"}]
 $ butters -R notifications -d peerio.com -a add --checkid e2f2dfb0-7928-11e7-abc0-01fda1e91471 --notifytarget myaddress@example.com --notifyvia smtp
 e2f2dfb0-7928-11e7-abc0-01fda1e91471
 $ butters -R notifications -d peerio.com -a del --checkid e2f2dfb0-7928-11e7-abc0-01fda1e91471

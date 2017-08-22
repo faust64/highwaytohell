@@ -62,7 +62,7 @@ if ! ./samples.d/butters -d peerio.com -R healthhistory -a get --checkid e2f2dfb
     echo failed quering history
     ret=`expr $ret + 1`
 fi
-if ! ./samples.d/butters -R contacts | grep '"active":"yes"'; then
+if ! ./samples.d/butters -R contacts | grep '"active":"confirmed"'; then
     echo failed querying contacts
     ret=`expr $ret + 1`
 fi
