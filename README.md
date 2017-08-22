@@ -58,7 +58,6 @@ Table of Contents
 
 ### Todolist
 
- * notifier (mail/hook/sms?) - outboundNotifier work in progress
  * handling redis authentication
  * paging (?)
  * zones import tool?
