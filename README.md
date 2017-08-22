@@ -142,7 +142,7 @@ DISCUSS:
    locally), while an other one would only gets stuff we know passed checkzone
    (& got signed) then actually restarting their name server. Note: the
    generation/signature process does involve a checkzone that implies nsd or
-   bind utils where installed, regardless of being name servers.
+   bind utils were installed, regardless of being name servers.
 
 ### checkHealth
 
