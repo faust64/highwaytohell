@@ -28,8 +28,8 @@
 	<script src='/static/script.js' type='application/javascript'></script>
     </head>
     <body onload='load();'>
-	<div id='overlay' ondrop='drop(event)' ondragover='allowDrop(event)'>
-	    <div id='droppable' class='nestedoverlay' draggable='true' ondragstart='drag(event)'>
+	<div id='overlay' ondrop='drop(event);' ondragover='allowDrop(event);'>
+	    <div id='droppable' class='nestedoverlay' draggable='true' ondragstart='drag(event);'>
 		<form id='formdomains' method='post' action='/register'>
 		    <a id='closeoverlay' onclick='hideForm();' href='#'></a>
 		    <table id='formadd'>

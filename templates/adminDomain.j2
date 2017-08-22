@@ -29,8 +29,8 @@
     </head>
     <body onload='load();'>
 	<div class='logout'><a href='/logout'>Logout {{ username }}</a></div>
-	<div id='overlay' ondrop='drop(event)' ondragover='allowDrop(event)'>
-	    <div id='droppable' class='nestedoverlay' draggable='true' ondragstart='drag(event)'>
+	<div id='overlay' ondrop='drop(event);' ondragover='allowDrop(event);'>
+	    <div id='droppable' class='nestedoverlay' draggable='true' ondragstart='drag(event);'>
 		<form id='formhealthchecks' method='post' action='/domains/{{ domain }}/admin/add'>
 		    <a id='closeoverlay' onclick='hideForm()' href='#'></a>
 		    <table id='formadd'>

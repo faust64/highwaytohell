@@ -29,16 +29,16 @@
     </head>
     <body onload='load();'>
 	<div class='logout'><a href='/logout'>Logout {{ username }}</a></div>
-	<div id='overlay' ondrop='drop(event)' ondragover='allowDrop(event)'>
-	    <div id='droppable' class='nestedoverlay' draggable='true' ondragstart='drag(event)'>
-		<form method='GET'>
-		    <select id='contactHelper' style='display:none;'>
+	<div id='overlay' ondrop='drop(event);' ondragover='allowDrop(event);'>
+	    <div id='droppable' class='nestedoverlay' draggable='true' ondragstart='drag(event);'>
+		<form method='get' action='/dev/null'>
+		    <select id='contactHelper' class='helper'>
 {{#contacts}}
 			<option value='{{ target }}'>{{ target }}</option>
 {{/contacts}}
 		    </select>
 		</form>
-		<form id='formnotifications' method='post'>
+		<form id='formnotifications' method='post' action='/notifications/{{ domain }}/add/CHANGEME'>
 		    <a id='closeoverlay' onclick='hideForm()' href='#'></a>
 		    <table id='formadd'>
 			<tr>

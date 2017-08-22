@@ -65,6 +65,8 @@ body {
 
 .good { color: green; }
 
+.helper { display: none; }
+
 .inputdata {
     background-color: #ebf7f9;
     border-radius: 5px;

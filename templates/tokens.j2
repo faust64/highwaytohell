@@ -29,9 +29,9 @@
     </head>
     <body onload='load();'>
 	<div class='logout'><a href='/logout'>Logout {{ username }}</a></div>
-	<div id='overlay' ondrop='drop(event)' ondragover='allowDrop(event)'>
-	    <div id='droppable' class='nestedoverlay' draggable='true' ondragstart='drag(event)'>
-		<form id='formtokens' method='post'>
+	<div id='overlay' ondrop='drop(event);' ondragover='allowDrop(event);'>
+	    <div id='droppable' class='nestedoverlay' draggable='true' ondragstart='drag(event);'>
+		<form id='formtokens' method='post' action='/settings/tokens'>
 		    <a id='closeoverlay' onclick='hideForm()' href='#'></a>
 		    <table id='formadd'>
 			<tr>
