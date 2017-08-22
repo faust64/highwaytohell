@@ -61,7 +61,6 @@ Table of Contents
  * handling redis authentication
  * paging (?)
  * zones import tool?
- * unclear yet how we'll trust phone numbers as contacts ...
  * moar tests
  * api-less mode?
  * shinyness - CSS or frontend contributions most welcome
