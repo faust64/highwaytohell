@@ -84,6 +84,7 @@ tables would be used:
    string is defined, yet not used
  * contactaddresses: collection of contact addresses (only emails so far,
    could eventually include phone numbers) mapped to their owner
+ * adding phone number as contact, shouldn't ask to check emails, rather sms
  * logins: a login history collection, associating an user ID to a client IP,
    a timestamp and wether login succeeded or failed
  * nspools: inventory of ns pools
@@ -176,7 +177,6 @@ FIXME:
  * dont res.send.(errorcode) if req.sessions.userid: instead render a common
    template
  * error & confirmation pages back links & labels
- * SMS registration (hypertext-free-confirmation-link)
 
 ## Special Thanks
 

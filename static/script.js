@@ -88,6 +88,13 @@ function checkRegistration() {
     return false;
 }
 
+function confirmContact(target) {
+    var code = prompt('Type in the confirmation code you received:');
+    if (code.length > 5) {
+	post('/settings/confirm-address', { confirmCode: code });
+    } else { alert('PIN looks too short'); }
+}
+
 function allowDrop(ev) { ev.preventDefault(); }
 function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
 function drop(ev) {

@@ -76,6 +76,7 @@ Table of Contents
 | POST   | /settings/2fa/confirm                    | confirm 2fa code             |
 | GET    | /settings/2fa/disable                    | 500                          |
 | POST   | /settings/2fa/disable                    | disable 2fa auth             |
+[ POST   | /settings/confirm-address                | confirm additional address   |
 | GET    | /settings/confirm-address/:userId/:token | confirm registration email   |
 | GET    | /settings/confirm-contact/:userId/:token | confirm additional address   |
 | GET    | /settings/contacts/add                   | 500                          |
