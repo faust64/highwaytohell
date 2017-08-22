@@ -5,11 +5,11 @@ const fs = require('fs');
 const dnssecCommands = {
 	bind: {
 	    kskbasecmd: 'dnssec-keygen -f KSK -a NSEC3RSASHA1 -b 2048 -n ZONE ',
-	    zskbasecmd: 'dnssec-keygen -a NSEC3RSASHA1 -b 1024 -n ZONE '
+	    zskbasecmd: 'dnssec-keygen -a NSEC3RSASHA1 -b 2048 -n ZONE '
 	},
 	nsd: {
 	    kskbasecmd: 'ldns-keygen -r /dev/urandom -k -a RSASHA1-NSEC3-SHA1 -b 2048 ',
-	    zskbasecmd: 'ldns-keygen -r /dev/urandom -a RSASHA1-NSEC3-SHA1 -b 1024 '
+	    zskbasecmd: 'ldns-keygen -r /dev/urandom -a RSASHA1-NSEC3-SHA1 -b 2048 '
 	}
     };
 const dnssecDriver = process.env.DNS_DRIVER || 'nsd';
