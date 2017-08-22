@@ -76,6 +76,8 @@ export SMTP_HOST=smtp.example.com
 # Bind address & port - use Nginx setting up SSL
 export APIGW_ADDR=127.0.0.1
 export APIGW_PORT=8080
+# prevent further user registrations
+#export LOCK_REGISTRATIONS=yay
 
 # nsd-checkconf in sbin
 export PATH=/usr/local/sbin:/usr/sbin:/sbin:$PATH
