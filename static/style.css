@@ -88,7 +88,7 @@ body {
 .loginhead { font-style: italic; }
 .loginhistory { width: 40%; }
 .loginip { font-weight: bold; }
-.loginlogo { width: 40%; }
+.loginlogo { float: right; width: 40%; }
 .loginlogoimg { width: 64px; height: 64px; }
 .loginpadding { width: 30%; }
 .logintime { font-style: italic; }

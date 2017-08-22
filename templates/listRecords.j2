@@ -1,54 +1,53 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
     <head>
 	<title>HighWayToHell</title>
-	<link rel='shortcut icon' href='/static/fav/icon32.ico'>
-	<link rel='icon' sizes='16x16' href='/static/fav/icon16.ico'>
-	<link rel='icon' sizes='32x32' href='/static/fav/icon32.ico'>
-	<link rel='icon' sizes='64x64' href='/static/fav/icon64.ico'>
-	<link rel='icon' type='image/png' sizes='196x196' href='/static/fav/icon192.png'>
-	<link rel='icon' type='image/png' sizes='160x160' href='/static/fav/icon160.png'>
-	<link rel='icon' type='image/png' sizes='96x96' href='/static/fav/icon96.png'>
-	<link rel='icon' type='image/png' sizes='64x64' href='/static/fav/icon64.png'>
-	<link rel='icon' type='image/png' sizes='32x32' href='/static/fav/icon32.png'>
-	<link rel='icon' type='image/png' sizes='16x16' href='/static/fav/icon16.png'>
-	<link rel='apple-touch-icon' href='/static/fav/icon57.png'>
-	<link rel='apple-touch-icon' sizes='114x114' href='/static/fav/favicon114.png'>
-	<link rel='apple-touch-icon' sizes='72x72' href='/static/fav/favicon72.png'>
-	<link rel='apple-touch-icon' sizes='144x144' href='/static/fav/favicon144.png'>
-	<link rel='apple-touch-icon' sizes='60x60' href='/static/fav/favicon60.png'>
-	<link rel='apple-touch-icon' sizes='120x120' href='/static/fav/favicon120.png'>
-	<link rel='apple-touch-icon' sizes='76x76' href='/static/fav/favicon76.png'>
-	<link rel='apple-touch-icon' sizes='152x152' href='/static/fav/favicon152.png'>
-	<link rel='apple-touch-icon' sizes='180x180' href='/static/fav/favicon180.png'>
-	<meta name='msapplication-TileColor' content='#FF0000'>
-	<meta name='msapplication-TileImage' content='/static/fav/icon144.png'>
-	<meta name='msapplication-config' content='/static/dav/browserconfig.xml'>
+	<link rel='shortcut icon' href='/static/fav/icon32.ico'/>
+	<link rel='icon' sizes='16x16' href='/static/fav/icon16.ico'/>
+	<link rel='icon' sizes='32x32' href='/static/fav/icon32.ico'/>
+	<link rel='icon' sizes='64x64' href='/static/fav/icon64.ico'/>
+	<link rel='icon' type='image/png' sizes='196x196' href='/static/fav/icon192.png'/>
+	<link rel='icon' type='image/png' sizes='160x160' href='/static/fav/icon160.png'/>
+	<link rel='icon' type='image/png' sizes='96x96' href='/static/fav/icon96.png'/>
+	<link rel='icon' type='image/png' sizes='64x64' href='/static/fav/icon64.png'/>
+	<link rel='icon' type='image/png' sizes='32x32' href='/static/fav/icon32.png'/>
+	<link rel='icon' type='image/png' sizes='16x16' href='/static/fav/icon16.png'/>
+	<link rel='apple-touch-icon' href='/static/fav/icon57.png'/>
+	<link rel='apple-touch-icon' sizes='114x114' href='/static/fav/favicon114.png'/>
+	<link rel='apple-touch-icon' sizes='72x72' href='/static/fav/favicon72.png'/>
+	<link rel='apple-touch-icon' sizes='144x144' href='/static/fav/favicon144.png'/>
+	<link rel='apple-touch-icon' sizes='60x60' href='/static/fav/favicon60.png'/>
+	<link rel='apple-touch-icon' sizes='120x120' href='/static/fav/favicon120.png'/>
+	<link rel='apple-touch-icon' sizes='76x76' href='/static/fav/favicon76.png'/>
+	<link rel='apple-touch-icon' sizes='152x152' href='/static/fav/favicon152.png'/>
+	<link rel='apple-touch-icon' sizes='180x180' href='/static/fav/favicon180.png'/>
+	<meta name='msapplication-TileColor' content='#FF0000'/>
+	<meta name='msapplication-TileImage' content='/static/fav/icon144.png'/>
+	<meta name='msapplication-config' content='/static/dav/browserconfig.xml'/>
 	<link href='/static/style.css' rel='stylesheet'/>
 	<script src='/static/script.js' type='application/javascript'></script>
     </head>
-    <body onLoad='load();'>
+    <body onload='load();'>
 	<div class='logout'><a href='/logout'>Logout {{ username }}</a></div>
 	<div id='overlay' ondrop='drop(event)' ondragover='allowDrop(event)'>
 	    <div id='droppable' class='nestedoverlay' draggable='true' ondragstart='drag(event)'>
-		<form id='formrecords' method='POST' action='/records/DOMAINNAME/add/RECORDNAME'>
-		    <a id='closeoverlay' onClick='hideForm()' href='#'></a>
+		<form id='formrecords' method='post' action='/records/DOMAINNAME/add/RECORDNAME'>
+		    <a id='closeoverlay' onclick='hideForm()' href='#'></a>
 		    <table id='formadd'>
 			<tr>
 			    <td id='formname' class='addformtitle' colspan='2'>Add Record</td>
 			</tr>
 			<tr>
-			    <td class=inputlabel>name</td>
-			    <td class=inputdata>
+			    <td class='inputlabel'>name</td>
+			    <td class='inputdata'>
 				<input type='hidden' id='formAction' name='dowhat' value='add'/>
-				<input type='hidden' id='formHelper' name='domainName' value='{{ domain }}' />
-				<input id='targetSource' onChange='updateSetId();' type=text size=32 name='recordName'/>
+				<input type='hidden' id='formHelper' name='domainName' value='{{ domain }}'/>
+				<input id='targetSource' onChange='updateSetId();' type='text' size='32' name='recordName'/>
 			    </td>
 			</tr>
 			<tr>
-			    <td class=inputlabel>type</td>
-			    <td class=inputdata>
+			    <td class='inputlabel'>type</td>
+			    <td class='inputdata'>
 				<select id='recordtype' name='recordType'>
 				    <option value='A' selected>A</option>
 				    <option value='AAAA'>AAAA</option>
@@ -60,20 +59,20 @@
 			    </td>
 			</tr>
 			<tr>
-			    <td class=inputlabel>target</td>
-			    <td class=inputdata><input id='recordtarget' type=text size=32 name='recordTarget'/></td>
+			    <td class='inputlabel'>target</td>
+			    <td class='inputdata'><input id='recordtarget' type='text' size='32' name='recordTarget'/></td>
 			</tr>
 			<tr>
-			    <td class=inputlabel>priority</td>
-			    <td class=inputdata><input id='recordprio' type=text size=4 name='recordPriority' value='10'/></td>
+			    <td class='inputlabel'>priority</td>
+			    <td class='inputdata'><input id='recordprio' type='text' size='4' name='recordPriority' value='10'/></td>
 			</tr>
 			<tr>
-			    <td class=inputlabel>setID</td>
-			    <td class=inputdata><input id='recordsetid' type=text size=32 name='setId'/></td>
+			    <td class='inputlabel'>setID</td>
+			    <td class='inputdata'><input id='recordsetid' type='text' size='32' name='setId'/></td>
 			</tr>
 			<tr>
-			    <td class=inputlabel>Health Check ID</td>
-			    <td class=inputdata>
+			    <td class='inputlabel'>Health Check ID</td>
+			    <td class='inputdata'>
 				<select id='recordhc' name='recordCheckId'>
 				    <option value='static' selected>Static Record</option>
 {{#checks}}
@@ -82,11 +81,11 @@
 				</select>
 			    </td>
 			<tr>
-			    <td class=inputlabel>TTL</td>
-			    <td class=inputdata><input id='recordttl' type=text size=6 name='recordTtl' value='3600'/></td>
+			    <td class='inputlabel'>TTL</td>
+			    <td class='inputdata'><input id='recordttl' type='text' size='6' name='recordTtl' value='3600'/></td>
 			</tr>
 			<tr>
-			    <td class=inputsubmit colspan='2'><input id='hacksubmit' type='submit' onClick='updateFormAction("records");' value='Register Record'/></td>
+			    <td class='inputsubmit' colspan='2'><input id='hacksubmit' type='submit' onclick='updateFormAction("records");' value='Register Record'/></td>
 			</tr>
 		    </table>
 		</form>
@@ -104,7 +103,7 @@
 		<td colspan='5'>
 		    <table id='nestedpanel'>
 			<tr>
-			    <td class='toggleadd' colspan='8'><a onClick='addRecord();' href='#'>Add Record</a></td>
+			    <td class='toggleadd' colspan='8'><a onclick='addRecord();' href='#'>Add Record</a></td>
 			</tr>
 			<tr>
 			    <th class='classifier'>Name</th>
@@ -118,14 +117,14 @@
 			</tr>
 {{#records}}
 			<tr>
-			    <td onClick='editRecord("{{ domain }}", "{{ name }}", "{{ type }}", {{ priority }}, "{{ target }}", "{{ setid }}", "{{ healthcheckid }}", {{ ttl }});' class='record'><a href='/records/{{ domain }}/get/{{ name }}'>{{ name }}</a></td>
-			    <td onClick='editRecord("{{ domain }}", "{{ name }}", "{{ type }}", {{ priority }}, "{{ target }}", "{{ setid }}", "{{ healthcheckid }}", {{ ttl }});' class='record'>{{ type }}</td>
-			    <td onClick='editRecord("{{ domain }}", "{{ name }}", "{{ type }}", {{ priority }}, "{{ target }}", "{{ setid }}", "{{ healthcheckid }}", {{ ttl }});' class='record'>{{ priority }}</td>
-			    <td onClick='editRecord("{{ domain }}", "{{ name }}", "{{ type }}", {{ priority }}, "{{ target }}", "{{ setid }}", "{{ healthcheckid }}", {{ ttl }});' class='record'>{{ target }}</td>
-			    <td onClick='editRecord("{{ domain }}", "{{ name }}", "{{ type }}", {{ priority }}, "{{ target }}", "{{ setid }}", "{{ healthcheckid }}", {{ ttl }});' class='record'>{{ setid }}</td>
-			    <td onClick='editRecord("{{ domain }}", "{{ name }}", "{{ type }}", {{ priority }}, "{{ target }}", "{{ setid }}", "{{ healthcheckid }}", {{ ttl }});' class='record'>{{{ healthcheck }}}</td>
-			    <td onClick='editRecord("{{ domain }}", "{{ name }}", "{{ type }}", {{ priority }}, "{{ target }}", "{{ setid }}", "{{ healthcheckid }}", {{ ttl }});' class='record'>{{ ttl }}</td>
-			    <td class='record'><a onClick='dropRecord("{{ domain }}", "{{ name }}", "{{ type }}", "{{ setid }}");' href='#' alt='Drop Record'><img class='deletelogoimg' src='/static/remove.png'></a></td>
+			    <td onclick='editRecord("{{ domain }}", "{{ name }}", "{{ type }}", {{ priority }}, "{{ target }}", "{{ setid }}", "{{ healthcheckid }}", {{ ttl }});' class='record'><a href='/records/{{ domain }}/get/{{ name }}'>{{ name }}</a></td>
+			    <td onclick='editRecord("{{ domain }}", "{{ name }}", "{{ type }}", {{ priority }}, "{{ target }}", "{{ setid }}", "{{ healthcheckid }}", {{ ttl }});' class='record'>{{ type }}</td>
+			    <td onclick='editRecord("{{ domain }}", "{{ name }}", "{{ type }}", {{ priority }}, "{{ target }}", "{{ setid }}", "{{ healthcheckid }}", {{ ttl }});' class='record'>{{ priority }}</td>
+			    <td onclick='editRecord("{{ domain }}", "{{ name }}", "{{ type }}", {{ priority }}, "{{ target }}", "{{ setid }}", "{{ healthcheckid }}", {{ ttl }});' class='record'>{{ target }}</td>
+			    <td onclick='editRecord("{{ domain }}", "{{ name }}", "{{ type }}", {{ priority }}, "{{ target }}", "{{ setid }}", "{{ healthcheckid }}", {{ ttl }});' class='record'>{{ setid }}</td>
+			    <td onclick='editRecord("{{ domain }}", "{{ name }}", "{{ type }}", {{ priority }}, "{{ target }}", "{{ setid }}", "{{ healthcheckid }}", {{ ttl }});' class='record'>{{{ healthcheck }}}</td>
+			    <td onclick='editRecord("{{ domain }}", "{{ name }}", "{{ type }}", {{ priority }}, "{{ target }}", "{{ setid }}", "{{ healthcheckid }}", {{ ttl }});' class='record'>{{ ttl }}</td>
+			    <td class='record'><a onclick='dropRecord("{{ domain }}", "{{ name }}", "{{ type }}", "{{ setid }}");' href='#' alt='Drop Record'><img class='deletelogoimg' src='/static/remove.png'/></a></td>
 			</tr>
 {{/records}}
 		    </table>

@@ -1,56 +1,55 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
     <head>
 	<title>HighWayToHell</title>
-	<link rel='shortcut icon' href='/static/fav/icon32.ico'>
-	<link rel='icon' sizes='16x16' href='/static/fav/icon16.ico'>
-	<link rel='icon' sizes='32x32' href='/static/fav/icon32.ico'>
-	<link rel='icon' sizes='64x64' href='/static/fav/icon64.ico'>
-	<link rel='icon' type='image/png' sizes='196x196' href='/static/fav/icon192.png'>
-	<link rel='icon' type='image/png' sizes='160x160' href='/static/fav/icon160.png'>
-	<link rel='icon' type='image/png' sizes='96x96' href='/static/fav/icon96.png'>
-	<link rel='icon' type='image/png' sizes='64x64' href='/static/fav/icon64.png'>
-	<link rel='icon' type='image/png' sizes='32x32' href='/static/fav/icon32.png'>
-	<link rel='icon' type='image/png' sizes='16x16' href='/static/fav/icon16.png'>
-	<link rel='apple-touch-icon' href='/static/fav/icon57.png'>
-	<link rel='apple-touch-icon' sizes='114x114' href='/static/fav/favicon114.png'>
-	<link rel='apple-touch-icon' sizes='72x72' href='/static/fav/favicon72.png'>
-	<link rel='apple-touch-icon' sizes='144x144' href='/static/fav/favicon144.png'>
-	<link rel='apple-touch-icon' sizes='60x60' href='/static/fav/favicon60.png'>
-	<link rel='apple-touch-icon' sizes='120x120' href='/static/fav/favicon120.png'>
-	<link rel='apple-touch-icon' sizes='76x76' href='/static/fav/favicon76.png'>
-	<link rel='apple-touch-icon' sizes='152x152' href='/static/fav/favicon152.png'>
-	<link rel='apple-touch-icon' sizes='180x180' href='/static/fav/favicon180.png'>
-	<meta name='msapplication-TileColor' content='#FF0000'>
-	<meta name='msapplication-TileImage' content='/static/fav/icon144.png'>
-	<meta name='msapplication-config' content='/static/dav/browserconfig.xml'>
+	<link rel='shortcut icon' href='/static/fav/icon32.ico'/>
+	<link rel='icon' sizes='16x16' href='/static/fav/icon16.ico'/>
+	<link rel='icon' sizes='32x32' href='/static/fav/icon32.ico'/>
+	<link rel='icon' sizes='64x64' href='/static/fav/icon64.ico'/>
+	<link rel='icon' type='image/png' sizes='196x196' href='/static/fav/icon192.png'/>
+	<link rel='icon' type='image/png' sizes='160x160' href='/static/fav/icon160.png'/>
+	<link rel='icon' type='image/png' sizes='96x96' href='/static/fav/icon96.png'/>
+	<link rel='icon' type='image/png' sizes='64x64' href='/static/fav/icon64.png'/>
+	<link rel='icon' type='image/png' sizes='32x32' href='/static/fav/icon32.png'/>
+	<link rel='icon' type='image/png' sizes='16x16' href='/static/fav/icon16.png'/>
+	<link rel='apple-touch-icon' href='/static/fav/icon57.png'/>
+	<link rel='apple-touch-icon' sizes='114x114' href='/static/fav/favicon114.png'/>
+	<link rel='apple-touch-icon' sizes='72x72' href='/static/fav/favicon72.png'/>
+	<link rel='apple-touch-icon' sizes='144x144' href='/static/fav/favicon144.png'/>
+	<link rel='apple-touch-icon' sizes='60x60' href='/static/fav/favicon60.png'/>
+	<link rel='apple-touch-icon' sizes='120x120' href='/static/fav/favicon120.png'/>
+	<link rel='apple-touch-icon' sizes='76x76' href='/static/fav/favicon76.png'/>
+	<link rel='apple-touch-icon' sizes='152x152' href='/static/fav/favicon152.png'/>
+	<link rel='apple-touch-icon' sizes='180x180' href='/static/fav/favicon180.png'/>
+	<meta name='msapplication-TileColor' content='#FF0000'/>
+	<meta name='msapplication-TileImage' content='/static/fav/icon144.png'/>
+	<meta name='msapplication-config' content='/static/dav/browserconfig.xml'/>
 	<link href='/static/style.css' rel='stylesheet'/>
 	<script src='/static/script.js' type='application/javascript'></script>
     </head>
-    <body onLoad='load();'>
+    <body onload='load();'>
 	<div class='logout'><a href='/logout'>Logout {{ username }}</a></div>
 	<div id='overlay' ondrop='drop(event)' ondragover='allowDrop(event)'>
 	    <div id='droppable' class='nestedoverlay' draggable='true' ondragstart='drag(event)'>
-		<form id='formtokens' method='POST'>
-		    <a id='closeoverlay' onClick='hideForm()' href='#'></a>
+		<form id='formtokens' method='post'>
+		    <a id='closeoverlay' onclick='hideForm()' href='#'></a>
 		    <table id='formadd'>
 			<tr>
 			    <td id='formname' class='addformtitle' colspan='2'>Add Token</td>
 			</tr>
 			<tr>
-			    <td class=inputlabel>permissions<br/>(comma-separated list of permissions)</td>
-			    <td class=inputdata>
-				<input type='hidden' id='tokenid' name='tokenId'>
-				<input id='tokperms' type=text size=32 name='tokenPerms' value='*'/>
+			    <td class='inputlabel'>permissions<br/>(comma-separated list of permissions)</td>
+			    <td class='inputdata'>
+				<input type='hidden' id='tokenid' name='tokenId'/>
+				<input id='tokperms' type='text' size='32' name='tokenPerms' value='*'/>
 			    </td>
 			</tr>
 			<tr>
-			    <td class=inputlabel>allowed source<br/>(comma-separated list of IPs or networks)</td>
-			    <td class=inputdata><input id='toksources' type=text size=32 name='tokenSourceFlt' value='*'/></td>
+			    <td class='inputlabel'>allowed source<br/>(comma-separated list of IPs or networks)</td>
+			    <td class='inputdata'><input id='toksources' type='text' size='32' name='tokenSourceFlt' value='*'/></td>
 			</tr>
 			<tr>
-			    <td class=inputsubmit colspan='2'><input id='hacksubmit' type='submit' value='Generate Access Token'/></td>
+			    <td class='inputsubmit' colspan='2'><input id='hacksubmit' type='submit' value='Generate Access Token'/></td>
 			</tr>
 		    </table>
 		</form>
@@ -68,7 +67,7 @@
 		<td colspan='5'>
 		    <table id='nestedpanel'>
 			<tr>
-			    <td class='toggleadd' colspan='4'><a onClick='addToken();' href='#'>Add Token</a></td>
+			    <td class='toggleadd' colspan='4'><a onclick='addToken();' href='#'>Add Token</a></td>
 			</tr>
 			<tr>
 			    <th class='classifier'>Token String</th>
@@ -79,9 +78,9 @@
 {{#records}}
 			<tr>
 			    <td class='record'>{{ tokenstring }}</td>
-			    <td onClick='editToken("{{ tokenstring }}", "{{ perms }}", "{{ trusted }}");' class='record'>{{ perms }}</td>
-			    <td onClick='editToken("{{ tokenstring }}", "{{ perms }}", "{{ trusted }}");' class='record'>{{ trusted }}</td>
-			    <td class='record'><a onClick='dropToken("{{ tokenstring }}");' href='#' alt='Drop Token'><img class='deletelogoimg' src='/static/remove.png'></a></td>
+			    <td onclick='editToken("{{ tokenstring }}", "{{ perms }}", "{{ trusted }}");' class='record'>{{ perms }}</td>
+			    <td onclick='editToken("{{ tokenstring }}", "{{ perms }}", "{{ trusted }}");' class='record'>{{ trusted }}</td>
+			    <td class='record'><a onclick='dropToken("{{ tokenstring }}");' href='#' alt='Drop Token'><img class='deletelogoimg' src='/static/remove.png'/></a></td>
 			</tr>
 {{/records}}
 		    </table>

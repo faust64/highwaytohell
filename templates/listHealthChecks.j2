@@ -1,51 +1,50 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
     <head>
 	<title>HighWayToHell</title>
-	<link rel='shortcut icon' href='/static/fav/icon32.ico'>
-	<link rel='icon' sizes='16x16' href='/static/fav/icon16.ico'>
-	<link rel='icon' sizes='32x32' href='/static/fav/icon32.ico'>
-	<link rel='icon' sizes='64x64' href='/static/fav/icon64.ico'>
-	<link rel='icon' type='image/png' sizes='196x196' href='/static/fav/icon192.png'>
-	<link rel='icon' type='image/png' sizes='160x160' href='/static/fav/icon160.png'>
-	<link rel='icon' type='image/png' sizes='96x96' href='/static/fav/icon96.png'>
-	<link rel='icon' type='image/png' sizes='64x64' href='/static/fav/icon64.png'>
-	<link rel='icon' type='image/png' sizes='32x32' href='/static/fav/icon32.png'>
-	<link rel='icon' type='image/png' sizes='16x16' href='/static/fav/icon16.png'>
-	<link rel='apple-touch-icon' href='/static/fav/icon57.png'>
-	<link rel='apple-touch-icon' sizes='114x114' href='/static/fav/favicon114.png'>
-	<link rel='apple-touch-icon' sizes='72x72' href='/static/fav/favicon72.png'>
-	<link rel='apple-touch-icon' sizes='144x144' href='/static/fav/favicon144.png'>
-	<link rel='apple-touch-icon' sizes='60x60' href='/static/fav/favicon60.png'>
-	<link rel='apple-touch-icon' sizes='120x120' href='/static/fav/favicon120.png'>
-	<link rel='apple-touch-icon' sizes='76x76' href='/static/fav/favicon76.png'>
-	<link rel='apple-touch-icon' sizes='152x152' href='/static/fav/favicon152.png'>
-	<link rel='apple-touch-icon' sizes='180x180' href='/static/fav/favicon180.png'>
-	<meta name='msapplication-TileColor' content='#FF0000'>
-	<meta name='msapplication-TileImage' content='/static/fav/icon144.png'>
-	<meta name='msapplication-config' content='/static/dav/browserconfig.xml'>
+	<link rel='shortcut icon' href='/static/fav/icon32.ico'/>
+	<link rel='icon' sizes='16x16' href='/static/fav/icon16.ico'/>
+	<link rel='icon' sizes='32x32' href='/static/fav/icon32.ico'/>
+	<link rel='icon' sizes='64x64' href='/static/fav/icon64.ico'/>
+	<link rel='icon' type='image/png' sizes='196x196' href='/static/fav/icon192.png'/>
+	<link rel='icon' type='image/png' sizes='160x160' href='/static/fav/icon160.png'/>
+	<link rel='icon' type='image/png' sizes='96x96' href='/static/fav/icon96.png'/>
+	<link rel='icon' type='image/png' sizes='64x64' href='/static/fav/icon64.png'/>
+	<link rel='icon' type='image/png' sizes='32x32' href='/static/fav/icon32.png'/>
+	<link rel='icon' type='image/png' sizes='16x16' href='/static/fav/icon16.png'/>
+	<link rel='apple-touch-icon' href='/static/fav/icon57.png'/>
+	<link rel='apple-touch-icon' sizes='114x114' href='/static/fav/favicon114.png'/>
+	<link rel='apple-touch-icon' sizes='72x72' href='/static/fav/favicon72.png'/>
+	<link rel='apple-touch-icon' sizes='144x144' href='/static/fav/favicon144.png'/>
+	<link rel='apple-touch-icon' sizes='60x60' href='/static/fav/favicon60.png'/>
+	<link rel='apple-touch-icon' sizes='120x120' href='/static/fav/favicon120.png'/>
+	<link rel='apple-touch-icon' sizes='76x76' href='/static/fav/favicon76.png'/>
+	<link rel='apple-touch-icon' sizes='152x152' href='/static/fav/favicon152.png'/>
+	<link rel='apple-touch-icon' sizes='180x180' href='/static/fav/favicon180.png'/>
+	<meta name='msapplication-TileColor' content='#FF0000'/>
+	<meta name='msapplication-TileImage' content='/static/fav/icon144.png'/>
+	<meta name='msapplication-config' content='/static/dav/browserconfig.xml'/>
 	<link href='/static/style.css' rel='stylesheet'/>
 	<script src='/static/script.js' type='application/javascript'></script>
     </head>
-    <body onLoad='load();'>
+    <body onload='load();'>
 	<div class='logout'><a href='/logout'>Logout {{ username }}</a></div>
 	<div id='overlay' ondrop='drop(event)' ondragover='allowDrop(event)'>
 	    <div id='droppable' class='nestedoverlay' draggable='true' ondragstart='drag(event)'>
-		<form id='formhealthchecks' method='POST'>
-		    <a id='closeoverlay' onClick='hideForm()' href='#'></a>
+		<form id='formhealthchecks' method='post'>
+		    <a id='closeoverlay' onclick='hideForm()' href='#'></a>
 		    <table id='formadd'>
 			<tr>
 			    <td id='formname' class='addformtitle' colspan='2'>Add Health Check</td>
 			</tr>
 			<tr>
-			    <td class=inputlabel>label</td>
-			    <td class=inputdata><input id='checkname' type=text size=32 name='checkName'/></td>
+			    <td class='inputlabel'>label</td>
+			    <td class='inputdata'><input id='checkname' type='text' size='32' name='checkName'/></td>
 			</tr>
 			<tr>
-			    <td class=inputlabel>type</td>
-			    <td class=inputdata>
-				<input id='checkid' type='hidden' name='checkId'>
+			    <td class='inputlabel'>type</td>
+			    <td class='inputdata'>
+				<input id='checkid' type='hidden' name='checkId'/>
 				<select id='checktype' name='checkType'>
 				    <option value='http' selected>HTTP</option>
 				    <option value='icmp'>ICMP</option>
@@ -53,20 +52,20 @@
 			    </td>
 			</tr>
 			<tr>
-			    <td class=inputlabel>headers</td>
-			    <td class=inputdata><input id='checkheaders' type=text size=32 name='checkHeaders'/></td>
+			    <td class='inputlabel'>headers</td>
+			    <td class='inputdata'><input id='checkheaders' type='text' size='32' name='checkHeaders'/></td>
 			</tr>
 			<tr>
-			    <td class=inputlabel>target</td>
-			    <td class=inputdata><input id='checktarget' type=text size=32 name='checkTarget'/></td>
+			    <td class='inputlabel'>target</td>
+			    <td class='inputdata'><input id='checktarget' type='text' size='32' name='checkTarget'/></td>
 			</tr>
 			<tr>
-			    <td class=inputlabel>match</td>
-			    <td class=inputdata><input id='checkmatch' type=text size=32 name='checkMatch'/></td>
+			    <td class='inputlabel'>match</td>
+			    <td class='inputdata'><input id='checkmatch' type='text' size='32' name='checkMatch'/></td>
 			</tr>
 			<tr>
-			    <td class=inputlabel>require healthy</td>
-			    <td class=inputdata>
+			    <td class='inputlabel'>require healthy</td>
+			    <td class='inputdata'>
 				<select id='checkhealthy' name='checkHealthy'>
 				    <option value='2'>2</option>
 				    <option value='3' selected>3</option>
@@ -82,8 +81,8 @@
 			    </td>
 			</tr>
 			<tr>
-			    <td class=inputlabel>require unhealthy</td>
-			    <td class=inputdata>
+			    <td class='inputlabel'>require unhealthy</td>
+			    <td class='inputdata'>
 				<select id='checkunhealthy' name='checkUnhealthy'>
 				    <option value='2' selected>2</option>
 				    <option value='3'>3</option>
@@ -99,11 +98,11 @@
 			    </td>
 			</tr>
 			<tr>
-			    <td class=inputlabel>invert</td>
-			    <td class=inputdata><input id='checkinvert' type=checkbox name='checkInvert'/></td>
+			    <td class='inputlabel'>invert</td>
+			    <td class='inputdata'><input id='checkinvert' type='checkbox' name='checkInvert'/></td>
 			</tr>
 			<tr>
-			    <td class=inputsubmit colspan='2'><input id='hacksubmit' type='submit' value='Register Health Checks'/></td>
+			    <td class='inputsubmit' colspan='2'><input id='hacksubmit' type='submit' value='Register Health Checks'/></td>
 			</tr>
 		    </table>
 		</form>
@@ -121,7 +120,7 @@
 		<td colspan='5'>
 		    <table id='nestedpanel'>
 			<tr>
-			    <td class='toggleadd' colspan='11'><a onClick='addHealthCheck("{{ domain }}");' href='#'>Add Health Check</a></td>
+			    <td class='toggleadd' colspan='11'><a onclick='addHealthCheck("{{ domain }}");' href='#'>Add Health Check</a></td>
 			</tr>
 			<tr>
 			    <th class='classifier'>UUID</th>
@@ -139,16 +138,16 @@
 {{#records}}
 			<tr>
 			    <td class='record'><a href='/healthhistory/{{ domain }}/get/{{ checkid }}'>{{ checkid }}</a></td>
-			    <td onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{{ checkname }}}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{{ checkname }}}</td>
-			    <td onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{{ checkname }}}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ type }}</td>
-			    <td onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{{ checkname }}}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ headers }}</td>
-			    <td onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{{ checkname }}}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{{ target }}}</a></td>
-			    <td onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{{ checkname }}}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ match }}</td>
-			    <td onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{{ checkname }}}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ reqhealthy }}</td>
-			    <td onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{{ checkname }}}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ requnhealthy }}</td>
-			    <td onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{{ checkname }}}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ invert }}</td>
-			    <td onClick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{{ checkname }}}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ nspool }}</td>
-			    <td class='record'><a onClick='dropHealthCheck("{{ domain }}", "{{ checkid }}");' href='#' alt='Drop Health Check'><img class='deletelogoimg' src='/static/remove.png'></a></td>
+			    <td onclick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{{ checkname }}}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{{ checkname }}}</td>
+			    <td onclick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{{ checkname }}}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ type }}</td>
+			    <td onclick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{{ checkname }}}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ headers }}</td>
+			    <td onclick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{{ checkname }}}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{{ target }}}</a></td>
+			    <td onclick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{{ checkname }}}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ match }}</td>
+			    <td onclick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{{ checkname }}}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ reqhealthy }}</td>
+			    <td onclick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{{ checkname }}}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ requnhealthy }}</td>
+			    <td onclick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{{ checkname }}}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ invert }}</td>
+			    <td onclick='editHealthCheck("{{ domain }}", "{{ checkid }}", "{{{ checkname }}}", "{{ type }}", "{{ headersstr }}", "{{{ targetstr }}}", "{{ match }}", {{ reqhealthy }}, {{ requnhealthy }}, "{{ invert }}");' class='record'>{{ nspool }}</td>
+			    <td class='record'><a onclick='dropHealthCheck("{{ domain }}", "{{ checkid }}");' href='#' alt='Drop Health Check'><img class='deletelogoimg' src='/static/remove.png'/></a></td>
 			</tr>
 {{/records}}
 		    </table>

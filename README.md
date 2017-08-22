@@ -63,6 +63,7 @@ Table of Contents
  * zones import tool?
  * moar tests
  * api-less mode?
+ * 2FA backup codes?
  * shinyness - CSS or frontend contributions most welcome
  * DNSSEC keys rotation open to discussion, bearing in mind it implies
    publishing new DS records to registrar, we can't automate it unilaterally
