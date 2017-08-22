@@ -233,7 +233,7 @@ const refresh = schedule.scheduleJob('*/15 * * * * *', () => {
 						    if (lastChecked.rows !== undefined) {
 							if (lastChecked.rows.length === 0) {
 							    doCheck = true;
-							} else if (parseInt(lastChecked.rows[0].when) + (ttl * 1000) <= now) {
+							} else if (parseInt(lastChecked.rows[0].when) + ((ttl - 1) * 1000) <= now) {
 							    doCheck = true;
 							} else if (process.env.DEBUG) {
 							    logger.info('last checked on ' + lastChecked.rows[0].when);
