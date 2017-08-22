@@ -198,7 +198,7 @@ zonesQueue.process((task, done) => {
 
 const checkStalledJobs = schedule.scheduleJob('* * * * *', () => {
 	if (neighbors.isElectedMaster() !== true) {
-	    logger.info('skipping keys retrieval on slaves');
+	    logger.info('skipping stalled jobs check on slaves');
 	    return true;
 	}
 	confQueue.checkStalledJobs((err, num) => {
