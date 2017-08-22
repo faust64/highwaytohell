@@ -162,33 +162,45 @@ checkQueue.process((task, done) => {
 								let count = 0, countb = 0, recHealthy = null, recPrevious = null;
 								for (let k = 0; k < resp.rows.length && (recHealthy === null || recPrevious === null); k++) {
 								    if (resp.rows[k].value === true) { if (k !== 0) { countb++; } if ((k + 1) < resp.rows.length) { count++; } }
-								    if ((k + 1) === requireUnhealthy && count === 0) {
-									recHealthy = false;
-								    } else if (k === requireUnhealthy && countb === 0) {
-									recPrevious = false;
-								    }
-								    if (recHealthy === null && (k + 1) === requireHealthy && count >= requireHealthy) {
-									recHealthy = true;
-								    } else if (recPrevious === null && k === requireHealthy && countb >= requireHealthy) {
-									recPrevious = true;
-								    }
+								    if ((k + 1) === requireUnhealthy && count === 0) { recHealthy = false; }
+								    else if (k === requireUnhealthy && countb === 0) { recPrevious = false; }
+								    if (recHealthy === null && (k + 1) === requireHealthy && count >= requireHealthy) { recHealthy = true; }
+								    else if (recPrevious === null && k === requireHealthy && countb >= requireHealthy) { recPrevious = true; }
 								}
 								if (recHealthy === null) { recHealthy = false; }
 								if (recPrevious === null) { recPrevious = false; }
 								if (recHealthy !== recPrevious) {
-								    let lookupDomain = 'SELECT * from zones WHERE origin = ?';
-								    client.execute(lookupDomain, [ origin ])
-									.then((resp) => {
-										if (resp.rows !== undefined && resp.rows.length > 0 && resp.rows[0].origin) {
-										    logger.info('should schedule zone refresh for ' + origin);
-										    refreshQueue.createJob(resp.rows[0]).save();
-										} else {
-										    logger.info('unable to lookup domain refreshing zone on behalf of ' + task.data.uuid);
+								    let lookupRecords = "SELECT origin FROM records WHERE healthcheckid = '" + task.data.uuid + "'";
+								    client.execute(lookupRecords)
+									.then((items) => {
+										let domainMatch = false;
+										if (items.rows !== undefined) {
+										    for (let k = 0; k < items.rows.length; k++) {
+											if (items.rows[k].origin === origin) { domainMatch = true; break ; }
+										    }
 										}
-										done();
+										if (domainMatch !== false) {
+										    let lookupDomain = "SELECT * from zones WHERE origin = '" + origin + "'";
+										    client.execute(lookupDomain)
+											.then((resp) => {
+												if (resp.rows !== undefined && resp.rows.length > 0 && resp.rows[0].origin) {
+												    logger.info('should schedule zone refresh for ' + origin);
+												    refreshQueue.createJob(resp.rows[0]).save();
+												} else { logger.info('unable to lookup domain refreshing zone on behalf of ' + task.data.uuid); }
+												done();
+											    })
+											.catch((e) => {
+												logger.error('unable to query cassandra refreshing zone on behalf of ' + task.data.uuid);
+												logger.error(e);
+												done();
+											    });
+										} else {
+										    logger.info('no records depending on ' + task.data.uuid);
+										    done();
+										}
 									    })
 									.catch((e) => {
-										logger.error('unable query cassandra refreshing zone on behalf of ' + task.data.uuid);
+										logger.error('unable to query cassandra resolving records depending on ' + task.data.uuid);
 										logger.error(e);
 										done();
 									    });

@@ -93,6 +93,8 @@ CREATE TABLE records (
 	PRIMARY KEY(origin, name, type, setId)
     );
 
+CREATE INDEX idc_check on records(healthCheckId);
+
 CREATE TABLE checks (
 	uuid varchar,
 	origin varchar,
