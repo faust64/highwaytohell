@@ -16,9 +16,9 @@ if test "$1" = config; then
     for worker in $doWorker
     do
 	case "$worker" in
-	    refreshZones) match="pubsub bull" ;;
-	    apiGW) match="GET POST" ;;
-	    checkHealth) match="checks" ;;
+	    refreshZones) match='pubsub bee' ;;
+	    apiGW) match='GET POST' ;;
+	    checkHealth) match='checks' ;;
 	esac
 	if test "$match"; then
 	    cat <<EOF
@@ -45,9 +45,9 @@ else
     for worker in $doWorker
     do
 	case "$worker" in
-	    refreshZones) match='pubsub bull' ;;
+	    refreshZones) match='pubsub bee' ;;
 	    apiGW) match='GET POST' ;;
-	    checkHealth) match="checks" ;;
+	    checkHealth) match='checks' ;;
 	esac
 	for what in $match
 	do

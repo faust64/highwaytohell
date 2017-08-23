@@ -29,7 +29,7 @@ const workerPool = process.env.HWTH_POOL || 'default';
 const redisBackend = process.env['REDIS_HOST_' + workerPool] || process.env.REDIS_HOST || '127.0.0.1';
 const redisPort = process.env['REDIS_PORT_' + workerPool] || process.env.REDIS_PORT || 6379;
 
-const bullProbe = pmxProbe.meter({ name: 'bull jobs per minute', sample: 60 });
+const beeProbe = pmxProbe.meter({ name: 'bee jobs per minute', sample: 60 });
 const confChannel = 'refresh-config-' + workerPool;
 const confQueue = new Queue('config-refresh-' + workerPool, { removeOnSuccess: true, isWorker: true, redis: { port: redisPort, host: redisBackend }});
 const confSub = redis.createClient(redisPort, redisBackend, { db: process.env.REDIS_DBID || '0' });
@@ -145,7 +145,7 @@ confQueue.process((task, done) => {
 	    .then(() => {
 		    logger.info('refreshed ns configuration on queue notification');
 		    publisher.publish(confChannel, 'thestickoftruth');
-		    bullProbe.mark();
+		    beeProbe.mark();
 		    done();
 		})
 	    .catch((e) => {
@@ -174,7 +174,7 @@ zonesQueue.process((task, done) => {
 					logger.info('done refreshing ' + task.data.origin + ', notifying pool');
 					publisher.publish(zonesChannel, task.data.origin);
 				    }
-				    bullProbe.mark();
+				    beeProbe.mark();
 				    done();
 				})
 			    .catch((e) => {

@@ -16,7 +16,7 @@ let cassandraOpts = {
 if (process.env.CASSANDRA_AUTH_USER && process.env.CASSANDRA_AUTH_PASS) {
     cassandraOpts.authProvider = new cassandra.auth.PlainTextAuthProvider(process.env.CASSANDRA_AUTH_USER, process.env.CASSANDRA_AUTH_PASS);
 }
-const bullProbe = pmxProbe.meter({ name: 'bull jobs per minute', sample: 60 });
+const beeProbe = pmxProbe.meter({ name: 'bee jobs per minute', sample: 60 });
 const client = new cassandra.Client(cassandraOpts);
 const neighbors = require('../lib/advertiseNeighbors.js')('notifiy-' + workerPool);
 const redisBackend = process.env['REDIS_HOST_' + workerPool] || process.env.REDIS_HOST || '127.0.0.1';
@@ -41,6 +41,7 @@ notifyQueue.on('error', (e) => {
     });
 notifyQueue.process((task, done) => {
 	logger.info('processing ' + task.data.what || 'undefined');
+	beeProbe.mark();
 	if (task.data.what === 'healthcheck') {
 	    let shouldNotify = "SELECT * FROM notifications WHERE idcheck = '" + task.data.checkid + "'";
 	    client.execute(shouldNotify)

@@ -16,7 +16,7 @@ let cassandraOpts = {
 if (process.env.CASSANDRA_AUTH_USER && process.env.CASSANDRA_AUTH_PASS) {
     cassandraOpts.authProvider = new cassandra.auth.PlainTextAuthProvider(process.env.CASSANDRA_AUTH_USER, process.env.CASSANDRA_AUTH_PASS);
 }
-const bullProbe = pmxProbe.meter({ name: 'checks per mintute', sample: 60 });
+const beeProbe = pmxProbe.meter({ name: 'checks per mintute', sample: 60 });
 const client = new cassandra.Client(cassandraOpts);
 const checkQueue = new Queue('health-checks-' + workerPool, { removeOnSuccess: true, isWorker: true, redis: { port: redisPort, host: redisBackend }});
 const checksLookup = 'SELECT * FROM checks WHERE nspool = ?';
@@ -142,7 +142,7 @@ checkQueue.process((task, done) => {
 	if (task.data.uuid !== undefined) {
 	    return new checkHealth.CheckHealth(client, task.data)
 		.then(() => {
-			bullProbe.mark();
+			beeProbe.mark();
 			notifyQueue.createJob({ what: 'healthcheck', checkid: task.data.uuid }).save();
 			logger.info('scheduling notification conditions evaluations checks');
 			let checkCond = "SELECT * FROM checks WHERE uuid = '" + task.data.uuid + "'";
