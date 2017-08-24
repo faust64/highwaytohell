@@ -23,7 +23,7 @@ if test "$1" = config; then
 	if test "$match"; then
 	    cat <<EOF
 multigraph HWTH$worker
-graph_title
+graph_title HWTH $worker
 graph_vlabel HWTH usage
 graph_category HighWayToHell
 EOF
@@ -34,7 +34,7 @@ HWTH_${worker}_$what.label $what
 HWTH_${worker}_$what.min 0
 HWTH_${worker}_$what.draw LINE1
 HWTH_${worker}_$what.info $what per minute
-HWTH_${worker}_$what.type DERIVE
+HWTH_${worker}_$what.type GAUGE
 EOF
 	    done
 	fi
@@ -49,9 +49,11 @@ else
 	    apiGW) match='GET POST' ;;
 	    checkHealth) match='checks' ;;
 	esac
+	echo multigraph HWTH$worker
 	for what in $match
 	do
 	    value=`(pm2 show $worker | awk "/$what/" | sed 's_^.* │ \([0-9\.][^ ]*\).*$_\1_' | tr '\n' '+' ; echo) | sed 's|+$||' | bc`
+	    echo "$value" | grep '^\.' >/dev/null && value="0$value"
 	    if test "$value"; then
 		cat <<EOF
 HWTH_${worker}_$what.value $value
