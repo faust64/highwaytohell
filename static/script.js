@@ -105,6 +105,13 @@ function drop(ev) {
     d.style.top = ev.clientY + 'px';
 }
 
+function drop2FA() {
+    var code = prompt('Type in a valid 2FA or backup code to disable 2FA:');
+    if (code.length > 5) {
+	post('/settings/2fa/disable', { confirmation: code });
+    } else { alert('PIN looks too short'); }
+}
+
 function dropAuthorization(domainName, userId) {
     var usure = confirm('Deny ' + userId + ' accesses to ' + domainName + '? This can not be un-done');
     if (usure === true) {
@@ -259,6 +266,13 @@ function editToken(tokenId, tokenPerms, tokenSources) {
     showForm('Edit Token');
 }
 
+function forgetBackupCodes() {
+    var code = prompt('Type in a valid 2FA code to forget any existing backup code:');
+    if (code.length > 5) {
+	post('/settings/2fa/dropbackup', { confirmation: code });
+    } else { alert('PIN looks too short'); }
+}
+
 function hideForm() {
     var form = document.getElementById('overlay');
     if (form) { form.style.visibility = 'hidden'; }
@@ -291,6 +305,13 @@ function post(path, params, method) {
     my.submit();
 }
 
+function regenBackupCodes() {
+    var code = prompt('Type in a valid 2FA code to generate a new set of backup codes:');
+    if (code.length > 5) {
+	post('/settings/2fa/genbackup', { confirmation: code });
+    } else { alert('PIN looks too short'); }
+}
+
 function setNotificationTarget() {
     var selectForm = document.getElementById('notifytype');
     var targetForm = document.getElementById('notifycontainer');
@@ -302,9 +323,7 @@ function setNotificationTarget() {
 	targetForm.innerHTML = res;
 	var notifyForm = document.getElementById('notifytarget');
 	notifyForm[0].selected = true;
-    } else {
-	targetForm.innerHTML = "<input id='notifytarget' type='text' size=32 name='notifyTarget'/>";
-    }
+    } else { targetForm.innerHTML = "<input id='notifytarget' type='text' size=32 name='notifyTarget'/>"; }
 }
 
 function showForm(title) {
@@ -346,12 +365,8 @@ function updateFormAction(where) {
 	    var domainName = document.getElementById('formHelper').value;
 	    var malcolm = document.getElementById('formAction').value;
 	    form.action = '/notifications/' + domainName + '/' + malcolm + '/' + actionUrl;
-	} else {
-	    alert('unhandled form');
-	}
-    } else {
-	alert('could not locate form element');
-    }
+	} else { alert('unhandled form'); }
+    } else { alert('could not locate form element'); }
 }
 
 function updateFormFields(what) {
@@ -378,7 +393,5 @@ function updateFormFields(what) {
 function updateSetId() {
     var recordForm = document.getElementById('targetSource');
     var setIdForm = document.getElementById('recordsetid');
-    if (recordForm && setIdForm) {
-	setIdForm.value = recordForm.value;
-    }
+    if (recordForm && setIdForm) { setIdForm.value = recordForm.value; }
 }

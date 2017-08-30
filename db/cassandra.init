@@ -33,6 +33,12 @@ CREATE TABLE twofa (
 	PRIMARY KEY (uuid)
     );
 
+CREATE TABLE backupcodes (
+	uuid varchar,
+	secret varchar,
+	PRIMARY KEY (uuid, secret)
+    );
+
 CREATE TABLE logins (
 	uuid varchar,
 	clientip varchar,

@@ -45,8 +45,8 @@ Table of Contents
    proxy forwarding connections to your lookpack on port 8080, you would
    have access to a web client declaring domains, records, health checks,
    creating API tokens for CLI usage (see `samples.d/butters`), enabling
-   2FA protection via authenticator such as Authy, sharing your zones
-   management with other users.
+   2FA protection via authenticator such as Authy & optional OTP backup codes,
+   sharing your zones management with other users.
  * starting the `outboundNotifier` worker, you should be able to configure
    POST/GET/email/SMS notifications based on your health check statuses,
    as well as notifications on login and/or failed login accessing our
@@ -63,7 +63,6 @@ Table of Contents
  * zones import tool?
  * moar tests
  * api-less mode?
- * 2FA backup codes?
  * shinyness - CSS or frontend contributions most welcome
  * DNSSEC keys rotation open to discussion, bearing in mind it implies
    publishing new DS records to registrar, we can't automate it unilaterally
@@ -78,7 +77,8 @@ Using a Cassandra backend storing pretty much everything else. The followings
 tables would be used:
 
  * users: account-specific settings
- * twofa: a collection of 2fa secrets and mapped to their owner
+ * twofa: a collection of 2fa secrets, mapped to their owner
+ * backupcodes: a collection of 2fa backup codes, mapped to their owner
  * tokens: a collection of tokens, mapped to their owner. TODO: a permissions
    string is defined, yet not used
  * contactaddresses: collection of contact addresses (only emails so far,

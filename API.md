@@ -7,6 +7,7 @@ Table of Contents
     * [Routes Inventory](#routes-inventory)
     * [Registration Process](#registration-process)
     * [2FA Authentication Workflow](#2fa-authentication-workflow)
+      * [Backup Codes](#backup-codes)
     * [Notes on Token-Based Authentication](#notes-on-token-based-authentication)
     * [Notes on Mails and SMS Notifications](#notes-on-mails-and-sms-notifications)
     * [Notes on Roles](#notes-on-roles)
@@ -76,6 +77,10 @@ Table of Contents
 | POST   | /settings/2fa/confirm                    | confirm 2fa code             |
 | GET    | /settings/2fa/disable                    | 500                          |
 | POST   | /settings/2fa/disable                    | disable 2fa auth             |
+| GET    | /settings/2fa/dropbackup                 | 500                          |
+| POST   | /settings/2fa/dropbackup                 | drop 2fa backup codes        |
+| GET    | /settings/2fa/genbackup                  | 500                          |
+| POST   | /settings/2fa/genbackup                  | generates 2fa backup codes   |
 [ POST   | /settings/confirm-address                | confirm additional address   |
 | GET    | /settings/confirm-address/:userId/:token | confirm registration email   |
 | GET    | /settings/confirm-contact/:userId/:token | confirm additional address   |
@@ -171,7 +176,7 @@ generate a token that we would keep in Redis with a 5 minutes TTL, such as
 hidden inputs: a user ID as kept in cassandra, and our token.
 User has now to enter is 2FA code and submit it (to `/login/2fa`).
 
-The last validation would user the hidden userid field retrieving user
+The last validation would use the hidden userid field retrieving user
 email address. Email address is used to retrive our 2FA token from Redis
 - note retrieving the token will drop it from dataset, preventing from
 it being used twice. Retrieved token is compared to the one sent by
@@ -180,6 +185,17 @@ everything matches, we create a new Redis keys, marking user as
 2FA-authenticated for the next whatever-TTL (1 hour?). Although note
 that as of right now, our login process does not check for such token
 existence, expect for having to 2fa-login each time ....
+
+### Backup Codes
+
+Having enabled 2FA on your account, you may generate and download a list of
+backup codes. Having done so, you may use these codes in place of your 2FA
+code.
+
+Note backup codes are One-Time-Passwords. If you ever consume all your codes,
+you will have to generate new ones.
+
+You may also drop backup codes that could be associated to your account.
 
 ## Notes on Token-Based Authentication
 
