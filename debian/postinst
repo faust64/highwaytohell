@@ -389,10 +389,10 @@ rsyslog_configure()
 {
     if test -d /etc/rsyslog.d; then
 	if test -s /usr/share/doc/highwaytohell/rsyslog.conf.sample; then
-	    if ! cmp /usr/share/doc/highwaytohell/rsyslog.conf.sample /etc/rsyslog.d/hwth.conf >/dev/null 2>&1; then
-		cp -p /usr/share/doc/highwaytohell/rsyslog.conf.sample /etc/rsyslog.d/hwth.conf
-		chown root:root /etc/rsyslog.d/hwth.conf
-		chmod 644 /etc/rsyslog.d/hwth.conf
+	    if ! cmp /usr/share/doc/highwaytohell/rsyslog.conf.sample /etc/rsyslog.d/40-pm2-hwth.conf >/dev/null 2>&1; then
+		cp -p /usr/share/doc/highwaytohell/rsyslog.conf.sample /etc/rsyslog.d/40-pm2-hwth.conf
+		chown root:root /etc/rsyslog.d/40-pm2-hwth.conf
+		chmod 644 /etc/rsyslog.d/40-pm2-hwth.conf
 		if test -x /bin/systemctl; then
 		    if ! systemctl restart rsyslog >/dev/null 2>&1; then
 			notify_msg WARNING failed restarting rsyslog
