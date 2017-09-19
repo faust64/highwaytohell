@@ -115,9 +115,9 @@
       "resolved": "./node_shrinkwrap/caseless-0.12.0.tgz"
     },
     "cassandra-driver": {
-      "version": "3.2.2",
+      "version": "3.3.0",
       "from": "cassandra-driver@>=3.2.2 <4.0.0",
-      "resolved": "./node_shrinkwrap/cassandra-driver-3.2.2.tgz"
+      "resolved": "./node_shrinkwrap/cassandra-driver-3.3.0.tgz"
     },
     "co": {
       "version": "4.6.0",
@@ -341,9 +341,9 @@
       "resolved": "./node_shrinkwrap/eyes-0.1.8.tgz"
     },
     "finalhandler": {
-      "version": "1.0.4",
+      "version": "1.0.5",
       "from": "finalhandler@>=1.0.4 <1.1.0",
-      "resolved": "./node_shrinkwrap/finalhandler-1.0.4.tgz"
+      "resolved": "./node_shrinkwrap/finalhandler-1.0.5.tgz"
     },
     "foreach": {
       "version": "2.0.5",
@@ -361,9 +361,9 @@
       "resolved": "./node_shrinkwrap/form-data-2.1.4.tgz"
     },
     "forwarded": {
-      "version": "0.1.1",
+      "version": "0.1.2",
       "from": "forwarded@>=0.1.0 <0.2.0",
-      "resolved": "./node_shrinkwrap/forwarded-0.1.1.tgz"
+      "resolved": "./node_shrinkwrap/forwarded-0.1.2.tgz"
     },
     "fresh": {
       "version": "0.5.0",
@@ -515,9 +515,9 @@
       "resolved": "./node_shrinkwrap/items-2.1.1.tgz"
     },
     "joi": {
-      "version": "11.0.1",
-      "from": "joi@11.0.1",
-      "resolved": "./node_shrinkwrap/joi-11.0.1.tgz",
+      "version": "11.0.2",
+      "from": "joi@11.0.2",
+      "resolved": "./node_shrinkwrap/joi-11.0.2.tgz",
       "dependencies": {
         "hoek": {
           "version": "4.2.0",
@@ -681,9 +681,9 @@
       "resolved": "./node_shrinkwrap/negotiator-0.6.1.tgz"
     },
     "node-schedule": {
-      "version": "1.2.4",
+      "version": "1.2.5",
       "from": "node-schedule@>=1.2.3 <2.0.0",
-      "resolved": "./node_shrinkwrap/node-schedule-1.2.4.tgz"
+      "resolved": "./node_shrinkwrap/node-schedule-1.2.5.tgz"
     },
     "nodemailer": {
       "version": "4.1.0",
@@ -947,9 +947,9 @@
       "resolved": "./node_shrinkwrap/tunnel-agent-0.6.0.tgz"
     },
     "twilio": {
-      "version": "3.6.6",
+      "version": "3.6.7",
       "from": "twilio@>=3.6.1 <4.0.0",
-      "resolved": "./node_shrinkwrap/twilio-3.6.6.tgz"
+      "resolved": "./node_shrinkwrap/twilio-3.6.7.tgz"
     },
     "type-is": {
       "version": "1.6.15",
