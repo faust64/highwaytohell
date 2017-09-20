@@ -13,9 +13,9 @@
       "resolved": "./node_shrinkwrap/airbrake-2.1.0.tgz"
     },
     "ajv": {
-      "version": "4.11.8",
-      "from": "ajv@>=4.9.1 <5.0.0",
-      "resolved": "./node_shrinkwrap/ajv-4.11.8.tgz"
+      "version": "5.2.2",
+      "from": "ajv@>=5.1.0 <6.0.0",
+      "resolved": "./node_shrinkwrap/ajv-5.2.2.tgz"
     },
     "array-flatten": {
       "version": "1.1.1",
@@ -33,9 +33,9 @@
       "resolved": "./node_shrinkwrap/asn1-0.2.3.tgz"
     },
     "assert-plus": {
-      "version": "0.2.0",
-      "from": "assert-plus@>=0.2.0 <0.3.0",
-      "resolved": "./node_shrinkwrap/assert-plus-0.2.0.tgz"
+      "version": "1.0.0",
+      "from": "assert-plus@>=1.0.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/assert-plus-1.0.0.tgz"
     },
     "async": {
       "version": "1.0.0",
@@ -53,13 +53,13 @@
       "resolved": "./node_shrinkwrap/asynckit-0.4.0.tgz"
     },
     "aws-sign2": {
-      "version": "0.6.0",
-      "from": "aws-sign2@>=0.6.0 <0.7.0",
-      "resolved": "./node_shrinkwrap/aws-sign2-0.6.0.tgz"
+      "version": "0.7.0",
+      "from": "aws-sign2@>=0.7.0 <0.8.0",
+      "resolved": "./node_shrinkwrap/aws-sign2-0.7.0.tgz"
     },
     "aws4": {
       "version": "1.6.0",
-      "from": "aws4@>=1.2.1 <2.0.0",
+      "from": "aws4@>=1.6.0 <2.0.0",
       "resolved": "./node_shrinkwrap/aws4-1.6.0.tgz"
     },
     "base32.js": {
@@ -85,19 +85,12 @@
     "body-parser": {
       "version": "1.18.1",
       "from": "body-parser@>=1.17.2 <2.0.0",
-      "resolved": "./node_shrinkwrap/body-parser-1.18.1.tgz",
-      "dependencies": {
-        "qs": {
-          "version": "6.5.1",
-          "from": "qs@6.5.1",
-          "resolved": "./node_shrinkwrap/qs-6.5.1.tgz"
-        }
-      }
+      "resolved": "./node_shrinkwrap/body-parser-1.18.1.tgz"
     },
     "boom": {
-      "version": "2.10.1",
-      "from": "boom@>=2.0.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/boom-2.10.1.tgz"
+      "version": "4.3.1",
+      "from": "boom@>=4.0.0 <5.0.0",
+      "resolved": "./node_shrinkwrap/boom-4.3.1.tgz"
     },
     "buffer-equal-constant-time": {
       "version": "1.0.1",
@@ -200,9 +193,16 @@
       "resolved": "./node_shrinkwrap/cron-parser-2.4.1.tgz"
     },
     "cryptiles": {
-      "version": "2.0.5",
-      "from": "cryptiles@>=2.0.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/cryptiles-2.0.5.tgz"
+      "version": "3.1.2",
+      "from": "cryptiles@>=3.0.0 <4.0.0",
+      "resolved": "./node_shrinkwrap/cryptiles-3.1.2.tgz",
+      "dependencies": {
+        "boom": {
+          "version": "5.2.0",
+          "from": "boom@>=5.0.0 <6.0.0",
+          "resolved": "./node_shrinkwrap/boom-5.2.0.tgz"
+        }
+      }
     },
     "cycle": {
       "version": "1.0.3",
@@ -212,14 +212,7 @@
     "dashdash": {
       "version": "1.14.1",
       "from": "dashdash@>=1.12.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/dashdash-1.14.1.tgz",
-      "dependencies": {
-        "assert-plus": {
-          "version": "1.0.0",
-          "from": "assert-plus@>=1.0.0 <2.0.0",
-          "resolved": "./node_shrinkwrap/assert-plus-1.0.0.tgz"
-        }
-      }
+      "resolved": "./node_shrinkwrap/dashdash-1.14.1.tgz"
     },
     "debug": {
       "version": "2.6.8",
@@ -327,7 +320,7 @@
     },
     "extend": {
       "version": "3.0.1",
-      "from": "extend@>=3.0.0 <3.1.0",
+      "from": "extend@>=3.0.1 <3.1.0",
       "resolved": "./node_shrinkwrap/extend-3.0.1.tgz"
     },
     "extsprintf": {
@@ -339,6 +332,11 @@
       "version": "0.1.8",
       "from": "eyes@>=0.1.0 <0.2.0",
       "resolved": "./node_shrinkwrap/eyes-0.1.8.tgz"
+    },
+    "fast-deep-equal": {
+      "version": "1.0.0",
+      "from": "fast-deep-equal@>=1.0.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/fast-deep-equal-1.0.0.tgz"
     },
     "finalhandler": {
       "version": "1.0.5",
@@ -356,9 +354,9 @@
       "resolved": "./node_shrinkwrap/forever-agent-0.6.1.tgz"
     },
     "form-data": {
-      "version": "2.1.4",
-      "from": "form-data@>=2.1.1 <2.2.0",
-      "resolved": "./node_shrinkwrap/form-data-2.1.4.tgz"
+      "version": "2.3.1",
+      "from": "form-data@>=2.3.1 <2.4.0",
+      "resolved": "./node_shrinkwrap/form-data-2.3.1.tgz"
     },
     "forwarded": {
       "version": "0.1.2",
@@ -378,14 +376,7 @@
     "getpass": {
       "version": "0.1.7",
       "from": "getpass@>=0.1.1 <0.2.0",
-      "resolved": "./node_shrinkwrap/getpass-0.1.7.tgz",
-      "dependencies": {
-        "assert-plus": {
-          "version": "1.0.0",
-          "from": "assert-plus@>=1.0.0 <2.0.0",
-          "resolved": "./node_shrinkwrap/assert-plus-1.0.0.tgz"
-        }
-      }
+      "resolved": "./node_shrinkwrap/getpass-0.1.7.tgz"
     },
     "glossy": {
       "version": "0.1.7",
@@ -393,14 +384,14 @@
       "resolved": "./node_shrinkwrap/glossy-0.1.7.tgz"
     },
     "har-schema": {
-      "version": "1.0.5",
-      "from": "har-schema@>=1.0.5 <2.0.0",
-      "resolved": "./node_shrinkwrap/har-schema-1.0.5.tgz"
+      "version": "2.0.0",
+      "from": "har-schema@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/har-schema-2.0.0.tgz"
     },
     "har-validator": {
-      "version": "4.2.1",
-      "from": "har-validator@>=4.2.1 <4.3.0",
-      "resolved": "./node_shrinkwrap/har-validator-4.2.1.tgz"
+      "version": "5.0.3",
+      "from": "har-validator@>=5.0.3 <5.1.0",
+      "resolved": "./node_shrinkwrap/har-validator-5.0.3.tgz"
     },
     "has": {
       "version": "1.0.1",
@@ -408,14 +399,14 @@
       "resolved": "./node_shrinkwrap/has-1.0.1.tgz"
     },
     "hawk": {
-      "version": "3.1.3",
-      "from": "hawk@>=3.1.3 <3.2.0",
-      "resolved": "./node_shrinkwrap/hawk-3.1.3.tgz"
+      "version": "6.0.2",
+      "from": "hawk@>=6.0.2 <6.1.0",
+      "resolved": "./node_shrinkwrap/hawk-6.0.2.tgz"
     },
     "hoek": {
-      "version": "2.16.3",
-      "from": "hoek@>=2.0.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/hoek-2.16.3.tgz"
+      "version": "4.2.0",
+      "from": "hoek@>=4.0.0 <5.0.0",
+      "resolved": "./node_shrinkwrap/hoek-4.2.0.tgz"
     },
     "http-errors": {
       "version": "1.6.2",
@@ -423,9 +414,9 @@
       "resolved": "./node_shrinkwrap/http-errors-1.6.2.tgz"
     },
     "http-signature": {
-      "version": "1.1.1",
-      "from": "http-signature@>=1.1.0 <1.2.0",
-      "resolved": "./node_shrinkwrap/http-signature-1.1.1.tgz"
+      "version": "1.2.0",
+      "from": "http-signature@>=1.2.0 <1.3.0",
+      "resolved": "./node_shrinkwrap/http-signature-1.2.0.tgz"
     },
     "httpntlm": {
       "version": "1.6.1",
@@ -515,21 +506,19 @@
       "resolved": "./node_shrinkwrap/items-2.1.1.tgz"
     },
     "joi": {
-      "version": "11.0.2",
-      "from": "joi@11.0.2",
-      "resolved": "./node_shrinkwrap/joi-11.0.2.tgz",
-      "dependencies": {
-        "hoek": {
-          "version": "4.2.0",
-          "from": "hoek@>=4.0.0 <5.0.0",
-          "resolved": "./node_shrinkwrap/hoek-4.2.0.tgz"
-        }
-      }
+      "version": "11.0.3",
+      "from": "joi@11.0.3",
+      "resolved": "./node_shrinkwrap/joi-11.0.3.tgz"
     },
     "json-schema": {
       "version": "0.2.3",
       "from": "json-schema@0.2.3",
       "resolved": "./node_shrinkwrap/json-schema-0.2.3.tgz"
+    },
+    "json-schema-traverse": {
+      "version": "0.3.1",
+      "from": "json-schema-traverse@>=0.3.0 <0.4.0",
+      "resolved": "./node_shrinkwrap/json-schema-traverse-0.3.1.tgz"
     },
     "json-stable-stringify": {
       "version": "1.0.1",
@@ -551,6 +540,11 @@
       "from": "jsonwebtoken@>=7.4.1 <8.0.0",
       "resolved": "./node_shrinkwrap/jsonwebtoken-7.4.3.tgz",
       "dependencies": {
+        "hoek": {
+          "version": "2.16.3",
+          "from": "hoek@>=2.0.0 <3.0.0",
+          "resolved": "./node_shrinkwrap/hoek-2.16.3.tgz"
+        },
         "isemail": {
           "version": "1.2.0",
           "from": "isemail@>=1.0.0 <2.0.0",
@@ -571,14 +565,7 @@
     "jsprim": {
       "version": "1.4.1",
       "from": "jsprim@>=1.2.2 <2.0.0",
-      "resolved": "./node_shrinkwrap/jsprim-1.4.1.tgz",
-      "dependencies": {
-        "assert-plus": {
-          "version": "1.0.0",
-          "from": "assert-plus@1.0.0",
-          "resolved": "./node_shrinkwrap/assert-plus-1.0.0.tgz"
-        }
-      }
+      "resolved": "./node_shrinkwrap/jsprim-1.4.1.tgz"
     },
     "jwa": {
       "version": "1.1.5",
@@ -652,7 +639,7 @@
     },
     "mime-types": {
       "version": "2.1.17",
-      "from": "mime-types@>=2.1.7 <2.2.0",
+      "from": "mime-types@>=2.1.17 <2.2.0",
       "resolved": "./node_shrinkwrap/mime-types-2.1.17.tgz"
     },
     "moment": {
@@ -712,7 +699,7 @@
     },
     "oauth-sign": {
       "version": "0.8.2",
-      "from": "oauth-sign@>=0.8.1 <0.9.0",
+      "from": "oauth-sign@>=0.8.2 <0.9.0",
       "resolved": "./node_shrinkwrap/oauth-sign-0.8.2.tgz"
     },
     "object-keys": {
@@ -746,9 +733,9 @@
       "resolved": "./node_shrinkwrap/path-to-regexp-0.1.7.tgz"
     },
     "performance-now": {
-      "version": "0.2.0",
-      "from": "performance-now@>=0.2.0 <0.3.0",
-      "resolved": "./node_shrinkwrap/performance-now-0.2.0.tgz"
+      "version": "2.1.0",
+      "from": "performance-now@>=2.1.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/performance-now-2.1.0.tgz"
     },
     "pmx": {
       "version": "1.5.2",
@@ -798,9 +785,9 @@
       "resolved": "./node_shrinkwrap/qrcode-0.9.0.tgz"
     },
     "qs": {
-      "version": "6.4.0",
-      "from": "qs@>=6.4.0 <6.5.0",
-      "resolved": "./node_shrinkwrap/qs-6.4.0.tgz"
+      "version": "6.5.1",
+      "from": "qs@>=6.5.1 <6.6.0",
+      "resolved": "./node_shrinkwrap/qs-6.5.1.tgz"
     },
     "random-bytes": {
       "version": "1.0.0",
@@ -833,9 +820,9 @@
       "resolved": "./node_shrinkwrap/redis-parser-2.6.0.tgz"
     },
     "request": {
-      "version": "2.81.0",
+      "version": "2.82.0",
       "from": "request@>=2.81.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/request-2.81.0.tgz"
+      "resolved": "./node_shrinkwrap/request-2.82.0.tgz"
     },
     "rootpath": {
       "version": "0.1.2",
@@ -844,7 +831,7 @@
     },
     "safe-buffer": {
       "version": "5.1.1",
-      "from": "safe-buffer@>=5.0.1 <6.0.0",
+      "from": "safe-buffer@>=5.1.1 <6.0.0",
       "resolved": "./node_shrinkwrap/safe-buffer-5.1.1.tgz"
     },
     "scmp": {
@@ -883,9 +870,9 @@
       "resolved": "./node_shrinkwrap/smtp-connection-2.12.0.tgz"
     },
     "sntp": {
-      "version": "1.0.9",
-      "from": "sntp@>=1.0.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/sntp-1.0.9.tgz"
+      "version": "2.0.2",
+      "from": "sntp@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/sntp-2.0.2.tgz"
     },
     "sorted-array-functions": {
       "version": "1.0.0",
@@ -900,14 +887,7 @@
     "sshpk": {
       "version": "1.13.1",
       "from": "sshpk@>=1.7.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/sshpk-1.13.1.tgz",
-      "dependencies": {
-        "assert-plus": {
-          "version": "1.0.0",
-          "from": "assert-plus@>=1.0.0 <2.0.0",
-          "resolved": "./node_shrinkwrap/assert-plus-1.0.0.tgz"
-        }
-      }
+      "resolved": "./node_shrinkwrap/sshpk-1.13.1.tgz"
     },
     "stack-trace": {
       "version": "0.0.9",
@@ -921,24 +901,17 @@
     },
     "stringstream": {
       "version": "0.0.5",
-      "from": "stringstream@>=0.0.4 <0.1.0",
+      "from": "stringstream@>=0.0.5 <0.1.0",
       "resolved": "./node_shrinkwrap/stringstream-0.0.5.tgz"
     },
     "topo": {
       "version": "2.0.2",
       "from": "topo@>=2.0.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/topo-2.0.2.tgz",
-      "dependencies": {
-        "hoek": {
-          "version": "4.2.0",
-          "from": "hoek@>=4.0.0 <5.0.0",
-          "resolved": "./node_shrinkwrap/hoek-4.2.0.tgz"
-        }
-      }
+      "resolved": "./node_shrinkwrap/topo-2.0.2.tgz"
     },
     "tough-cookie": {
       "version": "2.3.2",
-      "from": "tough-cookie@>=2.3.0 <2.4.0",
+      "from": "tough-cookie@>=2.3.2 <2.4.0",
       "resolved": "./node_shrinkwrap/tough-cookie-2.3.2.tgz"
     },
     "tunnel-agent": {
@@ -949,7 +922,84 @@
     "twilio": {
       "version": "3.6.7",
       "from": "twilio@>=3.6.1 <4.0.0",
-      "resolved": "./node_shrinkwrap/twilio-3.6.7.tgz"
+      "resolved": "./node_shrinkwrap/twilio-3.6.7.tgz",
+      "dependencies": {
+        "ajv": {
+          "version": "4.11.8",
+          "from": "ajv@>=4.9.1 <5.0.0",
+          "resolved": "./node_shrinkwrap/ajv-4.11.8.tgz"
+        },
+        "assert-plus": {
+          "version": "0.2.0",
+          "from": "assert-plus@>=0.2.0 <0.3.0",
+          "resolved": "./node_shrinkwrap/assert-plus-0.2.0.tgz"
+        },
+        "aws-sign2": {
+          "version": "0.6.0",
+          "from": "aws-sign2@>=0.6.0 <0.7.0",
+          "resolved": "./node_shrinkwrap/aws-sign2-0.6.0.tgz"
+        },
+        "boom": {
+          "version": "2.10.1",
+          "from": "boom@>=2.0.0 <3.0.0",
+          "resolved": "./node_shrinkwrap/boom-2.10.1.tgz"
+        },
+        "cryptiles": {
+          "version": "2.0.5",
+          "from": "cryptiles@>=2.0.0 <3.0.0",
+          "resolved": "./node_shrinkwrap/cryptiles-2.0.5.tgz"
+        },
+        "form-data": {
+          "version": "2.1.4",
+          "from": "form-data@>=2.1.1 <2.2.0",
+          "resolved": "./node_shrinkwrap/form-data-2.1.4.tgz"
+        },
+        "har-schema": {
+          "version": "1.0.5",
+          "from": "har-schema@>=1.0.5 <2.0.0",
+          "resolved": "./node_shrinkwrap/har-schema-1.0.5.tgz"
+        },
+        "har-validator": {
+          "version": "4.2.1",
+          "from": "har-validator@>=4.2.1 <4.3.0",
+          "resolved": "./node_shrinkwrap/har-validator-4.2.1.tgz"
+        },
+        "hawk": {
+          "version": "3.1.3",
+          "from": "hawk@>=3.1.3 <3.2.0",
+          "resolved": "./node_shrinkwrap/hawk-3.1.3.tgz"
+        },
+        "hoek": {
+          "version": "2.16.3",
+          "from": "hoek@>=2.0.0 <3.0.0",
+          "resolved": "./node_shrinkwrap/hoek-2.16.3.tgz"
+        },
+        "http-signature": {
+          "version": "1.1.1",
+          "from": "http-signature@>=1.1.0 <1.2.0",
+          "resolved": "./node_shrinkwrap/http-signature-1.1.1.tgz"
+        },
+        "performance-now": {
+          "version": "0.2.0",
+          "from": "performance-now@>=0.2.0 <0.3.0",
+          "resolved": "./node_shrinkwrap/performance-now-0.2.0.tgz"
+        },
+        "qs": {
+          "version": "6.4.0",
+          "from": "qs@>=6.4.0 <6.5.0",
+          "resolved": "./node_shrinkwrap/qs-6.4.0.tgz"
+        },
+        "request": {
+          "version": "2.81.0",
+          "from": "request@>=2.81.0 <2.82.0",
+          "resolved": "./node_shrinkwrap/request-2.81.0.tgz"
+        },
+        "sntp": {
+          "version": "1.0.9",
+          "from": "sntp@>=1.0.0 <2.0.0",
+          "resolved": "./node_shrinkwrap/sntp-1.0.9.tgz"
+        }
+      }
     },
     "type-is": {
       "version": "1.6.15",
@@ -978,7 +1028,7 @@
     },
     "uuid": {
       "version": "3.1.0",
-      "from": "uuid@>=3.0.0 <4.0.0",
+      "from": "uuid@>=3.1.0 <4.0.0",
       "resolved": "./node_shrinkwrap/uuid-3.1.0.tgz"
     },
     "vary": {
@@ -989,14 +1039,7 @@
     "verror": {
       "version": "1.10.0",
       "from": "verror@1.10.0",
-      "resolved": "./node_shrinkwrap/verror-1.10.0.tgz",
-      "dependencies": {
-        "assert-plus": {
-          "version": "1.0.0",
-          "from": "assert-plus@>=1.0.0 <2.0.0",
-          "resolved": "./node_shrinkwrap/assert-plus-1.0.0.tgz"
-        }
-      }
+      "resolved": "./node_shrinkwrap/verror-1.10.0.tgz"
     },
     "vxx": {
       "version": "1.2.2",
