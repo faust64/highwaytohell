@@ -43,9 +43,9 @@
       "resolved": "./node_shrinkwrap/async-1.0.0.tgz"
     },
     "async-listener": {
-      "version": "0.6.7",
+      "version": "0.6.8",
       "from": "async-listener@>=0.6.0 <0.7.0",
-      "resolved": "./node_shrinkwrap/async-listener-0.6.7.tgz"
+      "resolved": "./node_shrinkwrap/async-listener-0.6.8.tgz"
     },
     "asynckit": {
       "version": "0.4.0",
@@ -83,9 +83,9 @@
       "resolved": "./node_shrinkwrap/bluebird-3.5.0.tgz"
     },
     "body-parser": {
-      "version": "1.18.1",
+      "version": "1.18.2",
       "from": "body-parser@>=1.17.2 <2.0.0",
-      "resolved": "./node_shrinkwrap/body-parser-1.18.1.tgz"
+      "resolved": "./node_shrinkwrap/body-parser-1.18.2.tgz"
     },
     "boom": {
       "version": "4.3.1",
@@ -143,6 +143,12 @@
           "version": "2.5.0",
           "from": "bytes@2.5.0",
           "resolved": "./node_shrinkwrap/bytes-2.5.0.tgz",
+          "dev": true
+        },
+        "debug": {
+          "version": "2.6.8",
+          "from": "debug@2.6.8",
+          "resolved": "./node_shrinkwrap/debug-2.6.8.tgz",
           "dev": true
         }
       }
@@ -215,9 +221,9 @@
       "resolved": "./node_shrinkwrap/dashdash-1.14.1.tgz"
     },
     "debug": {
-      "version": "2.6.8",
-      "from": "debug@2.6.8",
-      "resolved": "./node_shrinkwrap/debug-2.6.8.tgz"
+      "version": "2.6.9",
+      "from": "debug@2.6.9",
+      "resolved": "./node_shrinkwrap/debug-2.6.9.tgz"
     },
     "define-properties": {
       "version": "1.1.2",
@@ -306,6 +312,11 @@
       "from": "express@>=4.15.3 <5.0.0",
       "resolved": "./node_shrinkwrap/express-4.15.4.tgz",
       "dependencies": {
+        "debug": {
+          "version": "2.6.8",
+          "from": "debug@2.6.8",
+          "resolved": "./node_shrinkwrap/debug-2.6.8.tgz"
+        },
         "qs": {
           "version": "6.5.0",
           "from": "qs@6.5.0",
@@ -316,7 +327,14 @@
     "express-session": {
       "version": "1.15.5",
       "from": "express-session@>=1.15.5 <2.0.0",
-      "resolved": "./node_shrinkwrap/express-session-1.15.5.tgz"
+      "resolved": "./node_shrinkwrap/express-session-1.15.5.tgz",
+      "dependencies": {
+        "debug": {
+          "version": "2.6.8",
+          "from": "debug@2.6.8",
+          "resolved": "./node_shrinkwrap/debug-2.6.8.tgz"
+        }
+      }
     },
     "extend": {
       "version": "3.0.1",
@@ -339,9 +357,9 @@
       "resolved": "./node_shrinkwrap/fast-deep-equal-1.0.0.tgz"
     },
     "finalhandler": {
-      "version": "1.0.5",
+      "version": "1.0.6",
       "from": "finalhandler@>=1.0.4 <1.1.0",
-      "resolved": "./node_shrinkwrap/finalhandler-1.0.5.tgz"
+      "resolved": "./node_shrinkwrap/finalhandler-1.0.6.tgz"
     },
     "foreach": {
       "version": "2.0.5",
@@ -506,9 +524,9 @@
       "resolved": "./node_shrinkwrap/items-2.1.1.tgz"
     },
     "joi": {
-      "version": "11.0.3",
-      "from": "joi@11.0.3",
-      "resolved": "./node_shrinkwrap/joi-11.0.3.tgz"
+      "version": "11.1.0",
+      "from": "joi@11.1.0",
+      "resolved": "./node_shrinkwrap/joi-11.1.0.tgz"
     },
     "json-schema": {
       "version": "0.2.3",
@@ -738,9 +756,9 @@
       "resolved": "./node_shrinkwrap/performance-now-2.1.0.tgz"
     },
     "pmx": {
-      "version": "1.5.2",
+      "version": "1.5.3",
       "from": "pmx@>=1.2.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/pmx-1.5.2.tgz",
+      "resolved": "./node_shrinkwrap/pmx-1.5.3.tgz",
       "dependencies": {
         "debug": {
           "version": "3.0.1",
@@ -847,7 +865,14 @@
     "send": {
       "version": "0.15.4",
       "from": "send@0.15.4",
-      "resolved": "./node_shrinkwrap/send-0.15.4.tgz"
+      "resolved": "./node_shrinkwrap/send-0.15.4.tgz",
+      "dependencies": {
+        "debug": {
+          "version": "2.6.8",
+          "from": "debug@2.6.8",
+          "resolved": "./node_shrinkwrap/debug-2.6.8.tgz"
+        }
+      }
     },
     "serve-static": {
       "version": "1.12.4",
@@ -910,9 +935,9 @@
       "resolved": "./node_shrinkwrap/topo-2.0.2.tgz"
     },
     "tough-cookie": {
-      "version": "2.3.2",
+      "version": "2.3.3",
       "from": "tough-cookie@>=2.3.2 <2.4.0",
-      "resolved": "./node_shrinkwrap/tough-cookie-2.3.2.tgz"
+      "resolved": "./node_shrinkwrap/tough-cookie-2.3.3.tgz"
     },
     "tunnel-agent": {
       "version": "0.6.0",
@@ -1032,9 +1057,9 @@
       "resolved": "./node_shrinkwrap/uuid-3.1.0.tgz"
     },
     "vary": {
-      "version": "1.1.1",
+      "version": "1.1.2",
       "from": "vary@>=1.1.1 <1.2.0",
-      "resolved": "./node_shrinkwrap/vary-1.1.1.tgz"
+      "resolved": "./node_shrinkwrap/vary-1.1.2.tgz"
     },
     "verror": {
       "version": "1.10.0",
