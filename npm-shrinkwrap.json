@@ -308,15 +308,10 @@
       "resolved": "./node_shrinkwrap/etag-1.8.1.tgz"
     },
     "express": {
-      "version": "4.15.4",
+      "version": "4.15.5",
       "from": "express@>=4.15.3 <5.0.0",
-      "resolved": "./node_shrinkwrap/express-4.15.4.tgz",
+      "resolved": "./node_shrinkwrap/express-4.15.5.tgz",
       "dependencies": {
-        "debug": {
-          "version": "2.6.8",
-          "from": "debug@2.6.8",
-          "resolved": "./node_shrinkwrap/debug-2.6.8.tgz"
-        },
         "qs": {
           "version": "6.5.0",
           "from": "qs@6.5.0",
@@ -358,7 +353,7 @@
     },
     "finalhandler": {
       "version": "1.0.6",
-      "from": "finalhandler@>=1.0.4 <1.1.0",
+      "from": "finalhandler@>=1.0.6 <1.1.0",
       "resolved": "./node_shrinkwrap/finalhandler-1.0.6.tgz"
     },
     "foreach": {
@@ -382,9 +377,9 @@
       "resolved": "./node_shrinkwrap/forwarded-0.1.2.tgz"
     },
     "fresh": {
-      "version": "0.5.0",
-      "from": "fresh@0.5.0",
-      "resolved": "./node_shrinkwrap/fresh-0.5.0.tgz"
+      "version": "0.5.2",
+      "from": "fresh@0.5.2",
+      "resolved": "./node_shrinkwrap/fresh-0.5.2.tgz"
     },
     "function-bind": {
       "version": "1.1.1",
@@ -518,15 +513,10 @@
       "from": "isstream@>=0.1.2 <0.2.0",
       "resolved": "./node_shrinkwrap/isstream-0.1.2.tgz"
     },
-    "items": {
-      "version": "2.1.1",
-      "from": "items@>=2.0.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/items-2.1.1.tgz"
-    },
     "joi": {
-      "version": "11.1.0",
-      "from": "joi@11.1.0",
-      "resolved": "./node_shrinkwrap/joi-11.1.0.tgz"
+      "version": "11.1.1",
+      "from": "joi@11.1.1",
+      "resolved": "./node_shrinkwrap/joi-11.1.1.tgz"
     },
     "json-schema": {
       "version": "0.2.3",
@@ -863,21 +853,14 @@
       "resolved": "./node_shrinkwrap/semver-5.4.1.tgz"
     },
     "send": {
-      "version": "0.15.4",
-      "from": "send@0.15.4",
-      "resolved": "./node_shrinkwrap/send-0.15.4.tgz",
-      "dependencies": {
-        "debug": {
-          "version": "2.6.8",
-          "from": "debug@2.6.8",
-          "resolved": "./node_shrinkwrap/debug-2.6.8.tgz"
-        }
-      }
+      "version": "0.15.6",
+      "from": "send@0.15.6",
+      "resolved": "./node_shrinkwrap/send-0.15.6.tgz"
     },
     "serve-static": {
-      "version": "1.12.4",
-      "from": "serve-static@1.12.4",
-      "resolved": "./node_shrinkwrap/serve-static-1.12.4.tgz"
+      "version": "1.12.6",
+      "from": "serve-static@1.12.6",
+      "resolved": "./node_shrinkwrap/serve-static-1.12.6.tgz"
     },
     "setprototypeof": {
       "version": "1.0.3",
