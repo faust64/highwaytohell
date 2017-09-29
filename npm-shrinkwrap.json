@@ -84,7 +84,7 @@
     },
     "body-parser": {
       "version": "1.18.2",
-      "from": "body-parser@>=1.17.2 <2.0.0",
+      "from": "body-parser@>=1.18.2 <2.0.0",
       "resolved": "./node_shrinkwrap/body-parser-1.18.2.tgz"
     },
     "boom": {

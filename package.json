@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "dependencies": {
     "airbrake": "^2.1.0",
-    "body-parser": "^1.17.2",
+    "body-parser": "^1.18.2",
     "bee-queue": "^1.1.0",
     "bluebird": "^3.5.0",
     "cassandra-driver": "^3.2.2",
