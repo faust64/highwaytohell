@@ -152,6 +152,7 @@ case "$ACTION" in
 	$0 start
 	;;
     reload)
+	ret=0
 	for worker in $RUN_WORKERS
 	do
 	    test -s /usr/share/highwaytohell/workers/$worker.js || continue
