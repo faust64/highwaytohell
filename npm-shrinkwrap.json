@@ -500,9 +500,9 @@
       "resolved": "./node_shrinkwrap/isstream-0.1.2.tgz"
     },
     "joi": {
-      "version": "11.3.2",
-      "from": "joi@11.3.2",
-      "resolved": "./node_shrinkwrap/joi-11.3.2.tgz"
+      "version": "11.3.3",
+      "from": "joi@11.3.3",
+      "resolved": "./node_shrinkwrap/joi-11.3.3.tgz"
     },
     "json-schema": {
       "version": "0.2.3",
