@@ -301,9 +301,9 @@
       "resolved": "./node_shrinkwrap/etag-1.8.1.tgz"
     },
     "express": {
-      "version": "4.16.1",
+      "version": "4.16.2",
       "from": "express@>=4.16.0 <5.0.0",
-      "resolved": "./node_shrinkwrap/express-4.16.1.tgz",
+      "resolved": "./node_shrinkwrap/express-4.16.2.tgz",
       "dependencies": {
         "setprototypeof": {
           "version": "1.1.0",
@@ -500,9 +500,9 @@
       "resolved": "./node_shrinkwrap/isstream-0.1.2.tgz"
     },
     "joi": {
-      "version": "11.3.3",
-      "from": "joi@11.3.3",
-      "resolved": "./node_shrinkwrap/joi-11.3.3.tgz"
+      "version": "11.3.4",
+      "from": "joi@11.3.4",
+      "resolved": "./node_shrinkwrap/joi-11.3.4.tgz"
     },
     "json-schema": {
       "version": "0.2.3",
@@ -637,9 +637,9 @@
       "resolved": "./node_shrinkwrap/mime-types-2.1.17.tgz"
     },
     "moment": {
-      "version": "2.18.1",
+      "version": "2.19.0",
       "from": "moment@>=2.9.0",
-      "resolved": "./node_shrinkwrap/moment-2.18.1.tgz"
+      "resolved": "./node_shrinkwrap/moment-2.19.0.tgz"
     },
     "moment-timezone": {
       "version": "0.5.13",
@@ -972,6 +972,11 @@
           "version": "1.1.1",
           "from": "http-signature@>=1.1.0 <1.2.0",
           "resolved": "./node_shrinkwrap/http-signature-1.1.1.tgz"
+        },
+        "moment": {
+          "version": "2.18.1",
+          "from": "moment@2.18.1",
+          "resolved": "./node_shrinkwrap/moment-2.18.1.tgz"
         },
         "performance-now": {
           "version": "0.2.0",
