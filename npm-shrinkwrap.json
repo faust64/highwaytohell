@@ -187,9 +187,9 @@
       "resolved": "./node_shrinkwrap/crc-3.4.4.tgz"
     },
     "cron-parser": {
-      "version": "2.4.2",
+      "version": "2.4.3",
       "from": "cron-parser@>=2.4.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/cron-parser-2.4.2.tgz"
+      "resolved": "./node_shrinkwrap/cron-parser-2.4.3.tgz"
     },
     "cryptiles": {
       "version": "3.1.2",
@@ -500,9 +500,16 @@
       "resolved": "./node_shrinkwrap/isstream-0.1.2.tgz"
     },
     "joi": {
-      "version": "11.3.4",
-      "from": "joi@11.3.4",
-      "resolved": "./node_shrinkwrap/joi-11.3.4.tgz"
+      "version": "13.0.0",
+      "from": "joi@13.0.0",
+      "resolved": "./node_shrinkwrap/joi-13.0.0.tgz",
+      "dependencies": {
+        "hoek": {
+          "version": "5.0.0",
+          "from": "hoek@>=5.0.0 <6.0.0",
+          "resolved": "./node_shrinkwrap/hoek-5.0.0.tgz"
+        }
+      }
     },
     "json-schema": {
       "version": "0.2.3",
@@ -637,9 +644,9 @@
       "resolved": "./node_shrinkwrap/mime-types-2.1.17.tgz"
     },
     "moment": {
-      "version": "2.19.0",
+      "version": "2.19.1",
       "from": "moment@>=2.9.0",
-      "resolved": "./node_shrinkwrap/moment-2.19.0.tgz"
+      "resolved": "./node_shrinkwrap/moment-2.19.1.tgz"
     },
     "moment-timezone": {
       "version": "0.5.13",
@@ -667,9 +674,9 @@
       "resolved": "./node_shrinkwrap/node-schedule-1.2.5.tgz"
     },
     "nodemailer": {
-      "version": "4.1.3",
+      "version": "4.2.0",
       "from": "nodemailer@>=4.0.1 <5.0.0",
-      "resolved": "./node_shrinkwrap/nodemailer-4.1.3.tgz"
+      "resolved": "./node_shrinkwrap/nodemailer-4.2.0.tgz"
     },
     "nodemailer-fetch": {
       "version": "1.6.0",
@@ -899,9 +906,16 @@
       "resolved": "./node_shrinkwrap/stringstream-0.0.5.tgz"
     },
     "topo": {
-      "version": "2.0.2",
-      "from": "topo@>=2.0.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/topo-2.0.2.tgz"
+      "version": "3.0.0",
+      "from": "topo@>=3.0.0 <4.0.0",
+      "resolved": "./node_shrinkwrap/topo-3.0.0.tgz",
+      "dependencies": {
+        "hoek": {
+          "version": "5.0.0",
+          "from": "hoek@>=5.0.0 <6.0.0",
+          "resolved": "./node_shrinkwrap/hoek-5.0.0.tgz"
+        }
+      }
     },
     "tough-cookie": {
       "version": "2.3.3",
@@ -914,9 +928,9 @@
       "resolved": "./node_shrinkwrap/tunnel-agent-0.6.0.tgz"
     },
     "twilio": {
-      "version": "3.8.0",
+      "version": "3.8.1",
       "from": "twilio@>=3.6.1 <4.0.0",
-      "resolved": "./node_shrinkwrap/twilio-3.8.0.tgz",
+      "resolved": "./node_shrinkwrap/twilio-3.8.1.tgz",
       "dependencies": {
         "ajv": {
           "version": "4.11.8",
