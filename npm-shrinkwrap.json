@@ -500,9 +500,9 @@
       "resolved": "./node_shrinkwrap/isstream-0.1.2.tgz"
     },
     "joi": {
-      "version": "13.0.0",
-      "from": "joi@13.0.0",
-      "resolved": "./node_shrinkwrap/joi-13.0.0.tgz",
+      "version": "13.0.1",
+      "from": "joi@13.0.1",
+      "resolved": "./node_shrinkwrap/joi-13.0.1.tgz",
       "dependencies": {
         "hoek": {
           "version": "5.0.0",
