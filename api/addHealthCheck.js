@@ -1,5 +1,5 @@
 const Promise = require('bluebird');
-const drv = require('cassandra-driver');
+const cst = require('../lib/cassandra.js');
 const uuid = require('cassandra-driver').types.TimeUuid;
 
 module.exports = (cassandra, domain, checkObject) => {
@@ -19,7 +19,7 @@ module.exports = (cassandra, domain, checkObject) => {
 		insertCheck += ", 'default', " + checkObject.healthyThreshold + ", "
 			+ checkObject.unhealthyThreshold + ", "
 			+ (checkObject.invert === true ? 'true' : 'false') + ");";
-		cassandra.execute(insertCheck, [], { consistency: drv.types.consistencies.one })
+		cassandra.execute(insertCheck, [], cst.writeConsistency())
 		    .then((resp) => { resolve(checkId); })
 		    .catch((e) => { reject('failed querying cassandra'); });
 	    });

@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 const Queue = require('bee-queue');
 const cassandra = require('cassandra-driver');
+const cst = require('../lib/cassandra.js');
 const fs = require('fs');
 const logger = require('../lib/logger.js')('outbound-notifier');
 const outboundNotify = require('../lib/outboundNotify.js');
@@ -44,7 +45,7 @@ notifyQueue.process((task, done) => {
 	beeProbe.mark();
 	if (task.data.what === 'healthcheck') {
 	    let shouldNotify = "SELECT * FROM notifications WHERE idcheck = '" + task.data.checkid + "'";
-	    client.execute(shouldNotify, [], { consistency: cassandra.types.consistencies.one })
+	    client.execute(shouldNotify, [], cst.readConsistency())
 		.then((notifs) => {
 			if (notifs.rows !== undefined && notifs.rows[0] !== undefined) {
 			    let promises = [];
@@ -80,12 +81,12 @@ notifyQueue.process((task, done) => {
 	    } else {
 		lookupUser += "emailaddress = '" + task.data.who + "'";
 	    }
-	    client.execute(lookupUser, [], { consistency: cassandra.types.consistencies.one })
+	    client.execute(lookupUser, [], cst.readConsistency())
 		.then((usr) => {
 			if (usr.rows !== undefined && usr.rows[0] !== undefined) {
 			    let lookupHistory = "select time, clientip, succeeded from logins where uuid = '" + usr.rows[0].uuid + "' order by time desc limit 5;"
 			    subst.username = usr.rows[0].username;
-			    client.execute(lookupHistory, [], { consistency: cassandra.types.consistencies.one })
+			    client.execute(lookupHistory, [], cst.readConsistency())
 				.then((hist) => {
 					if (hist.rows !== undefined && hist.rows[0] !== undefined) {
 					    for (let k = 0; k < hist.rows.length; k++) {

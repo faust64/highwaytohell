@@ -15,6 +15,8 @@ export CASSANDRA_HOST="cassandra1.example.com cassandra2.example.com cassandraN.
 export CASSANDRA_KEYSPACE=hwth
 #export CASSANDRA_AUTH_USER=hwth
 #export CASSANDRA_AUTH_PASS=secr3t
+#export CASSANDRA_READ_CONSISTENCY=one
+#export CASSANDRA_WRITE_CONSISTENCY=one
 
 # Cassandra - initializing & upgrading schema
 # sometimes (using PIP), Cassandra client won't connect to your backend cluster

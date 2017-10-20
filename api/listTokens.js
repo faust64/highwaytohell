@@ -1,10 +1,10 @@
 const Promise = require('bluebird');
-const drv = require('cassandra-driver');
+const cst = require('../lib/cassandra.js');
 
 module.exports = (cassandra, userId) => {
 	return new Promise ((resolve, reject) => {
 		let getTokens = "SELECT * FROM tokens WHERE idowner = '" + userId + "'";
-		cassandra.execute(getTokens, [], { consistency: drv.types.consistencies.one })
+		cassandra.execute(getTokens, [], cst.readConsistency())
 		    .then((resp) => {
 			    if (resp.rows !== undefined) { resolve(resp.rows); }
 			    else { resolve({}); }

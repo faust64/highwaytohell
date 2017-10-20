@@ -1,13 +1,13 @@
 const Promise = require('bluebird');
 const crypto = require('crypto');
-const drv = require('cassandra-driver');
+const cst = require('../lib/cassandra.js');
 
 module.exports = (cassandra, userId, code) => {
 	return new Promise ((resolve, reject) => {
 		let addSecrets = [];
 		let dropSecrets = "DELETE FROM backupcodes WHERE uuid = '" + userId + "'";
 		let get2fa = "SELECT secret FROM twofa WHERE uuid = '" + userId + "'";
-		cassandra.execute(get2fa, [], { consistency: drv.types.consistencies.one })
+		cassandra.execute(get2fa, [], cst.readConsistency())
 		    .then((resp) => {
 			    if (resp.rows !== undefined && resp.rows[0] !== undefined) {
 				let validObject = { secret: resp.rows[0].secret.toString(), encoding: 'base32', token: code };
@@ -26,9 +26,9 @@ module.exports = (cassandra, userId, code) => {
 						    }
 						}
 						if (rsp.length >= 10) {
-						    cassandra.execute(dropSecrets, [], { consistency: drv.types.consistencies.one })
+						    cassandra.execute(dropSecrets, [], cst.writeConsistency())
 							.then((dropped) => {
-								cassandra.batch(addSecrets, { consistency: drv.types.consistencies.one })
+								cassandra.batch(addSecrets, cst.writeConsistency())
 								    .then((resp) => { resolve(rsp); })
 								    .catch((e) => { reject('failed writing secrets to cassandra'); });
 							    })

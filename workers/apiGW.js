@@ -2,6 +2,7 @@ const Queue = require('bee-queue');
 const apiRouter = require('../lib/apiRouter.js');
 const bodyParser = require('body-parser');
 const cassandra = require('cassandra-driver');
+const cst = require('../lib/cassandra.js');
 const express = require('express');
 const http = require('http');
 const logger = require('../lib/logger.js')('api-gateway');
@@ -50,7 +51,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 app.set('trust proxy', 1);
 
-client.execute(listPools, [], { consistency: cassandra.types.consistencies.one })
+client.execute(listPools, [], cst.readConsistency())
     .then((resp) => {
 	    if (resp.rows !== undefined || resp.rows[0] !== undefined) {
 		const listenAddr = process.env.APIGW_ADDR || '127.0.0.1';

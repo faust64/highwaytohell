@@ -1,13 +1,13 @@
 const Promise = require('bluebird');
 const crypto = require('crypto');
-const drv = require('cassandra-driver');
+const cst = require('../lib/cassandra.js');
 const sendMail = require('../lib/sendMail.js');
 const sendSMS = require('../lib/sendSMS.js');
 
 module.exports = (cassandra, userId, username, type, target) => {
 	return new Promise ((resolve, reject) => {
 		let checkExisting = "SELECT confirmcode FROM contactaddresses WHERE uuid = '" + userId + "' AND target = '" + target + "'";
-		cassandra.execute(checkExisting, [], { consistency: drv.types.consistencies.one })
+		cassandra.execute(checkExisting, [], cst.readConsistency())
 		    .then((exist) => {
 			    if (exist.rows !== undefined && exist.rows[0] !== undefined && exist.rows[0].confirmcode !== undefined) { reject('contact already registered'); }
 			    else {
@@ -23,7 +23,7 @@ module.exports = (cassandra, userId, username, type, target) => {
 						sendMail(target, 'acknotify', subst)
 						    .then((ok) => {
 							    let insertContact = "INSERT INTO contactaddresses (uuid, type, target, confirmcode) VALUES ('" + userId + "', 'smtp', '" + target + "', '" + token + "')";
-							    cassandra.execute(insertContact, [], { consistency: drv.types.consistencies.one })
+							    cassandra.execute(insertContact, [], cst.writeConsistency())
 								.then((resp) => { resolve(true); })
 								.catch((de) => { reject('failed writing token to cassandra'); });
 							})
@@ -36,7 +36,7 @@ module.exports = (cassandra, userId, username, type, target) => {
 				    sendSMS(target, 'Your HighWayToHell confirmation code is ' + token)
 					.then((ok) => {
 						let insertContact = "INSERT INTO contactaddresses (uuid, type, target, confirmcode) VALUES ('" + userId + "', 'sms', '" + target + "', '" + token + "')";
-						cassandra.execute(insertContact, [], { consistency: drv.types.consistencies.one })
+						cassandra.execute(insertContact, [], cst.writeConsistency())
 						    .then((resp) => { resolve(true); })
 						    .catch((e) => { reject('failed writing token to cassandra'); });
 					    })

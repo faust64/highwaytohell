@@ -168,6 +168,8 @@ your own setup. The one you would definitely want to set being:
 
  * `CASSANDRA_HOST`: FQDNs or IPs list
  * `CASSANDRA_KEYSPACE`: name of previously-created keyspace
+ * `CASSANDRA_READ_CONSISTENCY`: READ consistency level (defaults to `one`)
+ * `CASSANDRA_WRITE_CONSISTENCY`: WRITE consistency level (defaults to `one`)
  * `CQLSH_VERSION`: only if you needed to set `--cqlversion` earlier
  * `HWTH_HOSTNAME`: formatting links, hostname to show
  * `HWTH_PROTO`: formatting links, proto to show

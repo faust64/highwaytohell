@@ -1,11 +1,11 @@
 const Promise = require('bluebird');
-const drv = require('cassandra-driver');
+const cst = require('../lib/cassandra.js');
 
 module.exports = (cassandra, domainName, checkId) => {
 	return new Promise ((resolve, reject) => {
 		let queryChecks = "SELECT uuid, name FROM checks WHERE origin = '" + domainName + "'";
 		if (checkId !== false) { queryChecks += " AND uuid = '" + checkId + "'"; }
-		cassandra.execute(queryChecks, [], { consistency: drv.types.consistencies.one })
+		cassandra.execute(queryChecks, [], cst.readConsistency())
 		    .then((resp) => {
 			    if (resp.rows !== undefined && resp.rows[0] !== undefined) {
 				let queryNotifications = "SELECT * FROM notifications WHERE idcheck IN ('";
@@ -15,7 +15,7 @@ module.exports = (cassandra, domainName, checkId) => {
 				    queryNotifications += checkId;
 				} else { queryNotifications += checkIds.join("', '"); }
 				queryNotifications += "')";
-				cassandra.execute(queryNotifications, [], { consistency: drv.types.consistencies.one })
+				cassandra.execute(queryNotifications, [], cst.readConsistency())
 				    .then((ret) => {
 					    for (let k = 0; k < ret.rows.length; k++) {
 						for (let o = 0; o < resp.rows.length; o++) {

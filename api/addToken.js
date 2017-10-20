@@ -1,6 +1,6 @@
 const Promise = require('bluebird');
 const crypto = require('crypto');
-const drv = require('cassandra-driver');
+const cst = require('../lib/cassandra.js');
 
 module.exports = (cassandra, idOwner, tokenObject) => {
 	return new Promise ((resolve, reject) => {
@@ -10,7 +10,7 @@ module.exports = (cassandra, idOwner, tokenObject) => {
 			    let token = buf.toString('hex');
 			    let insertToken = "INSERT INTO tokens (idowner, tokenstring, permissions, trusted) "
 				    + "VALUES ('" + idOwner + "', '" + token + "', '" + tokenObject.perms + "', '" + tokenObject.src + "')";
-			    cassandra.execute(insertToken, [], { consistency: drv.types.consistencies.one })
+			    cassandra.execute(insertToken, [], cst.writeConsistency())
 				.then((resp) => { resolve(token); })
 				.catch((e) => { reject('failed querying cassandra'); });
 			}

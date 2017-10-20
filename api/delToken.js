@@ -1,10 +1,10 @@
 const Promise = require('bluebird');
-const drv = require('cassandra-driver');
+const cst = require('../lib/cassandra.js');
 
 module.exports = (cassandra, userId, tokenString) => {
 	return new Promise ((resolve, reject) => {
 		let dropToken = "DELETE FROM tokens WHERE idowner = '" + userId + "' AND tokenstring = '" + tokenString + "'";
-		cassandra.execute(dropToken, [], { consistency: drv.types.consistencies.one })
+		cassandra.execute(dropToken, [], cst.writeConsistency())
 		    .then((resp) => { resolve({}); })
 		    .catch((e) => { reject('failed querying cassandra'); });
 	    });

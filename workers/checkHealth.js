@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 const Queue = require('bee-queue');
 const cassandra = require('cassandra-driver');
+const cst = require('../lib/cassandra.js');
 const checkHealth = require('../lib/checkHealth.js');
 const logger = require('../lib/logger.js')('check-health-manager');
 const pmxProbe = require('pmx').probe();
@@ -39,9 +40,9 @@ const cleanupChecks = schedule.scheduleJob('*/15 * * * *', () => {
 	let confLookup = "SELECT uuid, origin FROM checks WHERE nspool = '" + workerPool + "'";
 	let domainsLookup = "SELECT origin FROM zones WHERE nspool = '" + workerPool + "'";
 	let hasDomains = [];
-	client.execute(domainsLookup, [], { consistency: cassandra.types.consistencies.one })
+	client.execute(domainsLookup, [], cst.readConsistency())
 	    .then((doms) => {
-		    client.execute(confLookup, [], { consistency: cassandra.types.consistencies.one })
+		    client.execute(confLookup, [], cst.readConsistency())
 			.then((confs) => {
 				for (let k = 0; k < doms.length; k++) { hasDomains.push(doms[k].origin); }
 				logger.info('collected ' + hasDomains.length + ' domains, now starting to purge orphan health checks');
@@ -52,9 +53,9 @@ const cleanupChecks = schedule.scheduleJob('*/15 * * * *', () => {
 				    else {
 					let dropCheck = "DELETE FROM checks WHERE uuid = '" + confs[k].uuid + "' AND origin = '" + confs[k].origin + "'";
 					let dropHistory = "DELETE FROM checkhistory WHERE uuid = '" + confs[k].uuid + "'";
-					promises.push(client.execute(dropCheck, [], { consistency: cassandra.types.consistencies.one })
+					promises.push(client.execute(dropCheck, [], cst.writeConsistency())
 							.then((resp) => {
-								client.execute(dropHistory, [], { consistency: cassandra.types.consistencies.one })
+								client.execute(dropHistory, [], cst.writeConsistency())
 								    .then((dresp) => { logger.info('purged orphan ' + confs[k].uuid); })
 								    .catch((e) => {
 									    logger.error('failed purging orphan history ' + confs[k].uuid);
@@ -93,14 +94,14 @@ const cleanupLogs = schedule.scheduleJob('42 * * * *', () => {
 	    return true;
 	}
 	let evictBefore = (Date.now() - 3600000);
-	client.execute(checksLookup, [ workerPool ], { consistency: cassandra.types.consistencies.one })
+	client.execute(checksLookup, [ workerPool ], cst.readConsistency())
 	    .then(result => {
 		    if (result.rows !== undefined) {
 			let lookupPromise = [];
 			result.rows.forEach(check => {
 				lookupPromise.push(new Promise ((resolve, reject) => {
 					let lookup = "SELECT when FROM checkhistory WHERE uuid = '" + check.uuid + "' ORDER BY when asc";
-					client.execute(lookup, [], { consistency: cassandra.types.consistencies.one })
+					client.execute(lookup, [], cst.readConsistency())
 					    .then(history => {
 						    if (history.rows !== undefined) {
 							let commands = [];
@@ -110,7 +111,7 @@ const cleanupLogs = schedule.scheduleJob('42 * * * *', () => {
 								}
 							    });
 							if (commands.length > 0) {
-							    client.batch(commands, { consistency: cassandra.types.consistencies.one }, function(err) {
+							    client.batch(commands, cst.writeConsistency(), function(err) {
 								    if (err) {
 									logger.info('failed purging older records for check UUID ' + check.uuid);
 									resolve(true);
@@ -146,7 +147,7 @@ checkQueue.process((task, done) => {
 			notifyQueue.createJob({ what: 'healthcheck', checkid: task.data.uuid }).save();
 			logger.info('scheduling notification conditions evaluations checks');
 			let checkCond = "SELECT * FROM checks WHERE uuid = '" + task.data.uuid + "'";
-			client.execute(checkCond, [], { consistency: cassandra.types.consistencies.one })
+			client.execute(checkCond, [], cst.readConsistency())
 			    .then(conditions => {
 				    if (conditions.rows !== undefined) {
 					if (conditions.rows.length > 0) {
@@ -155,7 +156,7 @@ checkQueue.process((task, done) => {
 						maxLimit = (requireHealthy > requireUnhealthy ? requireHealthy : requireUnhealthy) + 1,
 						lookup = "SELECT value FROM checkhistory WHERE uuid = '" + task.data.uuid + "' ORDER BY when desc LIMIT " + maxLimit,
 						origin = conditions.rows[0].origin;
-					    client.execute(lookup, [], { consistency: cassandra.types.consistencies.one })
+					    client.execute(lookup, [], cst.readConsistency())
 						.then((resp) => {
 							if (resp.rows !== undefined) {
 							    if (resp.rows.length > 0) {
@@ -171,7 +172,7 @@ checkQueue.process((task, done) => {
 								if (recPrevious === null) { recPrevious = false; }
 								if (recHealthy !== recPrevious) {
 								    let lookupRecords = "SELECT origin FROM records WHERE healthcheckid = '" + task.data.uuid + "'";
-								    client.execute(lookupRecords, [], { consistency: cassandra.types.consistencies.one })
+								    client.execute(lookupRecords, [], cst.readConsistency())
 									.then((items) => {
 										let domainMatch = false;
 										if (items.rows !== undefined) {
@@ -181,7 +182,7 @@ checkQueue.process((task, done) => {
 										}
 										if (domainMatch !== false) {
 										    let lookupDomain = "SELECT * from zones WHERE origin = '" + origin + "'";
-										    client.execute(lookupDomain, [], { consistency: cassandra.types.consistencies.one })
+										    client.execute(lookupDomain, [], cst.readConsistency())
 											.then((resp) => {
 												if (resp.rows !== undefined && resp.rows.length > 0 && resp.rows[0].origin) {
 												    logger.info('should schedule zone refresh for ' + origin);
@@ -231,7 +232,7 @@ const refresh = schedule.scheduleJob('*/15 * * * * *', () => {
 	    return true;
 	}
 	let now = Math.round(Date.now() / 1000) * 1000;
-	client.execute(checksLookup, [ workerPool ], { consistency: cassandra.types.consistencies.one })
+	client.execute(checksLookup, [ workerPool ], cst.readConsistency())
 	    .then(result => {
 		    if (result.rows !== undefined) {
 			let checkPromise = [];
@@ -239,7 +240,7 @@ const refresh = schedule.scheduleJob('*/15 * * * * *', () => {
 				checkPromise.push(new Promise ((resolve, reject) => {
 					let ttl = check.ttl || 60;
 					let lookup = "SELECT when FROM checkhistory WHERE uuid = '" + check.uuid + "' ORDER BY when desc LIMIT 1";
-					client.execute(lookup, [], { consistency: cassandra.types.consistencies.one })
+					client.execute(lookup, [], cst.readConsistency())
 					    .then(lastChecked => {
 						    let doCheck = false;
 						    if (lastChecked.rows !== undefined) {

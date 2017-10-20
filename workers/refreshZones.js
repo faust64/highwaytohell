@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 const Queue = require('bee-queue');
 const cassandra = require('cassandra-driver');
+const cst = require('../lib/cassandra.js');
 const dnssecUpdate = require('../lib/dnssecUpdate.js');
 const exec = require('child_process').exec;
 const fs = require('fs');
@@ -42,7 +43,7 @@ const zonesSub = redis.createClient(redisPort, redisBackend, { db: process.env.R
 
 function pullDnssecKeys() {
     return new Promise((resolve, reject) => {
-	    client.execute('SELECT * FROM zones', [], { consistency: cassandra.types.consistencies.one })
+	    client.execute('SELECT * FROM zones', [], cst.readConsistency())
 		.then((resp) => {
 			if (resp.rows !== undefined) {
 			    let promises = [];
@@ -107,7 +108,7 @@ zonesSub.on('message', (chan, msg) => {
 	    if (process.env.DEBUG) { logger.info('ignoring zones refresh on non-master'); }
 	    return true;
 	}
-	client.execute(lookupDomain, [ msg ], { consistency: cassandra.types.consistencies.one })
+	client.execute(lookupDomain, [ msg ], cst.readConsistency())
 	    .then((resp) => {
 		    if (resp.rows !== undefined) {
 			return new generateZone.GenerateZone(client, resp.rows[0], false)
@@ -162,7 +163,7 @@ zonesQueue.on('error', (e) => {
     });
 zonesQueue.process((task, done) => {
 	if (task.data.origin !== undefined) {
-	    client.execute(lookupDomain, [ task.data.origin ], { consistency: cassandra.types.consistencies.one })
+	    client.execute(lookupDomain, [ task.data.origin ], cst.readConsistency())
 		.then((dom) => {
 		    if (dom !== undefined && dom.rows !== undefined && dom.rows[0] !== undefined) {
 			return new generateZone.GenerateZone(client, dom.rows[0], true)
