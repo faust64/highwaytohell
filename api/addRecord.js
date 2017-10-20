@@ -4,7 +4,7 @@ const drv = require('cassandra-driver');
 module.exports = (cassandra, domainName, recordObject) => {
 	return new Promise ((resolve, reject) => {
 		let checkConflict = "SELECT * FROM records WHERE origin = '" + domainName + "' AND name = '" + recordObject.name + "' AND TYPE IN ('A', 'AAAA', 'CNAME')";
-		cassandra.execute(checkConflict, [], { consistency: drv.types.consistencies.localQuorum })
+		cassandra.execute(checkConflict, [], { consistency: drv.types.consistencies.one })
 		    .then((cflt) => {
 			    /*
 			     * when A record exists, can't create CNAME
@@ -29,7 +29,7 @@ module.exports = (cassandra, domainName, recordObject) => {
 				if (recordObject.healthCheckId !== false && recordObject.healthCheckId !== null && recordObject.healthCheckId !== "null" && recordObject.healthCheckId !== "static") {
 				    insertRecord += ", '" + recordObject.healthCheckId + "')";
 				} else { insertRecord += ", null)"; }
-				cassandra.execute(insertRecord, [], { consistency: drv.types.consistencies.localQuorum })
+				cassandra.execute(insertRecord, [], { consistency: drv.types.consistencies.one })
 				    .then((resp) => {
 					    if (recordObject.name === '@') { resolve(domainName); }
 					    else { resolve(recordObject.name + '.' + domainName); }

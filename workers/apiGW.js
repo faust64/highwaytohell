@@ -50,7 +50,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 app.set('trust proxy', 1);
 
-client.execute(listPools, [], { consistency: cassandra.types.consistencies.localQuorum })
+client.execute(listPools, [], { consistency: cassandra.types.consistencies.one })
     .then((resp) => {
 	    if (resp.rows !== undefined || resp.rows[0] !== undefined) {
 		const listenAddr = process.env.APIGW_ADDR || '127.0.0.1';

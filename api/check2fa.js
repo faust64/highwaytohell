@@ -7,7 +7,7 @@ module.exports = (cassandra, request, userId, code, token) => {
 	let logConnection = function(clientIP, succeeded) {
 		return new Promise ((resolve, reject) => {
 			let queryLog = "INSERT INTO logins (uuid, clientip, time, succeeded) VALUES ('" + userId +"', '" + clientIP + "', '" + Date.now() + "', " + (succeeded === true ? 'true' : 'false') + ");"
-			cassandra.execute(queryLog, [], { consistency: drv.types.consistencies.localQuorum })
+			cassandra.execute(queryLog, [], { consistency: drv.types.consistencies.one })
 			    .then((log) => { resolve(true); })
 			    .catch((e) => {
 				    logger.error('failed loging 2FA ' + (succeeded === 'true' ? 'successful' : 'failed') + ' login for ' + userId);
@@ -43,7 +43,7 @@ module.exports = (cassandra, request, userId, code, token) => {
 	let confirmBackupCode = function() {
 		return new Promise ((resolve, reject) => {
 			let getBackupCodes = "SELECT secret FROM backupcodes WHERE uuid = '" + userId + "'";
-			cassandra.execute(getBackupCodes, [], { consistency: drv.types.consistencies.localQuorum })
+			cassandra.execute(getBackupCodes, [], { consistency: drv.types.consistencies.one })
 			    .then((bkp) => {
 				    let postProcess = "";
 				    if (bkp.rows !== undefined) {
@@ -55,7 +55,7 @@ module.exports = (cassandra, request, userId, code, token) => {
 					}
 				    }
 				    if (postProcess !== "") {
-					cassandra.execute(postProcess, [], { consistency: drv.types.consistencies.localQuorum })
+					cassandra.execute(postProcess, [], { consistency: drv.types.consistencies.one })
 					    .then((drp) => {
 						    logger.info('consumed 2FA backup code for ' + userId);
 						    resolve(true);
@@ -83,10 +83,10 @@ module.exports = (cassandra, request, userId, code, token) => {
 		let getUserData = "SELECT username, emailaddress, notifylogin, notifyfailed FROM users WHERE uuid = '" + userId + "'";
 		let postProcess = "";
 		let clientIP = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
-		cassandra.execute(get2fa, [], { consistency: drv.types.consistencies.localQuorum })
+		cassandra.execute(get2fa, [], { consistency: drv.types.consistencies.one })
 		    .then((resp) => {
 			    if (resp.rows !== undefined && resp.rows[0] !== undefined) {
-				cassandra.execute(getUserData, [], { consistency: drv.types.consistencies.localQuorum })
+				cassandra.execute(getUserData, [], { consistency: drv.types.consistencies.one })
 				    .then((nresp) => {
 					    if (nresp.rows !== undefined && nresp.rows[0] !== undefined && nresp.rows[0].emailaddress !== undefined) {
 						let notifyLogin = nresp.rows[0].notifylogin || false;

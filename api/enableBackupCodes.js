@@ -7,7 +7,7 @@ module.exports = (cassandra, userId, code) => {
 		let addSecrets = [];
 		let dropSecrets = "DELETE FROM backupcodes WHERE uuid = '" + userId + "'";
 		let get2fa = "SELECT secret FROM twofa WHERE uuid = '" + userId + "'";
-		cassandra.execute(get2fa, [], { consistency: drv.types.consistencies.localQuorum })
+		cassandra.execute(get2fa, [], { consistency: drv.types.consistencies.one })
 		    .then((resp) => {
 			    if (resp.rows !== undefined && resp.rows[0] !== undefined) {
 				let validObject = { secret: resp.rows[0].secret.toString(), encoding: 'base32', token: code };
@@ -26,9 +26,9 @@ module.exports = (cassandra, userId, code) => {
 						    }
 						}
 						if (rsp.length >= 10) {
-						    cassandra.execute(dropSecrets, [], { consistency: drv.types.consistencies.localQuorum })
+						    cassandra.execute(dropSecrets, [], { consistency: drv.types.consistencies.one })
 							.then((dropped) => {
-								cassandra.batch(addSecrets, { consistency: drv.types.consistencies.localQuorum })
+								cassandra.batch(addSecrets, { consistency: drv.types.consistencies.one })
 								    .then((resp) => { resolve(rsp); })
 								    .catch((e) => { reject('failed writing secrets to cassandra'); });
 							    })

@@ -4,11 +4,11 @@ const drv = require('cassandra-driver');
 module.exports = (cassandra, userId, emailaddr) => {
 	return new Promise ((resolve, reject) => {
 		let checkContact = "SELECT confirmcode FROM contactaddresses WHERE uuid = '" + userId + "' AND target = '" + emailaddr + "'";
-		cassandra.execute(checkContact, [], { consistency: drv.types.consistencies.localQuorum })
+		cassandra.execute(checkContact, [], { consistency: drv.types.consistencies.one })
 		    .then((trusted) => {
 			    if (trusted.rows !== undefined && trusted.rows[0] !== undefined && trusted.rows[0].confirmcode === 'true') {
 				let checkConflict = "SELECT uuid FROM users WHERE emailaddress = '" + emailaddr + "'";
-				cassandra.execute(checkConflict, [], { consistency: drv.types.consistencies.localQuorum })
+				cassandra.execute(checkConflict, [], { consistency: drv.types.consistencies.one })
 				    .then((cflt) => {
 					    let goahead = false;
 					    if (cflt.rows !== undefined && clft.rows[0] !== undefined && cflt.rows[0].uuid !== undefined) {
@@ -16,7 +16,7 @@ module.exports = (cassandra, userId, emailaddr) => {
 					    } else { goahead = true; }
 					    if (goahead) {
 						let updateUser = "UPDATE users SET emailaddress = '" + emailaddr + "' WHERE uuid = '" + userId + "'";
-						cassandra.execute(updateUser, [], { consistency: drv.types.consistencies.localQuorum })
+						cassandra.execute(updateUser, [], { consistency: drv.types.consistencies.one })
 						    .then((resp) => { resolve('address changed to ' + emailaddr); })
 						    .catch((e) => { reject('failed querying cassandra'); });
 					    } else { reject('that address is already used by an other user as its primary contact'); }

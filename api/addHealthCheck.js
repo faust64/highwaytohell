@@ -19,7 +19,7 @@ module.exports = (cassandra, domain, checkObject) => {
 		insertCheck += ", 'default', " + checkObject.healthyThreshold + ", "
 			+ checkObject.unhealthyThreshold + ", "
 			+ (checkObject.invert === true ? 'true' : 'false') + ");";
-		cassandra.execute(insertCheck, [], { consistency: drv.types.consistencies.localQuorum })
+		cassandra.execute(insertCheck, [], { consistency: drv.types.consistencies.one })
 		    .then((resp) => { resolve(checkId); })
 		    .catch((e) => { reject('failed querying cassandra'); });
 	    });

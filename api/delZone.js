@@ -6,11 +6,11 @@ module.exports = (cassandra, domainName) => {
 		let dropRecords = "DELETE FROM records WHERE origin = '" + domainName + "'";
 		let dropDomain = "DELETE FROM zones WHERE origin = '" + domainName + "'";
 		let dropPerms = "DELETE FROM rbaclookalike WHERE domain = '" + domainName + "'";
-		cassandra.execute(dropRecords, [], { consistency: drv.types.consistencies.localQuorum })
+		cassandra.execute(dropRecords, [], { consistency: drv.types.consistencies.one })
 		    .then((drp) => {
-			    cassandra.execute(dropPerms, [], { consistency: drv.types.consistencies.localQuorum })
+			    cassandra.execute(dropPerms, [], { consistency: drv.types.consistencies.one })
 				.then((perms) => {
-					cassandra.execute(dropDomain, [], { consistency: drv.types.consistencies.localQuorum })
+					cassandra.execute(dropDomain, [], { consistency: drv.types.consistencies.one })
 					    .then((resp) => { resolve('domain ' + domainName + ' dropped'); })
 					    .catch((e) => { reject('failed querying cassandra dropping perms'); });
 				    })

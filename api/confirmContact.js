@@ -4,7 +4,7 @@ const drv = require('cassandra-driver');
 module.exports = (cassandra, userId, token) => {
 	return new Promise ((resolve, reject) => {
 		let queryToken = "SELECT target, confirmcode FROM contactaddresses WHERE uuid = '" + userId + "'";
-		cassandra.execute(queryToken, [], { consistency: drv.types.consistencies.localQuorum })
+		cassandra.execute(queryToken, [], { consistency: drv.types.consistencies.one })
 		    .then((resp) => {
 			    if (resp.rows !== undefined && resp.rows[0] !== undefined) {
 				let matched = false;
@@ -13,7 +13,7 @@ module.exports = (cassandra, userId, token) => {
 					matched = true;
 					let target = resp.rows[k].target;
 					let confirmAddress = "UPDATE contactaddresses SET confirmcode = 'true' WHERE uuid = '" + userId + "' AND target = '" + target + "'";
-					cassandra.execute(confirmAddress, [], { consistency: drv.types.consistencies.localQuorum })
+					cassandra.execute(confirmAddress, [], { consistency: drv.types.consistencies.one })
 					    .then((trust) => { resolve(target); })
 					    .catch((e) => { reject('failed trusting address receiving alerts'); });
 		    		    }
