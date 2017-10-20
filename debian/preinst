@@ -90,6 +90,7 @@ install_nodejs()
 	    fi
 	    mv /usr/local/node-v${NODE_VERSION}-linux-${DARCH} /usr/local/nodejs
 	    chown -R root:root /usr/local/nodejs
+	    chmod 644 /usr/local/nodejs/etc/npmrc
 	    ln -sf /usr/local/nodejs/bin/node /usr/bin/node
 	    ln -sf /usr/local/nodejs/bin/npm /usr/bin/npm
 	else
