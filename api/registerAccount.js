@@ -1,12 +1,13 @@
 const Promise = require('bluebird');
 const crypto = require('crypto');
+const drv = require('cassandra-driver');
 const sendMail = require('../lib/sendMail.js');
 const uuid = require('cassandra-driver').types.TimeUuid;
 
 module.exports = (cassandra, username, emailaddr, password) => {
 	return new Promise ((resolve, reject) => {
 		let checkExisting = "SELECT uuid FROM users WHERE emailaddress = '" + emailaddr + "'";
-		cassandra.execute(checkExisting)
+		cassandra.execute(checkExisting, [], { consistency: drv.types.consistencies.localQuorum })
 		    .then((exist) => {
 			    if (exist.rows !== undefined && exist.rows[0] !== undefined && exist.rows[0].uuid !== undefined) {
 				reject('emailaddress already registered');
@@ -25,7 +26,7 @@ module.exports = (cassandra, username, emailaddr, password) => {
 						.then((ok) => {
 							let insertUser = "INSERT INTO users (uuid, username, emailaddress, pwhash, confirmcode, notifyfailed, notifylogin) VALUES "
 							    +"('" + userId + "', '" + username + "', '" + emailaddr + "', '" + pwHash + "', '" + token + "', false, false)";
-							cassandra.execute(insertUser)
+							cassandra.execute(insertUser, [], { consistency: drv.types.consistencies.localQuorum })
 							    .then((resp) => { resolve('user ' + username + ' created with uuid ' + userId); })
 							    .catch((e) => { reject('failed querying cassandra'); });
 						    })

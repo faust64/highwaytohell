@@ -1,7 +1,8 @@
 const Promise = require('bluebird');
+const drv = require('cassandra-driver');
 const exec = require('child_process').exec;
 const fs = require('fs');
-/* Pef ! */
+
 const dnssecCommands = {
 	bind: {
 	    kskbasecmd: 'dnssec-keygen -f KSK -a NSEC3RSASHA1 -b 2048 -n ZONE ',
@@ -42,12 +43,12 @@ module.exports = (cassandra, domain) => {
 			    if (ksk !== '' && zsk !== '') {
 				if (process.env.DEBUG) { self._log.info('generated zsk:' + zsk + ' & ksk:' + ksk); }
 				let command = "UPDATE zones SET ksk = '" + ksk + "', zsk = '" + zsk + "' WHERE origin = '" + domain + "'";
-				cassandra.execute(command)
+				cassandra.execute(command, [], { consistency: drv.types.consistencies.localQuorum })
 				    .then((resp) => {
 					    self._log.info('dnssec initialized for ' + domain);
 					    let uploadDnssecKeys = 'INSERT INTO dnsseckeys (ksk, zsk, kskkey, kskprivate, zskkey, zskprivate) VALUES (?, ?, ?, ?, ?, ?)';
 					    let uploadOptions = [ ksk, zsk, kskObj.key, kskObj.priv, zskObj.key, zskObj.priv ];
-					    cassandra.execute(uploadDnssecKeys, uploadOptions)
+					    cassandra.execute(uploadDnssecKeys, uploadOptions, { consistency: drv.types.consistencies.localQuorum })
 						.then((respDeep) => {
 							self._log.info('uploaded new keys for ' + domain);
 							resolve(true);

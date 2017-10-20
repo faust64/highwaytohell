@@ -1,9 +1,10 @@
 const Promise = require('bluebird');
+const drv = require('cassandra-driver');
 
 module.exports = (cassandra, domain) => {
 	return new Promise ((resolve, reject) => {
 		let queryPerms = "SELECT * FROM rbaclookalike WHERE domain = '" + domain + "'";
-		cassandra.execute(queryPerms)
+		cassandra.execute(queryPerms, [], { consistency: drv.types.consistencies.localQuorum })
 		    .then((perms) => {
 			    if (perms.rows !== undefined && perms.rows[0] !== undefined) {
 				let userids = [];
@@ -13,7 +14,7 @@ module.exports = (cassandra, domain) => {
 				    retWith.push({ uuid: perms.rows[k].uuid, role: perms.rows[k].role });
 				}
 				let queryUsers = "SELECT uuid, emailaddress, username FROM users WHERE uuid IN ('" + userids.join("', '") + "')";
-				cassandra.execute(queryUsers)
+				cassandra.execute(queryUsers, [], { consistency: drv.types.consistencies.localQuorum })
 				    .then((users) => {
 					    if (users.rows !== undefined && users.rows[0] !== undefined) {
 						for (let k = 0; k < users.rows.length; k++) {
