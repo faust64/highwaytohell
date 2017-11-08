@@ -13,9 +13,14 @@
       "resolved": "./node_shrinkwrap/airbrake-2.1.1.tgz"
     },
     "ajv": {
-      "version": "5.2.3",
+      "version": "5.3.0",
       "from": "ajv@>=5.1.0 <6.0.0",
-      "resolved": "./node_shrinkwrap/ajv-5.2.3.tgz"
+      "resolved": "./node_shrinkwrap/ajv-5.3.0.tgz"
+    },
+    "ansi-regex": {
+      "version": "2.1.1",
+      "from": "ansi-regex@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/ansi-regex-2.1.1.tgz"
     },
     "array-flatten": {
       "version": "1.1.1",
@@ -97,10 +102,20 @@
       "from": "buffer-equal-constant-time@1.0.1",
       "resolved": "./node_shrinkwrap/buffer-equal-constant-time-1.0.1.tgz"
     },
+    "builtin-modules": {
+      "version": "1.1.1",
+      "from": "builtin-modules@>=1.0.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/builtin-modules-1.1.1.tgz"
+    },
     "bytes": {
       "version": "3.0.0",
       "from": "bytes@3.0.0",
       "resolved": "./node_shrinkwrap/bytes-3.0.0.tgz"
+    },
+    "camelcase": {
+      "version": "4.1.0",
+      "from": "camelcase@>=4.1.0 <5.0.0",
+      "resolved": "./node_shrinkwrap/camelcase-4.1.0.tgz"
     },
     "caseless": {
       "version": "0.12.0",
@@ -112,15 +127,32 @@
       "from": "cassandra-driver@>=3.2.2 <4.0.0",
       "resolved": "./node_shrinkwrap/cassandra-driver-3.3.0.tgz"
     },
+    "cliui": {
+      "version": "3.2.0",
+      "from": "cliui@>=3.2.0 <4.0.0",
+      "resolved": "./node_shrinkwrap/cliui-3.2.0.tgz",
+      "dependencies": {
+        "string-width": {
+          "version": "1.0.2",
+          "from": "string-width@>=1.0.1 <2.0.0",
+          "resolved": "./node_shrinkwrap/string-width-1.0.2.tgz"
+        }
+      }
+    },
     "co": {
       "version": "4.6.0",
       "from": "co@>=4.6.0 <5.0.0",
       "resolved": "./node_shrinkwrap/co-4.6.0.tgz"
     },
+    "code-point-at": {
+      "version": "1.1.0",
+      "from": "code-point-at@>=1.0.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/code-point-at-1.1.0.tgz"
+    },
     "colors": {
-      "version": "1.1.2",
-      "from": "colors@*",
-      "resolved": "./node_shrinkwrap/colors-1.1.2.tgz"
+      "version": "1.0.3",
+      "from": "colors@>=1.0.0 <1.1.0",
+      "resolved": "./node_shrinkwrap/colors-1.0.3.tgz"
     },
     "combined-stream": {
       "version": "1.0.5",
@@ -128,9 +160,9 @@
       "resolved": "./node_shrinkwrap/combined-stream-1.0.5.tgz"
     },
     "compressible": {
-      "version": "2.0.11",
+      "version": "2.0.12",
       "from": "compressible@>=2.0.11 <2.1.0",
-      "resolved": "./node_shrinkwrap/compressible-2.0.11.tgz",
+      "resolved": "./node_shrinkwrap/compressible-2.0.12.tgz",
       "dev": true
     },
     "compression": {
@@ -191,6 +223,11 @@
       "from": "cron-parser@>=2.4.0 <3.0.0",
       "resolved": "./node_shrinkwrap/cron-parser-2.4.3.tgz"
     },
+    "cross-spawn": {
+      "version": "5.1.0",
+      "from": "cross-spawn@>=5.0.1 <6.0.0",
+      "resolved": "./node_shrinkwrap/cross-spawn-5.1.0.tgz"
+    },
     "cryptiles": {
       "version": "3.1.2",
       "from": "cryptiles@>=3.0.0 <4.0.0",
@@ -217,6 +254,11 @@
       "version": "2.6.9",
       "from": "debug@2.6.9",
       "resolved": "./node_shrinkwrap/debug-2.6.9.tgz"
+    },
+    "decamelize": {
+      "version": "1.2.0",
+      "from": "decamelize@>=1.1.1 <2.0.0",
+      "resolved": "./node_shrinkwrap/decamelize-1.2.0.tgz"
     },
     "define-properties": {
       "version": "1.1.2",
@@ -280,6 +322,11 @@
       "from": "encodeurl@>=1.0.1 <1.1.0",
       "resolved": "./node_shrinkwrap/encodeurl-1.0.1.tgz"
     },
+    "error-ex": {
+      "version": "1.3.1",
+      "from": "error-ex@>=1.2.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/error-ex-1.3.1.tgz"
+    },
     "es-abstract": {
       "version": "1.9.0",
       "from": "es-abstract@>=1.5.1 <2.0.0",
@@ -300,6 +347,11 @@
       "from": "etag@>=1.8.1 <1.9.0",
       "resolved": "./node_shrinkwrap/etag-1.8.1.tgz"
     },
+    "execa": {
+      "version": "0.7.0",
+      "from": "execa@>=0.7.0 <0.8.0",
+      "resolved": "./node_shrinkwrap/execa-0.7.0.tgz"
+    },
     "express": {
       "version": "4.16.2",
       "from": "express@>=4.16.0 <5.0.0",
@@ -309,6 +361,11 @@
           "version": "1.1.0",
           "from": "setprototypeof@1.1.0",
           "resolved": "./node_shrinkwrap/setprototypeof-1.1.0.tgz"
+        },
+        "statuses": {
+          "version": "1.3.1",
+          "from": "statuses@>=1.3.1 <1.4.0",
+          "resolved": "./node_shrinkwrap/statuses-1.3.1.tgz"
         }
       }
     },
@@ -337,10 +394,27 @@
       "from": "fast-deep-equal@>=1.0.0 <2.0.0",
       "resolved": "./node_shrinkwrap/fast-deep-equal-1.0.0.tgz"
     },
+    "fast-json-stable-stringify": {
+      "version": "2.0.0",
+      "from": "fast-json-stable-stringify@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/fast-json-stable-stringify-2.0.0.tgz"
+    },
     "finalhandler": {
       "version": "1.1.0",
       "from": "finalhandler@1.1.0",
-      "resolved": "./node_shrinkwrap/finalhandler-1.1.0.tgz"
+      "resolved": "./node_shrinkwrap/finalhandler-1.1.0.tgz",
+      "dependencies": {
+        "statuses": {
+          "version": "1.3.1",
+          "from": "statuses@>=1.3.1 <1.4.0",
+          "resolved": "./node_shrinkwrap/statuses-1.3.1.tgz"
+        }
+      }
+    },
+    "find-up": {
+      "version": "2.1.0",
+      "from": "find-up@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/find-up-2.1.0.tgz"
     },
     "foreach": {
       "version": "2.0.5",
@@ -372,6 +446,16 @@
       "from": "function-bind@>=1.1.1 <2.0.0",
       "resolved": "./node_shrinkwrap/function-bind-1.1.1.tgz"
     },
+    "get-caller-file": {
+      "version": "1.0.2",
+      "from": "get-caller-file@>=1.0.1 <2.0.0",
+      "resolved": "./node_shrinkwrap/get-caller-file-1.0.2.tgz"
+    },
+    "get-stream": {
+      "version": "3.0.0",
+      "from": "get-stream@>=3.0.0 <4.0.0",
+      "resolved": "./node_shrinkwrap/get-stream-3.0.0.tgz"
+    },
     "getpass": {
       "version": "0.1.7",
       "from": "getpass@>=0.1.1 <0.2.0",
@@ -381,6 +465,11 @@
       "version": "0.1.7",
       "from": "glossy@>=0.0.0 <1.0.0",
       "resolved": "./node_shrinkwrap/glossy-0.1.7.tgz"
+    },
+    "graceful-fs": {
+      "version": "4.1.11",
+      "from": "graceful-fs@>=4.1.2 <5.0.0",
+      "resolved": "./node_shrinkwrap/graceful-fs-4.1.11.tgz"
     },
     "har-schema": {
       "version": "2.0.0",
@@ -406,6 +495,11 @@
       "version": "4.2.0",
       "from": "hoek@>=4.0.0 <5.0.0",
       "resolved": "./node_shrinkwrap/hoek-4.2.0.tgz"
+    },
+    "hosted-git-info": {
+      "version": "2.5.0",
+      "from": "hosted-git-info@>=2.1.4 <3.0.0",
+      "resolved": "./node_shrinkwrap/hosted-git-info-2.5.0.tgz"
     },
     "http-errors": {
       "version": "1.6.2",
@@ -437,6 +531,11 @@
       "from": "inherits@2.0.3",
       "resolved": "./node_shrinkwrap/inherits-2.0.3.tgz"
     },
+    "invert-kv": {
+      "version": "1.0.0",
+      "from": "invert-kv@>=1.0.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/invert-kv-1.0.0.tgz"
+    },
     "ipaddr.js": {
       "version": "1.5.2",
       "from": "ipaddr.js@1.5.2",
@@ -446,6 +545,16 @@
       "version": "3.2.1",
       "from": "is@>=3.2.0 <4.0.0",
       "resolved": "./node_shrinkwrap/is-3.2.1.tgz"
+    },
+    "is-arrayish": {
+      "version": "0.2.1",
+      "from": "is-arrayish@>=0.2.1 <0.3.0",
+      "resolved": "./node_shrinkwrap/is-arrayish-0.2.1.tgz"
+    },
+    "is-builtin-module": {
+      "version": "1.0.0",
+      "from": "is-builtin-module@>=1.0.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/is-builtin-module-1.0.0.tgz"
     },
     "is-callable": {
       "version": "1.1.3",
@@ -457,6 +566,11 @@
       "from": "is-date-object@>=1.0.1 <2.0.0",
       "resolved": "./node_shrinkwrap/is-date-object-1.0.1.tgz"
     },
+    "is-fullwidth-code-point": {
+      "version": "1.0.0",
+      "from": "is-fullwidth-code-point@>=1.0.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/is-fullwidth-code-point-1.0.0.tgz"
+    },
     "is-nan": {
       "version": "1.2.1",
       "from": "is-nan@>=1.2.1 <2.0.0",
@@ -466,6 +580,11 @@
       "version": "1.0.4",
       "from": "is-regex@>=1.0.4 <2.0.0",
       "resolved": "./node_shrinkwrap/is-regex-1.0.4.tgz"
+    },
+    "is-stream": {
+      "version": "1.1.0",
+      "from": "is-stream@>=1.1.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/is-stream-1.1.0.tgz"
     },
     "is-symbol": {
       "version": "1.0.1",
@@ -494,6 +613,11 @@
         }
       }
     },
+    "isexe": {
+      "version": "2.0.0",
+      "from": "isexe@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/isexe-2.0.0.tgz"
+    },
     "isstream": {
       "version": "0.1.2",
       "from": "isstream@>=0.1.2 <0.2.0",
@@ -505,9 +629,9 @@
       "resolved": "./node_shrinkwrap/joi-13.0.1.tgz",
       "dependencies": {
         "hoek": {
-          "version": "5.0.0",
+          "version": "5.0.2",
           "from": "hoek@>=5.0.0 <6.0.0",
-          "resolved": "./node_shrinkwrap/hoek-5.0.0.tgz"
+          "resolved": "./node_shrinkwrap/hoek-5.0.2.tgz"
         }
       }
     },
@@ -521,20 +645,10 @@
       "from": "json-schema-traverse@>=0.3.0 <0.4.0",
       "resolved": "./node_shrinkwrap/json-schema-traverse-0.3.1.tgz"
     },
-    "json-stable-stringify": {
-      "version": "1.0.1",
-      "from": "json-stable-stringify@>=1.0.1 <2.0.0",
-      "resolved": "./node_shrinkwrap/json-stable-stringify-1.0.1.tgz"
-    },
     "json-stringify-safe": {
       "version": "5.0.1",
       "from": "json-stringify-safe@>=5.0.1 <5.1.0",
       "resolved": "./node_shrinkwrap/json-stringify-safe-5.0.1.tgz"
-    },
-    "jsonify": {
-      "version": "0.0.0",
-      "from": "jsonify@>=0.0.0 <0.1.0",
-      "resolved": "./node_shrinkwrap/jsonify-0.0.0.tgz"
     },
     "jsonwebtoken": {
       "version": "7.4.3",
@@ -578,6 +692,21 @@
       "from": "jws@>=3.1.4 <4.0.0",
       "resolved": "./node_shrinkwrap/jws-3.1.4.tgz"
     },
+    "lcid": {
+      "version": "1.0.0",
+      "from": "lcid@>=1.0.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/lcid-1.0.0.tgz"
+    },
+    "load-json-file": {
+      "version": "2.0.0",
+      "from": "load-json-file@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/load-json-file-2.0.0.tgz"
+    },
+    "locate-path": {
+      "version": "2.0.0",
+      "from": "locate-path@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/locate-path-2.0.0.tgz"
+    },
     "lodash": {
       "version": "4.0.0",
       "from": "lodash@4.0.0",
@@ -613,10 +742,20 @@
       "from": "long-timeout@0.1.1",
       "resolved": "./node_shrinkwrap/long-timeout-0.1.1.tgz"
     },
+    "lru-cache": {
+      "version": "4.1.1",
+      "from": "lru-cache@>=4.0.1 <5.0.0",
+      "resolved": "./node_shrinkwrap/lru-cache-4.1.1.tgz"
+    },
     "media-typer": {
       "version": "0.3.0",
       "from": "media-typer@0.3.0",
       "resolved": "./node_shrinkwrap/media-typer-0.3.0.tgz"
+    },
+    "mem": {
+      "version": "1.1.0",
+      "from": "mem@>=1.1.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/mem-1.1.0.tgz"
     },
     "merge-descriptors": {
       "version": "1.0.1",
@@ -643,15 +782,20 @@
       "from": "mime-types@>=2.1.17 <2.2.0",
       "resolved": "./node_shrinkwrap/mime-types-2.1.17.tgz"
     },
+    "mimic-fn": {
+      "version": "1.1.0",
+      "from": "mimic-fn@>=1.0.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/mimic-fn-1.1.0.tgz"
+    },
     "moment": {
       "version": "2.19.1",
       "from": "moment@>=2.9.0",
       "resolved": "./node_shrinkwrap/moment-2.19.1.tgz"
     },
     "moment-timezone": {
-      "version": "0.5.13",
+      "version": "0.5.14",
       "from": "moment-timezone@>=0.5.0 <0.6.0",
-      "resolved": "./node_shrinkwrap/moment-timezone-0.5.13.tgz"
+      "resolved": "./node_shrinkwrap/moment-timezone-0.5.14.tgz"
     },
     "ms": {
       "version": "2.0.0",
@@ -674,9 +818,9 @@
       "resolved": "./node_shrinkwrap/node-schedule-1.2.5.tgz"
     },
     "nodemailer": {
-      "version": "4.2.0",
+      "version": "4.3.1",
       "from": "nodemailer@>=4.0.1 <5.0.0",
-      "resolved": "./node_shrinkwrap/nodemailer-4.2.0.tgz"
+      "resolved": "./node_shrinkwrap/nodemailer-4.3.1.tgz"
     },
     "nodemailer-fetch": {
       "version": "1.6.0",
@@ -697,6 +841,21 @@
       "version": "0.1.10",
       "from": "nodemailer-wellknown@0.1.10",
       "resolved": "./node_shrinkwrap/nodemailer-wellknown-0.1.10.tgz"
+    },
+    "normalize-package-data": {
+      "version": "2.4.0",
+      "from": "normalize-package-data@>=2.3.2 <3.0.0",
+      "resolved": "./node_shrinkwrap/normalize-package-data-2.4.0.tgz"
+    },
+    "npm-run-path": {
+      "version": "2.0.2",
+      "from": "npm-run-path@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/npm-run-path-2.0.2.tgz"
+    },
+    "number-is-nan": {
+      "version": "1.0.1",
+      "from": "number-is-nan@>=1.0.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/number-is-nan-1.0.1.tgz"
     },
     "oauth-sign": {
       "version": "0.8.2",
@@ -723,20 +882,65 @@
       "from": "on-headers@>=1.0.1 <1.1.0",
       "resolved": "./node_shrinkwrap/on-headers-1.0.1.tgz"
     },
+    "os-locale": {
+      "version": "2.1.0",
+      "from": "os-locale@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/os-locale-2.1.0.tgz"
+    },
+    "p-finally": {
+      "version": "1.0.0",
+      "from": "p-finally@>=1.0.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/p-finally-1.0.0.tgz"
+    },
+    "p-limit": {
+      "version": "1.1.0",
+      "from": "p-limit@>=1.1.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/p-limit-1.1.0.tgz"
+    },
+    "p-locate": {
+      "version": "2.0.0",
+      "from": "p-locate@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/p-locate-2.0.0.tgz"
+    },
+    "parse-json": {
+      "version": "2.2.0",
+      "from": "parse-json@>=2.2.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/parse-json-2.2.0.tgz"
+    },
     "parseurl": {
       "version": "1.3.2",
       "from": "parseurl@>=1.3.2 <1.4.0",
       "resolved": "./node_shrinkwrap/parseurl-1.3.2.tgz"
+    },
+    "path-exists": {
+      "version": "3.0.0",
+      "from": "path-exists@>=3.0.0 <4.0.0",
+      "resolved": "./node_shrinkwrap/path-exists-3.0.0.tgz"
+    },
+    "path-key": {
+      "version": "2.0.1",
+      "from": "path-key@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/path-key-2.0.1.tgz"
     },
     "path-to-regexp": {
       "version": "0.1.7",
       "from": "path-to-regexp@0.1.7",
       "resolved": "./node_shrinkwrap/path-to-regexp-0.1.7.tgz"
     },
+    "path-type": {
+      "version": "2.0.0",
+      "from": "path-type@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/path-type-2.0.0.tgz"
+    },
     "performance-now": {
       "version": "2.1.0",
       "from": "performance-now@>=2.1.0 <3.0.0",
       "resolved": "./node_shrinkwrap/performance-now-2.1.0.tgz"
+    },
+    "pify": {
+      "version": "2.3.0",
+      "from": "pify@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/pify-2.3.0.tgz"
     },
     "pmx": {
       "version": "1.5.4",
@@ -751,9 +955,9 @@
       }
     },
     "pngjs": {
-      "version": "2.3.1",
-      "from": "pngjs@>=2.3.1 <3.0.0",
-      "resolved": "./node_shrinkwrap/pngjs-2.3.1.tgz"
+      "version": "3.3.0",
+      "from": "pngjs@>=3.3.0 <4.0.0",
+      "resolved": "./node_shrinkwrap/pngjs-3.3.0.tgz"
     },
     "pop-iterate": {
       "version": "1.0.1",
@@ -761,14 +965,19 @@
       "resolved": "./node_shrinkwrap/pop-iterate-1.0.1.tgz"
     },
     "promise-callbacks": {
-      "version": "3.0.0",
+      "version": "3.1.0",
       "from": "promise-callbacks@>=3.0.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/promise-callbacks-3.0.0.tgz"
+      "resolved": "./node_shrinkwrap/promise-callbacks-3.1.0.tgz"
     },
     "proxy-addr": {
       "version": "2.0.2",
       "from": "proxy-addr@>=2.0.2 <2.1.0",
       "resolved": "./node_shrinkwrap/proxy-addr-2.0.2.tgz"
+    },
+    "pseudomap": {
+      "version": "1.0.2",
+      "from": "pseudomap@>=1.0.2 <2.0.0",
+      "resolved": "./node_shrinkwrap/pseudomap-1.0.2.tgz"
     },
     "punycode": {
       "version": "1.4.1",
@@ -781,9 +990,9 @@
       "resolved": "./node_shrinkwrap/q-2.0.3.tgz"
     },
     "qrcode": {
-      "version": "0.9.0",
-      "from": "qrcode@>=0.9.0 <0.10.0",
-      "resolved": "./node_shrinkwrap/qrcode-0.9.0.tgz"
+      "version": "1.0.0",
+      "from": "qrcode@1.0.0",
+      "resolved": "./node_shrinkwrap/qrcode-1.0.0.tgz"
     },
     "qs": {
       "version": "6.5.1",
@@ -805,6 +1014,16 @@
       "from": "raw-body@2.3.2",
       "resolved": "./node_shrinkwrap/raw-body-2.3.2.tgz"
     },
+    "read-pkg": {
+      "version": "2.0.0",
+      "from": "read-pkg@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/read-pkg-2.0.0.tgz"
+    },
+    "read-pkg-up": {
+      "version": "2.0.0",
+      "from": "read-pkg-up@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/read-pkg-up-2.0.0.tgz"
+    },
     "redis": {
       "version": "2.8.0",
       "from": "redis@>=2.7.1 <3.0.0",
@@ -824,6 +1043,16 @@
       "version": "2.83.0",
       "from": "request@>=2.81.0 <3.0.0",
       "resolved": "./node_shrinkwrap/request-2.83.0.tgz"
+    },
+    "require-directory": {
+      "version": "2.1.1",
+      "from": "require-directory@>=2.1.1 <3.0.0",
+      "resolved": "./node_shrinkwrap/require-directory-2.1.1.tgz"
+    },
+    "require-main-filename": {
+      "version": "1.0.1",
+      "from": "require-main-filename@>=1.0.1 <2.0.0",
+      "resolved": "./node_shrinkwrap/require-main-filename-1.0.1.tgz"
     },
     "rootpath": {
       "version": "0.1.2",
@@ -848,22 +1077,49 @@
     "send": {
       "version": "0.16.1",
       "from": "send@0.16.1",
-      "resolved": "./node_shrinkwrap/send-0.16.1.tgz"
+      "resolved": "./node_shrinkwrap/send-0.16.1.tgz",
+      "dependencies": {
+        "statuses": {
+          "version": "1.3.1",
+          "from": "statuses@>=1.3.1 <1.4.0",
+          "resolved": "./node_shrinkwrap/statuses-1.3.1.tgz"
+        }
+      }
     },
     "serve-static": {
       "version": "1.13.1",
       "from": "serve-static@1.13.1",
       "resolved": "./node_shrinkwrap/serve-static-1.13.1.tgz"
     },
+    "set-blocking": {
+      "version": "2.0.0",
+      "from": "set-blocking@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/set-blocking-2.0.0.tgz"
+    },
     "setprototypeof": {
       "version": "1.0.3",
       "from": "setprototypeof@1.0.3",
       "resolved": "./node_shrinkwrap/setprototypeof-1.0.3.tgz"
     },
+    "shebang-command": {
+      "version": "1.2.0",
+      "from": "shebang-command@>=1.2.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/shebang-command-1.2.0.tgz"
+    },
+    "shebang-regex": {
+      "version": "1.0.0",
+      "from": "shebang-regex@>=1.0.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/shebang-regex-1.0.0.tgz"
+    },
     "shimmer": {
       "version": "1.1.0",
       "from": "shimmer@>=1.0.0 <2.0.0",
       "resolved": "./node_shrinkwrap/shimmer-1.1.0.tgz"
+    },
+    "signal-exit": {
+      "version": "3.0.2",
+      "from": "signal-exit@>=3.0.0 <4.0.0",
+      "resolved": "./node_shrinkwrap/signal-exit-3.0.2.tgz"
     },
     "smtp-connection": {
       "version": "2.12.0",
@@ -871,14 +1127,29 @@
       "resolved": "./node_shrinkwrap/smtp-connection-2.12.0.tgz"
     },
     "sntp": {
-      "version": "2.0.2",
+      "version": "2.1.0",
       "from": "sntp@>=2.0.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/sntp-2.0.2.tgz"
+      "resolved": "./node_shrinkwrap/sntp-2.1.0.tgz"
     },
     "sorted-array-functions": {
       "version": "1.0.0",
       "from": "sorted-array-functions@>=1.0.0 <2.0.0",
       "resolved": "./node_shrinkwrap/sorted-array-functions-1.0.0.tgz"
+    },
+    "spdx-correct": {
+      "version": "1.0.2",
+      "from": "spdx-correct@>=1.0.0 <1.1.0",
+      "resolved": "./node_shrinkwrap/spdx-correct-1.0.2.tgz"
+    },
+    "spdx-expression-parse": {
+      "version": "1.0.4",
+      "from": "spdx-expression-parse@>=1.0.0 <1.1.0",
+      "resolved": "./node_shrinkwrap/spdx-expression-parse-1.0.4.tgz"
+    },
+    "spdx-license-ids": {
+      "version": "1.2.2",
+      "from": "spdx-license-ids@>=1.0.2 <2.0.0",
+      "resolved": "./node_shrinkwrap/spdx-license-ids-1.2.2.tgz"
     },
     "speakeasy": {
       "version": "2.0.0",
@@ -896,14 +1167,51 @@
       "resolved": "./node_shrinkwrap/stack-trace-0.0.9.tgz"
     },
     "statuses": {
-      "version": "1.3.1",
+      "version": "1.4.0",
       "from": "statuses@>=1.3.1 <2.0.0",
-      "resolved": "./node_shrinkwrap/statuses-1.3.1.tgz"
+      "resolved": "./node_shrinkwrap/statuses-1.4.0.tgz"
+    },
+    "string-width": {
+      "version": "2.1.1",
+      "from": "string-width@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/string-width-2.1.1.tgz",
+      "dependencies": {
+        "ansi-regex": {
+          "version": "3.0.0",
+          "from": "ansi-regex@>=3.0.0 <4.0.0",
+          "resolved": "./node_shrinkwrap/ansi-regex-3.0.0.tgz"
+        },
+        "is-fullwidth-code-point": {
+          "version": "2.0.0",
+          "from": "is-fullwidth-code-point@>=2.0.0 <3.0.0",
+          "resolved": "./node_shrinkwrap/is-fullwidth-code-point-2.0.0.tgz"
+        },
+        "strip-ansi": {
+          "version": "4.0.0",
+          "from": "strip-ansi@>=4.0.0 <5.0.0",
+          "resolved": "./node_shrinkwrap/strip-ansi-4.0.0.tgz"
+        }
+      }
     },
     "stringstream": {
       "version": "0.0.5",
       "from": "stringstream@>=0.0.5 <0.1.0",
       "resolved": "./node_shrinkwrap/stringstream-0.0.5.tgz"
+    },
+    "strip-ansi": {
+      "version": "3.0.1",
+      "from": "strip-ansi@>=3.0.1 <4.0.0",
+      "resolved": "./node_shrinkwrap/strip-ansi-3.0.1.tgz"
+    },
+    "strip-bom": {
+      "version": "3.0.0",
+      "from": "strip-bom@>=3.0.0 <4.0.0",
+      "resolved": "./node_shrinkwrap/strip-bom-3.0.0.tgz"
+    },
+    "strip-eof": {
+      "version": "1.0.0",
+      "from": "strip-eof@>=1.0.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/strip-eof-1.0.0.tgz"
     },
     "topo": {
       "version": "3.0.0",
@@ -911,9 +1219,9 @@
       "resolved": "./node_shrinkwrap/topo-3.0.0.tgz",
       "dependencies": {
         "hoek": {
-          "version": "5.0.0",
+          "version": "5.0.2",
           "from": "hoek@>=5.0.0 <6.0.0",
-          "resolved": "./node_shrinkwrap/hoek-5.0.0.tgz"
+          "resolved": "./node_shrinkwrap/hoek-5.0.2.tgz"
         }
       }
     },
@@ -928,89 +1236,14 @@
       "resolved": "./node_shrinkwrap/tunnel-agent-0.6.0.tgz"
     },
     "twilio": {
-      "version": "3.8.1",
+      "version": "3.9.2",
       "from": "twilio@>=3.6.1 <4.0.0",
-      "resolved": "./node_shrinkwrap/twilio-3.8.1.tgz",
+      "resolved": "./node_shrinkwrap/twilio-3.9.2.tgz",
       "dependencies": {
-        "ajv": {
-          "version": "4.11.8",
-          "from": "ajv@>=4.9.1 <5.0.0",
-          "resolved": "./node_shrinkwrap/ajv-4.11.8.tgz"
-        },
-        "assert-plus": {
-          "version": "0.2.0",
-          "from": "assert-plus@>=0.2.0 <0.3.0",
-          "resolved": "./node_shrinkwrap/assert-plus-0.2.0.tgz"
-        },
-        "aws-sign2": {
-          "version": "0.6.0",
-          "from": "aws-sign2@>=0.6.0 <0.7.0",
-          "resolved": "./node_shrinkwrap/aws-sign2-0.6.0.tgz"
-        },
-        "boom": {
-          "version": "2.10.1",
-          "from": "boom@>=2.0.0 <3.0.0",
-          "resolved": "./node_shrinkwrap/boom-2.10.1.tgz"
-        },
-        "cryptiles": {
-          "version": "2.0.5",
-          "from": "cryptiles@>=2.0.0 <3.0.0",
-          "resolved": "./node_shrinkwrap/cryptiles-2.0.5.tgz"
-        },
-        "form-data": {
-          "version": "2.1.4",
-          "from": "form-data@>=2.1.1 <2.2.0",
-          "resolved": "./node_shrinkwrap/form-data-2.1.4.tgz"
-        },
-        "har-schema": {
-          "version": "1.0.5",
-          "from": "har-schema@>=1.0.5 <2.0.0",
-          "resolved": "./node_shrinkwrap/har-schema-1.0.5.tgz"
-        },
-        "har-validator": {
-          "version": "4.2.1",
-          "from": "har-validator@>=4.2.1 <4.3.0",
-          "resolved": "./node_shrinkwrap/har-validator-4.2.1.tgz"
-        },
-        "hawk": {
-          "version": "3.1.3",
-          "from": "hawk@>=3.1.3 <3.2.0",
-          "resolved": "./node_shrinkwrap/hawk-3.1.3.tgz"
-        },
-        "hoek": {
-          "version": "2.16.3",
-          "from": "hoek@>=2.0.0 <3.0.0",
-          "resolved": "./node_shrinkwrap/hoek-2.16.3.tgz"
-        },
-        "http-signature": {
-          "version": "1.1.1",
-          "from": "http-signature@>=1.1.0 <1.2.0",
-          "resolved": "./node_shrinkwrap/http-signature-1.1.1.tgz"
-        },
         "moment": {
           "version": "2.18.1",
           "from": "moment@2.18.1",
           "resolved": "./node_shrinkwrap/moment-2.18.1.tgz"
-        },
-        "performance-now": {
-          "version": "0.2.0",
-          "from": "performance-now@>=0.2.0 <0.3.0",
-          "resolved": "./node_shrinkwrap/performance-now-0.2.0.tgz"
-        },
-        "qs": {
-          "version": "6.4.0",
-          "from": "qs@>=6.4.0 <6.5.0",
-          "resolved": "./node_shrinkwrap/qs-6.4.0.tgz"
-        },
-        "request": {
-          "version": "2.81.0",
-          "from": "request@>=2.81.0 <2.82.0",
-          "resolved": "./node_shrinkwrap/request-2.81.0.tgz"
-        },
-        "sntp": {
-          "version": "1.0.9",
-          "from": "sntp@>=1.0.0 <2.0.0",
-          "resolved": "./node_shrinkwrap/sntp-1.0.9.tgz"
         }
       }
     },
@@ -1044,6 +1277,11 @@
       "from": "uuid@>=3.1.0 <4.0.0",
       "resolved": "./node_shrinkwrap/uuid-3.1.0.tgz"
     },
+    "validate-npm-package-license": {
+      "version": "3.0.1",
+      "from": "validate-npm-package-license@>=3.0.1 <4.0.0",
+      "resolved": "./node_shrinkwrap/validate-npm-package-license-3.0.1.tgz"
+    },
     "vary": {
       "version": "1.1.2",
       "from": "vary@>=1.1.2 <1.2.0",
@@ -1064,22 +1302,37 @@
       "from": "weak-map@>=1.0.5 <2.0.0",
       "resolved": "./node_shrinkwrap/weak-map-1.0.5.tgz"
     },
+    "which": {
+      "version": "1.3.0",
+      "from": "which@>=1.2.9 <2.0.0",
+      "resolved": "./node_shrinkwrap/which-1.3.0.tgz"
+    },
+    "which-module": {
+      "version": "2.0.0",
+      "from": "which-module@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/which-module-2.0.0.tgz"
+    },
     "winston": {
       "version": "2.4.0",
       "from": "winston@>=2.3.1 <3.0.0",
-      "resolved": "./node_shrinkwrap/winston-2.4.0.tgz",
-      "dependencies": {
-        "colors": {
-          "version": "1.0.3",
-          "from": "colors@>=1.0.0 <1.1.0",
-          "resolved": "./node_shrinkwrap/colors-1.0.3.tgz"
-        }
-      }
+      "resolved": "./node_shrinkwrap/winston-2.4.0.tgz"
     },
     "winston-syslog": {
       "version": "1.2.6",
       "from": "winston-syslog@>=1.2.6 <2.0.0",
       "resolved": "./node_shrinkwrap/winston-syslog-1.2.6.tgz"
+    },
+    "wrap-ansi": {
+      "version": "2.1.0",
+      "from": "wrap-ansi@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/wrap-ansi-2.1.0.tgz",
+      "dependencies": {
+        "string-width": {
+          "version": "1.0.2",
+          "from": "string-width@>=1.0.1 <2.0.0",
+          "resolved": "./node_shrinkwrap/string-width-1.0.2.tgz"
+        }
+      }
     },
     "xmlbuilder": {
       "version": "9.0.1",
@@ -1090,6 +1343,26 @@
       "version": "4.0.1",
       "from": "xtend@>=4.0.1 <5.0.0",
       "resolved": "./node_shrinkwrap/xtend-4.0.1.tgz"
+    },
+    "y18n": {
+      "version": "3.2.1",
+      "from": "y18n@>=3.2.1 <4.0.0",
+      "resolved": "./node_shrinkwrap/y18n-3.2.1.tgz"
+    },
+    "yallist": {
+      "version": "2.1.2",
+      "from": "yallist@>=2.1.2 <3.0.0",
+      "resolved": "./node_shrinkwrap/yallist-2.1.2.tgz"
+    },
+    "yargs": {
+      "version": "8.0.2",
+      "from": "yargs@>=8.0.2 <9.0.0",
+      "resolved": "./node_shrinkwrap/yargs-8.0.2.tgz"
+    },
+    "yargs-parser": {
+      "version": "7.0.0",
+      "from": "yargs-parser@>=7.0.0 <8.0.0",
+      "resolved": "./node_shrinkwrap/yargs-parser-7.0.0.tgz"
     }
   }
 }

@@ -17,7 +17,7 @@
     "nodemailer": "^4.0.1",
     "nodemailer-smtp-transport": "^2.7.4",
     "pmx": "^1.5.4",
-    "qrcode": "^0.9.0",
+    "qrcode": "1.0.0",
     "redis": "^2.7.1",
     "request": "^2.81.0",
     "speakeasy": "^2.0.0",
