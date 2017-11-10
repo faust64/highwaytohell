@@ -10,7 +10,7 @@ const generateZone = require('../lib/generateZone.js');
 const logger = require('../lib/logger.js')('refresh-zones-worker');
 const os = require('os');
 const pmxProbe = require('pmx').probe();
-const redis = require('./redis');
+const redis = require('../lib/redis.js');
 const schedule = require('node-schedule');
 
 let cassandraOpts = {
