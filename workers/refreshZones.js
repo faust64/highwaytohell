@@ -29,16 +29,17 @@ const workerPool = process.env.HWTH_POOL || 'default';
 
 const redisBackend = process.env['REDIS_HOST_' + workerPool] || process.env.REDIS_HOST || '127.0.0.1';
 const redisPort = process.env['REDIS_PORT_' + workerPool] || process.env.REDIS_PORT || 6379;
+const queueClient = redis.createClient(redisPort, redisBackend, { db: process.env.REDIS_DBID || '0' });
 
 const beeProbe = pmxProbe.meter({ name: 'bee jobs per minute', sample: 60 });
 const confChannel = 'refresh-config-' + workerPool;
-const confQueue = new Queue('config-refresh-' + workerPool, { removeOnSuccess: true, isWorker: true, redis: { port: redisPort, host: redisBackend }});
+const confQueue = new Queue('config-refresh-' + workerPool, { removeOnSuccess: true, isWorker: true, redis: queueClient });
 const confSub = redis.createClient(redisPort, redisBackend, { db: process.env.REDIS_DBID || '0' });
 const neighbors = require('../lib/advertiseNeighbors.js')('refresh-zones-' + workerPool + '-' + os.hostname());
 const publisher = redis.createClient(redisPort, redisBackend, { db: process.env.REDIS_DBID || '0' });
 const pubsubProbe = pmxProbe.meter({ name: 'pubsub events per minute', sample: 60 });
 const zonesChannel = 'refresh-zones-' + workerPool;
-const zonesQueue = new Queue('zones-refresh-' + workerPool, { removeOnSuccess: true, isWorker: true, redis: { port: redisPort, host: redisBackend }});
+const zonesQueue = new Queue('zones-refresh-' + workerPool, { removeOnSuccess: true, isWorker: true, redis: queueClient });
 const zonesSub = redis.createClient(redisPort, redisBackend, { db: process.env.REDIS_DBID || '0' });
 
 function pullDnssecKeys() {
