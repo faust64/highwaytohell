@@ -624,9 +624,9 @@
       "resolved": "./node_shrinkwrap/isstream-0.1.2.tgz"
     },
     "joi": {
-      "version": "13.0.1",
-      "from": "joi@13.0.1",
-      "resolved": "./node_shrinkwrap/joi-13.0.1.tgz",
+      "version": "13.0.2",
+      "from": "joi@13.0.2",
+      "resolved": "./node_shrinkwrap/joi-13.0.2.tgz",
       "dependencies": {
         "hoek": {
           "version": "5.0.2",
@@ -788,9 +788,9 @@
       "resolved": "./node_shrinkwrap/mimic-fn-1.1.0.tgz"
     },
     "moment": {
-      "version": "2.19.1",
+      "version": "2.19.2",
       "from": "moment@>=2.9.0",
-      "resolved": "./node_shrinkwrap/moment-2.19.1.tgz"
+      "resolved": "./node_shrinkwrap/moment-2.19.2.tgz"
     },
     "moment-timezone": {
       "version": "0.5.14",
@@ -818,9 +818,9 @@
       "resolved": "./node_shrinkwrap/node-schedule-1.2.5.tgz"
     },
     "nodemailer": {
-      "version": "4.3.1",
+      "version": "4.4.0",
       "from": "nodemailer@>=4.0.1 <5.0.0",
-      "resolved": "./node_shrinkwrap/nodemailer-4.3.1.tgz"
+      "resolved": "./node_shrinkwrap/nodemailer-4.4.0.tgz"
     },
     "nodemailer-fetch": {
       "version": "1.6.0",
