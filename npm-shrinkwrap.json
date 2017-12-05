@@ -13,9 +13,9 @@
       "resolved": "./node_shrinkwrap/airbrake-2.1.1.tgz"
     },
     "ajv": {
-      "version": "5.3.0",
+      "version": "5.5.1",
       "from": "ajv@>=5.1.0 <6.0.0",
-      "resolved": "./node_shrinkwrap/ajv-5.3.0.tgz"
+      "resolved": "./node_shrinkwrap/ajv-5.5.1.tgz"
     },
     "ansi-regex": {
       "version": "2.1.1",
@@ -194,9 +194,9 @@
       "resolved": "./node_shrinkwrap/content-type-1.0.4.tgz"
     },
     "continuation-local-storage": {
-      "version": "3.2.0",
+      "version": "3.2.1",
       "from": "continuation-local-storage@>=3.1.4 <4.0.0",
-      "resolved": "./node_shrinkwrap/continuation-local-storage-3.2.0.tgz"
+      "resolved": "./node_shrinkwrap/continuation-local-storage-3.2.1.tgz"
     },
     "cookie": {
       "version": "0.3.1",
@@ -306,16 +306,9 @@
       "resolved": "./node_shrinkwrap/ee-first-1.1.1.tgz"
     },
     "emitter-listener": {
-      "version": "1.0.1",
-      "from": "emitter-listener@>=1.0.1 <2.0.0",
-      "resolved": "./node_shrinkwrap/emitter-listener-1.0.1.tgz",
-      "dependencies": {
-        "shimmer": {
-          "version": "1.0.0",
-          "from": "shimmer@1.0.0",
-          "resolved": "./node_shrinkwrap/shimmer-1.0.0.tgz"
-        }
-      }
+      "version": "1.1.1",
+      "from": "emitter-listener@>=1.1.1 <2.0.0",
+      "resolved": "./node_shrinkwrap/emitter-listener-1.1.1.tgz"
     },
     "encodeurl": {
       "version": "1.0.1",
@@ -328,9 +321,9 @@
       "resolved": "./node_shrinkwrap/error-ex-1.3.1.tgz"
     },
     "es-abstract": {
-      "version": "1.9.0",
+      "version": "1.10.0",
       "from": "es-abstract@>=1.5.1 <2.0.0",
-      "resolved": "./node_shrinkwrap/es-abstract-1.9.0.tgz"
+      "resolved": "./node_shrinkwrap/es-abstract-1.10.0.tgz"
     },
     "es-to-primitive": {
       "version": "1.1.1",
@@ -788,9 +781,9 @@
       "resolved": "./node_shrinkwrap/mimic-fn-1.1.0.tgz"
     },
     "moment": {
-      "version": "2.19.2",
+      "version": "2.19.3",
       "from": "moment@>=2.9.0",
-      "resolved": "./node_shrinkwrap/moment-2.19.2.tgz"
+      "resolved": "./node_shrinkwrap/moment-2.19.3.tgz"
     },
     "moment-timezone": {
       "version": "0.5.14",
@@ -943,9 +936,9 @@
       "resolved": "./node_shrinkwrap/pify-2.3.0.tgz"
     },
     "pmx": {
-      "version": "1.5.4",
+      "version": "1.5.5",
       "from": "pmx@>=1.5.4 <2.0.0",
-      "resolved": "./node_shrinkwrap/pmx-1.5.4.tgz",
+      "resolved": "./node_shrinkwrap/pmx-1.5.5.tgz",
       "dependencies": {
         "debug": {
           "version": "3.1.0",
@@ -955,9 +948,9 @@
       }
     },
     "pngjs": {
-      "version": "3.3.0",
+      "version": "3.3.1",
       "from": "pngjs@>=3.3.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/pngjs-3.3.0.tgz"
+      "resolved": "./node_shrinkwrap/pngjs-3.3.1.tgz"
     },
     "pop-iterate": {
       "version": "1.0.1",
@@ -1112,9 +1105,9 @@
       "resolved": "./node_shrinkwrap/shebang-regex-1.0.0.tgz"
     },
     "shimmer": {
-      "version": "1.1.0",
+      "version": "1.2.0",
       "from": "shimmer@>=1.0.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/shimmer-1.1.0.tgz"
+      "resolved": "./node_shrinkwrap/shimmer-1.2.0.tgz"
     },
     "signal-exit": {
       "version": "3.0.2",
@@ -1236,9 +1229,9 @@
       "resolved": "./node_shrinkwrap/tunnel-agent-0.6.0.tgz"
     },
     "twilio": {
-      "version": "3.9.2",
+      "version": "3.10.1",
       "from": "twilio@>=3.6.1 <4.0.0",
-      "resolved": "./node_shrinkwrap/twilio-3.9.2.tgz",
+      "resolved": "./node_shrinkwrap/twilio-3.10.1.tgz",
       "dependencies": {
         "moment": {
           "version": "2.18.1",
@@ -1318,9 +1311,9 @@
       "resolved": "./node_shrinkwrap/winston-2.4.0.tgz"
     },
     "winston-syslog": {
-      "version": "1.2.6",
-      "from": "winston-syslog@>=1.2.6 <2.0.0",
-      "resolved": "./node_shrinkwrap/winston-syslog-1.2.6.tgz"
+      "version": "2.0.0",
+      "from": "winston-syslog@2.0.0",
+      "resolved": "./node_shrinkwrap/winston-syslog-2.0.0.tgz"
     },
     "wrap-ansi": {
       "version": "2.1.0",
