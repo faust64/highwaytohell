@@ -48,6 +48,11 @@ if (process.env.NODE_ENV !== 'production') {
     } catch(e) {
 	logger.info('could not enable compression, despite environ not being set to production');
     }
+    try {
+	app.use('/static', express.static('static'));
+    } catch(e) {
+	logger.info('could not serve static assets');
+    }
 }
 app.set('trust proxy', 1);
 
