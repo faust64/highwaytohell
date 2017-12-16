@@ -9,7 +9,7 @@
     },
     "airbrake": {
       "version": "2.1.1",
-      "from": "airbrake@>=2.1.0 <3.0.0",
+      "from": "airbrake@2.1.1",
       "resolved": "./node_shrinkwrap/airbrake-2.1.1.tgz"
     },
     "ajv": {
@@ -79,17 +79,17 @@
     },
     "bee-queue": {
       "version": "1.1.0",
-      "from": "bee-queue@>=1.1.0 <2.0.0",
+      "from": "bee-queue@1.1.0",
       "resolved": "./node_shrinkwrap/bee-queue-1.1.0.tgz"
     },
     "bluebird": {
       "version": "3.5.1",
-      "from": "bluebird@>=3.5.0 <4.0.0",
+      "from": "bluebird@3.5.1",
       "resolved": "./node_shrinkwrap/bluebird-3.5.1.tgz"
     },
     "body-parser": {
       "version": "1.18.2",
-      "from": "body-parser@>=1.18.2 <2.0.0",
+      "from": "body-parser@1.18.2",
       "resolved": "./node_shrinkwrap/body-parser-1.18.2.tgz"
     },
     "boom": {
@@ -124,7 +124,7 @@
     },
     "cassandra-driver": {
       "version": "3.3.0",
-      "from": "cassandra-driver@>=3.2.2 <4.0.0",
+      "from": "cassandra-driver@3.3.0",
       "resolved": "./node_shrinkwrap/cassandra-driver-3.3.0.tgz"
     },
     "cliui": {
@@ -173,7 +173,7 @@
     },
     "connect-redis": {
       "version": "3.3.2",
-      "from": "connect-redis@>=3.3.0 <4.0.0",
+      "from": "connect-redis@3.3.2",
       "resolved": "./node_shrinkwrap/connect-redis-3.3.2.tgz",
       "dependencies": {
         "debug": {
@@ -347,7 +347,7 @@
     },
     "express": {
       "version": "4.16.2",
-      "from": "express@>=4.16.0 <5.0.0",
+      "from": "express@4.16.2",
       "resolved": "./node_shrinkwrap/express-4.16.2.tgz",
       "dependencies": {
         "setprototypeof": {
@@ -364,7 +364,7 @@
     },
     "express-session": {
       "version": "1.15.6",
-      "from": "express-session@>=1.15.6 <2.0.0",
+      "from": "express-session@1.15.6",
       "resolved": "./node_shrinkwrap/express-session-1.15.6.tgz"
     },
     "extend": {
@@ -781,9 +781,9 @@
       "resolved": "./node_shrinkwrap/mimic-fn-1.1.0.tgz"
     },
     "moment": {
-      "version": "2.19.3",
+      "version": "2.19.4",
       "from": "moment@>=2.9.0",
-      "resolved": "./node_shrinkwrap/moment-2.19.3.tgz"
+      "resolved": "./node_shrinkwrap/moment-2.19.4.tgz"
     },
     "moment-timezone": {
       "version": "0.5.14",
@@ -797,7 +797,7 @@
     },
     "mustache": {
       "version": "2.3.0",
-      "from": "mustache@>=2.3.0 <3.0.0",
+      "from": "mustache@2.3.0",
       "resolved": "./node_shrinkwrap/mustache-2.3.0.tgz"
     },
     "negotiator": {
@@ -807,13 +807,13 @@
     },
     "node-schedule": {
       "version": "1.2.5",
-      "from": "node-schedule@>=1.2.3 <2.0.0",
+      "from": "node-schedule@1.2.5",
       "resolved": "./node_shrinkwrap/node-schedule-1.2.5.tgz"
     },
     "nodemailer": {
-      "version": "4.4.0",
-      "from": "nodemailer@>=4.0.1 <5.0.0",
-      "resolved": "./node_shrinkwrap/nodemailer-4.4.0.tgz"
+      "version": "4.4.1",
+      "from": "nodemailer@4.4.1",
+      "resolved": "./node_shrinkwrap/nodemailer-4.4.1.tgz"
     },
     "nodemailer-fetch": {
       "version": "1.6.0",
@@ -827,7 +827,7 @@
     },
     "nodemailer-smtp-transport": {
       "version": "2.7.4",
-      "from": "nodemailer-smtp-transport@>=2.7.4 <3.0.0",
+      "from": "nodemailer-smtp-transport@2.7.4",
       "resolved": "./node_shrinkwrap/nodemailer-smtp-transport-2.7.4.tgz"
     },
     "nodemailer-wellknown": {
@@ -937,7 +937,7 @@
     },
     "pmx": {
       "version": "1.5.5",
-      "from": "pmx@>=1.5.4 <2.0.0",
+      "from": "pmx@1.5.5",
       "resolved": "./node_shrinkwrap/pmx-1.5.5.tgz",
       "dependencies": {
         "debug": {
@@ -1019,7 +1019,7 @@
     },
     "redis": {
       "version": "2.8.0",
-      "from": "redis@>=2.7.1 <3.0.0",
+      "from": "redis@2.8.0",
       "resolved": "./node_shrinkwrap/redis-2.8.0.tgz"
     },
     "redis-commands": {
@@ -1034,7 +1034,7 @@
     },
     "request": {
       "version": "2.83.0",
-      "from": "request@>=2.81.0 <3.0.0",
+      "from": "request@2.83.0",
       "resolved": "./node_shrinkwrap/request-2.83.0.tgz"
     },
     "require-directory": {
@@ -1146,7 +1146,7 @@
     },
     "speakeasy": {
       "version": "2.0.0",
-      "from": "speakeasy@>=2.0.0 <3.0.0",
+      "from": "speakeasy@2.0.0",
       "resolved": "./node_shrinkwrap/speakeasy-2.0.0.tgz"
     },
     "sshpk": {
@@ -1230,7 +1230,7 @@
     },
     "twilio": {
       "version": "3.10.1",
-      "from": "twilio@>=3.6.1 <4.0.0",
+      "from": "twilio@3.10.1",
       "resolved": "./node_shrinkwrap/twilio-3.10.1.tgz",
       "dependencies": {
         "moment": {
@@ -1311,9 +1311,9 @@
       "resolved": "./node_shrinkwrap/winston-2.4.0.tgz"
     },
     "winston-syslog": {
-      "version": "2.0.0",
-      "from": "winston-syslog@2.0.0",
-      "resolved": "./node_shrinkwrap/winston-syslog-2.0.0.tgz"
+      "version": "1.2.6",
+      "from": "winston-syslog@>=1.2.6 <2.0.0",
+      "resolved": "./node_shrinkwrap/winston-syslog-1.2.6.tgz"
     },
     "wrap-ansi": {
       "version": "2.1.0",
