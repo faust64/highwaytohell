@@ -110,7 +110,7 @@ favicon:
 	    do \
 		convert logo.png -resize "$${size}x$$size" static/fav/icon$$size.png; \
 	    done
-	for size in 16 32 48 64
+	for size in 16 32 48 64; \
 	    do \
 		convert logo.png -resize "$${size}x$$size" static/fav/icon$$size.ico; \
 	    done
