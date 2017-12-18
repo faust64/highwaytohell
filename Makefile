@@ -103,7 +103,7 @@ build:
 
 favicon:
 	if ! test -s logo.png; then \
-	    echo "please install initial logo into repository root, as logo.png"; >&2\
+	    echo "please install initial logo into repository root, as logo.png"; >&2 \
 	    exit 1; \
 	fi
 	for size in 16 32 57 60 64 70 72 76 96 114 120 128 144 150 152 160 180 196 256 310; \
@@ -116,7 +116,7 @@ favicon:
 	    done
 	for size in 128 256; \
 	    do \
-		convert logo.png -resize "$${size}x$$size" static/logo$size.png; \
+		convert logo.png -resize "$${size}x$$size" static/logo$$size.png; \
 	    done
 	find static/fav -type f
 
