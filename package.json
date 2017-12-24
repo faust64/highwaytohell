@@ -21,7 +21,7 @@
     "redis": "2.8.0",
     "request": "2.83.0",
     "speakeasy": "2.0.0",
-    "twilio": "3.10.1",
+    "twilio": "3.11.0",
     "winston": "^2.3.1",
     "winston-syslog": "^1.2.6"
   },

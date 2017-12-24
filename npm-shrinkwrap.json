@@ -13,9 +13,9 @@
       "resolved": "./node_shrinkwrap/airbrake-2.1.1.tgz"
     },
     "ajv": {
-      "version": "5.5.1",
+      "version": "5.5.2",
       "from": "ajv@>=5.1.0 <6.0.0",
-      "resolved": "./node_shrinkwrap/ajv-5.5.1.tgz"
+      "resolved": "./node_shrinkwrap/ajv-5.5.2.tgz"
     },
     "ansi-regex": {
       "version": "2.1.1",
@@ -48,9 +48,9 @@
       "resolved": "./node_shrinkwrap/async-1.0.0.tgz"
     },
     "async-listener": {
-      "version": "0.6.8",
+      "version": "0.6.9",
       "from": "async-listener@>=0.6.0 <0.7.0",
-      "resolved": "./node_shrinkwrap/async-listener-0.6.8.tgz"
+      "resolved": "./node_shrinkwrap/async-listener-0.6.9.tgz"
     },
     "asynckit": {
       "version": "0.4.0",
@@ -781,9 +781,9 @@
       "resolved": "./node_shrinkwrap/mimic-fn-1.1.0.tgz"
     },
     "moment": {
-      "version": "2.19.4",
+      "version": "2.20.1",
       "from": "moment@>=2.9.0",
-      "resolved": "./node_shrinkwrap/moment-2.19.4.tgz"
+      "resolved": "./node_shrinkwrap/moment-2.20.1.tgz"
     },
     "moment-timezone": {
       "version": "0.5.14",
@@ -1229,9 +1229,9 @@
       "resolved": "./node_shrinkwrap/tunnel-agent-0.6.0.tgz"
     },
     "twilio": {
-      "version": "3.10.1",
-      "from": "twilio@3.10.1",
-      "resolved": "./node_shrinkwrap/twilio-3.10.1.tgz",
+      "version": "3.11.0",
+      "from": "twilio@3.11.0",
+      "resolved": "./node_shrinkwrap/twilio-3.11.0.tgz",
       "dependencies": {
         "moment": {
           "version": "2.18.1",
