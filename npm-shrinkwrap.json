@@ -983,9 +983,9 @@
       "resolved": "./node_shrinkwrap/q-2.0.3.tgz"
     },
     "qrcode": {
-      "version": "1.0.0",
-      "from": "qrcode@1.0.0",
-      "resolved": "./node_shrinkwrap/qrcode-1.0.0.tgz"
+      "version": "1.0.1",
+      "from": "qrcode@1.0.1",
+      "resolved": "./node_shrinkwrap/qrcode-1.0.1.tgz"
     },
     "qs": {
       "version": "6.5.1",
