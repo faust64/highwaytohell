@@ -983,9 +983,9 @@
       "resolved": "./node_shrinkwrap/q-2.0.3.tgz"
     },
     "qrcode": {
-      "version": "1.0.0",
-      "from": "qrcode@1.0.0",
-      "resolved": "./node_shrinkwrap/qrcode-1.0.0.tgz"
+      "version": "1.1.0",
+      "from": "qrcode@1.1.0",
+      "resolved": "./node_shrinkwrap/qrcode-1.1.0.tgz"
     },
     "qs": {
       "version": "6.5.1",
@@ -1125,9 +1125,9 @@
       "resolved": "./node_shrinkwrap/sntp-2.1.0.tgz"
     },
     "sorted-array-functions": {
-      "version": "1.0.0",
+      "version": "1.1.0",
       "from": "sorted-array-functions@>=1.0.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/sorted-array-functions-1.0.0.tgz"
+      "resolved": "./node_shrinkwrap/sorted-array-functions-1.1.0.tgz"
     },
     "spdx-correct": {
       "version": "1.0.2",
