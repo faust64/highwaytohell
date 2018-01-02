@@ -8,7 +8,7 @@
     "bee-queue": "1.1.0",
     "bluebird": "3.5.1",
     "cassandra-driver": "3.3.0",
-    "connect-redis": "3.3.2",
+    "connect-redis": "3.3.3",
     "express": "4.16.2",
     "express-session": "1.15.6",
     "joi": "13.0.2",

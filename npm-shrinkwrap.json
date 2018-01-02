@@ -177,9 +177,9 @@
       "dev": true
     },
     "connect-redis": {
-      "version": "3.3.2",
-      "from": "connect-redis@3.3.2",
-      "resolved": "./node_shrinkwrap/connect-redis-3.3.2.tgz",
+      "version": "3.3.3",
+      "from": "connect-redis@3.3.3",
+      "resolved": "./node_shrinkwrap/connect-redis-3.3.3.tgz",
       "dependencies": {
         "debug": {
           "version": "3.1.0",
