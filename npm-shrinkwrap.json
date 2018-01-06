@@ -622,9 +622,9 @@
       "resolved": "./node_shrinkwrap/isstream-0.1.2.tgz"
     },
     "joi": {
-      "version": "13.0.2",
-      "from": "joi@13.0.2",
-      "resolved": "./node_shrinkwrap/joi-13.0.2.tgz",
+      "version": "13.1.0",
+      "from": "joi@13.1.0",
+      "resolved": "./node_shrinkwrap/joi-13.1.0.tgz",
       "dependencies": {
         "hoek": {
           "version": "5.0.2",
@@ -891,14 +891,19 @@
       "resolved": "./node_shrinkwrap/p-finally-1.0.0.tgz"
     },
     "p-limit": {
-      "version": "1.1.0",
+      "version": "1.2.0",
       "from": "p-limit@>=1.1.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/p-limit-1.1.0.tgz"
+      "resolved": "./node_shrinkwrap/p-limit-1.2.0.tgz"
     },
     "p-locate": {
       "version": "2.0.0",
       "from": "p-locate@>=2.0.0 <3.0.0",
       "resolved": "./node_shrinkwrap/p-locate-2.0.0.tgz"
+    },
+    "p-try": {
+      "version": "1.0.0",
+      "from": "p-try@>=1.0.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/p-try-1.0.0.tgz"
     },
     "parse-json": {
       "version": "2.2.0",
