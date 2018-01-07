@@ -21,7 +21,7 @@ const execAsync = Promise.promisify(exec);
 
 module.exports = (cassandra, domain) => {
 	return new Promise ((resolve, reject) => {
-		this._log = require('../lib/logger.js')('dnssec-init');
+		this._log = require('wraplog')('dnssec-init');
 		let self = this;
 		let cmdSelector = dnssecCommands[dnssecDriver];
 		let zsk = '', ksk = '', kskObj = {}, zskObj = {};

@@ -5,7 +5,7 @@ const cassandra = require('cassandra-driver');
 const cst = require('../lib/cassandra.js');
 const express = require('express');
 const http = require('http');
-const logger = require('../lib/logger.js')('api-gateway');
+const logger = require('wraplog')('api-gateway');
 const session = require('express-session');
 const workerPool = process.env.HWTH_POOL || 'default';
 

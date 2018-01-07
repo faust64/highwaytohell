@@ -1,7 +1,7 @@
 const Promise = require('bluebird');
 const crypto = require('crypto');
 const cst = require('../lib/cassandra.js');
-const logger = require('../lib/logger.js')('login-internals');
+const logger = require('wraplog')('login-internals');
 const redisToken = require('../lib/redisToken.js')();
 
 module.exports = (cassandra, request, emailaddr, password) => {
