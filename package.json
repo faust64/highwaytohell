@@ -5,7 +5,7 @@
   "dependencies": {
     "airbrake": "2.1.1",
     "body-parser": "1.18.2",
-    "bee-queue": "1.1.0",
+    "bee-queue": "1.2.0",
     "bluebird": "3.5.1",
     "cassandra-driver": "3.3.0",
     "connect-redis": "3.3.3",
