@@ -78,9 +78,9 @@
       "resolved": "./node_shrinkwrap/base64url-2.0.0.tgz"
     },
     "bee-queue": {
-      "version": "1.2.0",
-      "from": "bee-queue@1.2.0",
-      "resolved": "./node_shrinkwrap/bee-queue-1.2.0.tgz"
+      "version": "1.2.1",
+      "from": "bee-queue@1.2.1",
+      "resolved": "./node_shrinkwrap/bee-queue-1.2.1.tgz"
     },
     "bluebird": {
       "version": "3.5.1",
@@ -306,9 +306,9 @@
       "resolved": "./node_shrinkwrap/delayed-stream-1.0.0.tgz"
     },
     "depd": {
-      "version": "1.1.1",
+      "version": "1.1.2",
       "from": "depd@>=1.1.1 <1.2.0",
-      "resolved": "./node_shrinkwrap/depd-1.1.1.tgz"
+      "resolved": "./node_shrinkwrap/depd-1.1.2.tgz"
     },
     "deprecate": {
       "version": "1.0.0",
@@ -547,7 +547,14 @@
     "http-errors": {
       "version": "1.6.2",
       "from": "http-errors@>=1.6.2 <1.7.0",
-      "resolved": "./node_shrinkwrap/http-errors-1.6.2.tgz"
+      "resolved": "./node_shrinkwrap/http-errors-1.6.2.tgz",
+      "dependencies": {
+        "depd": {
+          "version": "1.1.1",
+          "from": "depd@1.1.1",
+          "resolved": "./node_shrinkwrap/depd-1.1.1.tgz"
+        }
+      }
     },
     "http-signature": {
       "version": "1.2.0",
