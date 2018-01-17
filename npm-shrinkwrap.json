@@ -1425,9 +1425,9 @@
       }
     },
     "wraplog": {
-      "version": "0.0.3",
-      "from": "wraplog@0.0.3",
-      "resolved": "./node_shrinkwrap/wraplog-0.0.3.tgz"
+      "version": "0.0.4",
+      "from": "wraplog@0.0.4",
+      "resolved": "./node_shrinkwrap/wraplog-0.0.4.tgz"
     },
     "xmlbuilder": {
       "version": "9.0.1",
