@@ -22,7 +22,7 @@
     "request": "2.83.0",
     "speakeasy": "2.0.0",
     "twilio": "3.11.0",
-    "wraplog": "0.0.2"
+    "wraplog": "0.0.3"
   },
   "devDependencies": {
     "compression": "latest"

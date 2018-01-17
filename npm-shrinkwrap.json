@@ -1140,9 +1140,9 @@
       "resolved": "./node_shrinkwrap/scmp-0.0.3.tgz"
     },
     "semver": {
-      "version": "5.4.1",
+      "version": "5.5.0",
       "from": "semver@>=5.0.1 <6.0.0",
-      "resolved": "./node_shrinkwrap/semver-5.4.1.tgz"
+      "resolved": "./node_shrinkwrap/semver-5.5.0.tgz"
     },
     "send": {
       "version": "0.16.1",
@@ -1353,9 +1353,9 @@
       "resolved": "./node_shrinkwrap/utils-merge-1.0.1.tgz"
     },
     "uuid": {
-      "version": "3.1.0",
+      "version": "3.2.1",
       "from": "uuid@>=3.1.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/uuid-3.1.0.tgz"
+      "resolved": "./node_shrinkwrap/uuid-3.2.1.tgz"
     },
     "validate-npm-package-license": {
       "version": "3.0.1",
@@ -1425,9 +1425,9 @@
       }
     },
     "wraplog": {
-      "version": "0.0.2",
-      "from": "wraplog@0.0.2",
-      "resolved": "./node_shrinkwrap/wraplog-0.0.2.tgz"
+      "version": "0.0.3",
+      "from": "wraplog@0.0.3",
+      "resolved": "./node_shrinkwrap/wraplog-0.0.3.tgz"
     },
     "xmlbuilder": {
       "version": "9.0.1",
