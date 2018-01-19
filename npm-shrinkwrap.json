@@ -652,9 +652,9 @@
       "resolved": "./node_shrinkwrap/isarray-2.0.2.tgz"
     },
     "isemail": {
-      "version": "3.0.0",
+      "version": "3.1.0",
       "from": "isemail@>=3.0.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/isemail-3.0.0.tgz",
+      "resolved": "./node_shrinkwrap/isemail-3.1.0.tgz",
       "dependencies": {
         "punycode": {
           "version": "2.1.0",
@@ -674,9 +674,9 @@
       "resolved": "./node_shrinkwrap/isstream-0.1.2.tgz"
     },
     "joi": {
-      "version": "13.1.0",
-      "from": "joi@13.1.0",
-      "resolved": "./node_shrinkwrap/joi-13.1.0.tgz",
+      "version": "13.1.1",
+      "from": "joi@13.1.1",
+      "resolved": "./node_shrinkwrap/joi-13.1.1.tgz",
       "dependencies": {
         "hoek": {
           "version": "5.0.2",
