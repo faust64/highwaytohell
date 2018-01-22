@@ -356,9 +356,9 @@
       "resolved": "./node_shrinkwrap/enabled-1.0.2.tgz"
     },
     "encodeurl": {
-      "version": "1.0.1",
+      "version": "1.0.2",
       "from": "encodeurl@>=1.0.1 <1.1.0",
-      "resolved": "./node_shrinkwrap/encodeurl-1.0.1.tgz"
+      "resolved": "./node_shrinkwrap/encodeurl-1.0.2.tgz"
     },
     "env-variable": {
       "version": "0.0.3",
@@ -1013,9 +1013,9 @@
       "resolved": "./node_shrinkwrap/pify-2.3.0.tgz"
     },
     "pmx": {
-      "version": "1.5.5",
-      "from": "pmx@1.5.5",
-      "resolved": "./node_shrinkwrap/pmx-1.5.5.tgz",
+      "version": "1.5.6",
+      "from": "pmx@1.5.6",
+      "resolved": "./node_shrinkwrap/pmx-1.5.6.tgz",
       "dependencies": {
         "debug": {
           "version": "3.1.0",
