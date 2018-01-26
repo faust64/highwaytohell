@@ -78,9 +78,9 @@
       "resolved": "./node_shrinkwrap/base64url-2.0.0.tgz"
     },
     "bee-queue": {
-      "version": "1.2.1",
-      "from": "bee-queue@1.2.1",
-      "resolved": "./node_shrinkwrap/bee-queue-1.2.1.tgz"
+      "version": "1.2.2",
+      "from": "bee-queue@1.2.2",
+      "resolved": "./node_shrinkwrap/bee-queue-1.2.2.tgz"
     },
     "bluebird": {
       "version": "3.5.1",
@@ -254,9 +254,9 @@
       "resolved": "./node_shrinkwrap/crc-3.4.4.tgz"
     },
     "cron-parser": {
-      "version": "2.4.3",
+      "version": "2.4.4",
       "from": "cron-parser@>=2.4.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/cron-parser-2.4.3.tgz"
+      "resolved": "./node_shrinkwrap/cron-parser-2.4.4.tgz"
     },
     "cross-spawn": {
       "version": "5.1.0",
