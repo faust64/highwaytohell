@@ -1331,9 +1331,9 @@
       "resolved": "./node_shrinkwrap/tunnel-agent-0.6.0.tgz"
     },
     "twilio": {
-      "version": "3.11.1",
-      "from": "twilio@3.11.1",
-      "resolved": "./node_shrinkwrap/twilio-3.11.1.tgz",
+      "version": "3.11.2",
+      "from": "twilio@3.11.2",
+      "resolved": "./node_shrinkwrap/twilio-3.11.2.tgz",
       "dependencies": {
         "moment": {
           "version": "2.19.3",
