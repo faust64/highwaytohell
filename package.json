@@ -21,7 +21,7 @@
     "redis": "2.8.0",
     "request": "2.83.0",
     "speakeasy": "2.0.0",
-    "twilio": "3.11.2",
+    "twilio": "3.11.3",
     "wraplog": "0.0.4"
   },
   "devDependencies": {
