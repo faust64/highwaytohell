@@ -190,20 +190,20 @@
       "resolved": "./node_shrinkwrap/colorspace-1.0.1.tgz"
     },
     "combined-stream": {
-      "version": "1.0.5",
+      "version": "1.0.6",
       "from": "combined-stream@>=1.0.5 <1.1.0",
-      "resolved": "./node_shrinkwrap/combined-stream-1.0.5.tgz"
+      "resolved": "./node_shrinkwrap/combined-stream-1.0.6.tgz"
     },
     "compressible": {
-      "version": "2.0.12",
-      "from": "compressible@>=2.0.11 <2.1.0",
-      "resolved": "./node_shrinkwrap/compressible-2.0.12.tgz",
+      "version": "2.0.13",
+      "from": "compressible@>=2.0.13 <2.1.0",
+      "resolved": "./node_shrinkwrap/compressible-2.0.13.tgz",
       "dev": true
     },
     "compression": {
-      "version": "1.7.1",
+      "version": "1.7.2",
       "from": "compression@latest",
-      "resolved": "./node_shrinkwrap/compression-1.7.1.tgz",
+      "resolved": "./node_shrinkwrap/compression-1.7.2.tgz",
       "dev": true
     },
     "connect-redis": {
@@ -294,6 +294,11 @@
       "version": "1.2.0",
       "from": "decamelize@>=1.1.1 <2.0.0",
       "resolved": "./node_shrinkwrap/decamelize-1.2.0.tgz"
+    },
+    "deep-metrics": {
+      "version": "0.0.1",
+      "from": "deep-metrics@>=0.0.1 <0.0.2",
+      "resolved": "./node_shrinkwrap/deep-metrics-0.0.1.tgz"
     },
     "define-properties": {
       "version": "1.1.2",
@@ -470,9 +475,9 @@
       "resolved": "./node_shrinkwrap/forever-agent-0.6.1.tgz"
     },
     "form-data": {
-      "version": "2.3.1",
+      "version": "2.3.2",
       "from": "form-data@>=2.3.1 <2.4.0",
-      "resolved": "./node_shrinkwrap/form-data-2.3.1.tgz"
+      "resolved": "./node_shrinkwrap/form-data-2.3.2.tgz"
     },
     "forwarded": {
       "version": "0.1.2",
@@ -535,9 +540,9 @@
       "resolved": "./node_shrinkwrap/hawk-6.0.2.tgz"
     },
     "hoek": {
-      "version": "4.2.0",
+      "version": "4.2.1",
       "from": "hoek@>=4.0.0 <5.0.0",
-      "resolved": "./node_shrinkwrap/hoek-4.2.0.tgz"
+      "resolved": "./node_shrinkwrap/hoek-4.2.1.tgz"
     },
     "hosted-git-info": {
       "version": "2.5.0",
@@ -647,9 +652,9 @@
       "resolved": "./node_shrinkwrap/is-typedarray-1.0.0.tgz"
     },
     "isarray": {
-      "version": "2.0.3",
+      "version": "2.0.4",
       "from": "isarray@>=2.0.1 <3.0.0",
-      "resolved": "./node_shrinkwrap/isarray-2.0.3.tgz"
+      "resolved": "./node_shrinkwrap/isarray-2.0.4.tgz"
     },
     "isemail": {
       "version": "3.1.1",
@@ -848,14 +853,14 @@
       "resolved": "./node_shrinkwrap/mime-1.4.1.tgz"
     },
     "mime-db": {
-      "version": "1.30.0",
-      "from": "mime-db@>=1.30.0 <1.31.0",
-      "resolved": "./node_shrinkwrap/mime-db-1.30.0.tgz"
+      "version": "1.33.0",
+      "from": "mime-db@>=1.33.0 <1.34.0",
+      "resolved": "./node_shrinkwrap/mime-db-1.33.0.tgz"
     },
     "mime-types": {
-      "version": "2.1.17",
+      "version": "2.1.18",
       "from": "mime-types@>=2.1.17 <2.2.0",
-      "resolved": "./node_shrinkwrap/mime-types-2.1.17.tgz"
+      "resolved": "./node_shrinkwrap/mime-types-2.1.18.tgz"
     },
     "mimic-fn": {
       "version": "1.2.0",
@@ -1028,9 +1033,9 @@
       "resolved": "./node_shrinkwrap/pify-2.3.0.tgz"
     },
     "pmx": {
-      "version": "1.5.6",
-      "from": "pmx@1.5.6",
-      "resolved": "./node_shrinkwrap/pmx-1.5.6.tgz",
+      "version": "1.6.4",
+      "from": "pmx@1.6.4",
+      "resolved": "./node_shrinkwrap/pmx-1.6.4.tgz",
       "dependencies": {
         "debug": {
           "version": "3.1.0",
@@ -1040,9 +1045,9 @@
       }
     },
     "pngjs": {
-      "version": "3.3.1",
+      "version": "3.3.2",
       "from": "pngjs@>=3.3.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/pngjs-3.3.1.tgz"
+      "resolved": "./node_shrinkwrap/pngjs-3.3.2.tgz"
     },
     "pop-iterate": {
       "version": "1.0.1",
@@ -1156,7 +1161,7 @@
     },
     "semver": {
       "version": "5.5.0",
-      "from": "semver@>=5.0.1 <6.0.0",
+      "from": "semver@>=5.0.0 <6.0.0",
       "resolved": "./node_shrinkwrap/semver-5.5.0.tgz"
     },
     "send": {
@@ -1343,9 +1348,9 @@
       }
     },
     "type-is": {
-      "version": "1.6.15",
+      "version": "1.6.16",
       "from": "type-is@>=1.6.15 <1.7.0",
-      "resolved": "./node_shrinkwrap/type-is-1.6.15.tgz"
+      "resolved": "./node_shrinkwrap/type-is-1.6.16.tgz"
     },
     "uid-safe": {
       "version": "2.1.5",
