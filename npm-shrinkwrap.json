@@ -128,9 +128,9 @@
       "resolved": "./node_shrinkwrap/caseless-0.12.0.tgz"
     },
     "cassandra-driver": {
-      "version": "3.4.0",
-      "from": "cassandra-driver@3.4.0",
-      "resolved": "./node_shrinkwrap/cassandra-driver-3.4.0.tgz"
+      "version": "3.4.1",
+      "from": "cassandra-driver@3.4.1",
+      "resolved": "./node_shrinkwrap/cassandra-driver-3.4.1.tgz"
     },
     "cliui": {
       "version": "3.2.0",
@@ -592,9 +592,9 @@
       "resolved": "./node_shrinkwrap/invert-kv-1.0.0.tgz"
     },
     "ipaddr.js": {
-      "version": "1.5.2",
-      "from": "ipaddr.js@1.5.2",
-      "resolved": "./node_shrinkwrap/ipaddr.js-1.5.2.tgz"
+      "version": "1.6.0",
+      "from": "ipaddr.js@1.6.0",
+      "resolved": "./node_shrinkwrap/ipaddr.js-1.6.0.tgz"
     },
     "is": {
       "version": "3.2.1",
@@ -1060,9 +1060,9 @@
       "resolved": "./node_shrinkwrap/promise-callbacks-3.1.0.tgz"
     },
     "proxy-addr": {
-      "version": "2.0.2",
+      "version": "2.0.3",
       "from": "proxy-addr@>=2.0.2 <2.1.0",
-      "resolved": "./node_shrinkwrap/proxy-addr-2.0.2.tgz"
+      "resolved": "./node_shrinkwrap/proxy-addr-2.0.3.tgz"
     },
     "pseudomap": {
       "version": "1.0.2",
