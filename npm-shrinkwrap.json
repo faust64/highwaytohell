@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "dependencies": {
     "accepts": {
-      "version": "1.3.4",
+      "version": "1.3.5",
       "from": "accepts@>=1.3.4 <1.4.0",
-      "resolved": "./node_shrinkwrap/accepts-1.3.4.tgz"
+      "resolved": "./node_shrinkwrap/accepts-1.3.5.tgz"
     },
     "airbrake": {
       "version": "2.1.1",
@@ -254,9 +254,9 @@
       "resolved": "./node_shrinkwrap/crc-3.4.4.tgz"
     },
     "cron-parser": {
-      "version": "2.4.4",
+      "version": "2.4.5",
       "from": "cron-parser@>=2.4.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/cron-parser-2.4.4.tgz"
+      "resolved": "./node_shrinkwrap/cron-parser-2.4.5.tgz"
     },
     "cross-spawn": {
       "version": "5.1.0",
@@ -706,9 +706,9 @@
       "resolved": "./node_shrinkwrap/json-stringify-safe-5.0.1.tgz"
     },
     "jsonwebtoken": {
-      "version": "8.1.1",
+      "version": "8.2.0",
       "from": "jsonwebtoken@>=8.1.0 <9.0.0",
-      "resolved": "./node_shrinkwrap/jsonwebtoken-8.1.1.tgz",
+      "resolved": "./node_shrinkwrap/jsonwebtoken-8.2.0.tgz",
       "dependencies": {
         "ms": {
           "version": "2.1.1",
@@ -868,9 +868,9 @@
       "resolved": "./node_shrinkwrap/mimic-fn-1.2.0.tgz"
     },
     "moment": {
-      "version": "2.20.1",
+      "version": "2.21.0",
       "from": "moment@>=2.9.0",
-      "resolved": "./node_shrinkwrap/moment-2.20.1.tgz"
+      "resolved": "./node_shrinkwrap/moment-2.21.0.tgz"
     },
     "moment-timezone": {
       "version": "0.5.14",
@@ -1120,9 +1120,9 @@
       "resolved": "./node_shrinkwrap/redis-2.8.0.tgz"
     },
     "redis-commands": {
-      "version": "1.3.4",
+      "version": "1.3.5",
       "from": "redis-commands@>=1.2.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/redis-commands-1.3.4.tgz"
+      "resolved": "./node_shrinkwrap/redis-commands-1.3.5.tgz"
     },
     "redis-parser": {
       "version": "2.6.0",
@@ -1227,38 +1227,24 @@
       "resolved": "./node_shrinkwrap/sorted-array-functions-1.1.0.tgz"
     },
     "spdx-correct": {
-      "version": "2.0.4",
-      "from": "spdx-correct@>=2.0.4 <3.0.0",
-      "resolved": "./node_shrinkwrap/spdx-correct-2.0.4.tgz",
-      "dependencies": {
-        "spdx-expression-parse": {
-          "version": "2.0.2",
-          "from": "spdx-expression-parse@>=2.0.1 <3.0.0",
-          "resolved": "./node_shrinkwrap/spdx-expression-parse-2.0.2.tgz"
-        }
-      }
+      "version": "3.0.0",
+      "from": "spdx-correct@>=3.0.0 <4.0.0",
+      "resolved": "./node_shrinkwrap/spdx-correct-3.0.0.tgz"
     },
     "spdx-exceptions": {
       "version": "2.1.0",
-      "from": "spdx-exceptions@>=2.0.0 <3.0.0",
+      "from": "spdx-exceptions@>=2.1.0 <3.0.0",
       "resolved": "./node_shrinkwrap/spdx-exceptions-2.1.0.tgz"
     },
     "spdx-expression-parse": {
       "version": "3.0.0",
       "from": "spdx-expression-parse@>=3.0.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/spdx-expression-parse-3.0.0.tgz",
-      "dependencies": {
-        "spdx-license-ids": {
-          "version": "3.0.0",
-          "from": "spdx-license-ids@>=3.0.0 <4.0.0",
-          "resolved": "./node_shrinkwrap/spdx-license-ids-3.0.0.tgz"
-        }
-      }
+      "resolved": "./node_shrinkwrap/spdx-expression-parse-3.0.0.tgz"
     },
     "spdx-license-ids": {
-      "version": "2.0.1",
-      "from": "spdx-license-ids@>=2.0.1 <3.0.0",
-      "resolved": "./node_shrinkwrap/spdx-license-ids-2.0.1.tgz"
+      "version": "3.0.0",
+      "from": "spdx-license-ids@>=3.0.0 <4.0.0",
+      "resolved": "./node_shrinkwrap/spdx-license-ids-3.0.0.tgz"
     },
     "speakeasy": {
       "version": "2.0.0",
@@ -1355,9 +1341,9 @@
       "resolved": "./node_shrinkwrap/tunnel-agent-0.6.0.tgz"
     },
     "twilio": {
-      "version": "3.12.0",
-      "from": "twilio@3.12.0",
-      "resolved": "./node_shrinkwrap/twilio-3.12.0.tgz",
+      "version": "3.13.0",
+      "from": "twilio@3.13.0",
+      "resolved": "./node_shrinkwrap/twilio-3.13.0.tgz",
       "dependencies": {
         "moment": {
           "version": "2.19.3",
@@ -1397,9 +1383,9 @@
       "resolved": "./node_shrinkwrap/uuid-3.2.1.tgz"
     },
     "validate-npm-package-license": {
-      "version": "3.0.2",
+      "version": "3.0.3",
       "from": "validate-npm-package-license@>=3.0.1 <4.0.0",
-      "resolved": "./node_shrinkwrap/validate-npm-package-license-3.0.2.tgz"
+      "resolved": "./node_shrinkwrap/validate-npm-package-license-3.0.3.tgz"
     },
     "vary": {
       "version": "1.1.2",
