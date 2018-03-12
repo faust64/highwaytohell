@@ -43,9 +43,16 @@
       "resolved": "./node_shrinkwrap/assert-plus-1.0.0.tgz"
     },
     "async": {
-      "version": "1.5.2",
-      "from": "async@>=1.0.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/async-1.5.2.tgz"
+      "version": "2.6.0",
+      "from": "async@>=2.6.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/async-2.6.0.tgz",
+      "dependencies": {
+        "lodash": {
+          "version": "4.17.5",
+          "from": "lodash@>=4.14.0 <5.0.0",
+          "resolved": "./node_shrinkwrap/lodash-4.17.5.tgz"
+        }
+      }
     },
     "async-listener": {
       "version": "0.6.9",
@@ -180,9 +187,9 @@
       "resolved": "./node_shrinkwrap/colornames-0.0.2.tgz"
     },
     "colors": {
-      "version": "1.1.2",
+      "version": "1.2.1",
       "from": "colors@>=1.1.2 <2.0.0",
-      "resolved": "./node_shrinkwrap/colors-1.1.2.tgz"
+      "resolved": "./node_shrinkwrap/colors-1.2.1.tgz"
     },
     "colorspace": {
       "version": "1.0.1",
@@ -545,9 +552,9 @@
       "resolved": "./node_shrinkwrap/hoek-4.2.1.tgz"
     },
     "hosted-git-info": {
-      "version": "2.5.0",
+      "version": "2.6.0",
       "from": "hosted-git-info@>=2.1.4 <3.0.0",
-      "resolved": "./node_shrinkwrap/hosted-git-info-2.5.0.tgz"
+      "resolved": "./node_shrinkwrap/hosted-git-info-2.6.0.tgz"
     },
     "http-errors": {
       "version": "1.6.2",
@@ -823,9 +830,9 @@
       "resolved": "./node_shrinkwrap/long-timeout-0.1.1.tgz"
     },
     "lru-cache": {
-      "version": "4.1.1",
+      "version": "4.1.2",
       "from": "lru-cache@>=4.0.1 <5.0.0",
-      "resolved": "./node_shrinkwrap/lru-cache-4.1.1.tgz"
+      "resolved": "./node_shrinkwrap/lru-cache-4.1.2.tgz"
     },
     "media-typer": {
       "version": "0.3.0",
@@ -1130,9 +1137,9 @@
       "resolved": "./node_shrinkwrap/redis-parser-2.6.0.tgz"
     },
     "request": {
-      "version": "2.83.0",
-      "from": "request@2.83.0",
-      "resolved": "./node_shrinkwrap/request-2.83.0.tgz"
+      "version": "2.85.0",
+      "from": "request@2.85.0",
+      "resolved": "./node_shrinkwrap/request-2.85.0.tgz"
     },
     "require-directory": {
       "version": "2.1.1",
@@ -1349,6 +1356,11 @@
           "version": "2.19.3",
           "from": "moment@2.19.3",
           "resolved": "./node_shrinkwrap/moment-2.19.3.tgz"
+        },
+        "request": {
+          "version": "2.83.0",
+          "from": "request@>=2.83.0 <2.84.0",
+          "resolved": "./node_shrinkwrap/request-2.83.0.tgz"
         }
       }
     },
@@ -1423,9 +1435,9 @@
       "resolved": "./node_shrinkwrap/window-or-global-1.0.1.tgz"
     },
     "winston": {
-      "version": "3.0.0-rc1",
+      "version": "3.0.0-rc2",
       "from": "winston@>=3.0.0-rc1 <4.0.0",
-      "resolved": "./node_shrinkwrap/winston-3.0.0-rc1.tgz"
+      "resolved": "./node_shrinkwrap/winston-3.0.0-rc2.tgz"
     },
     "winston-syslog": {
       "version": "2.0.0",
