@@ -9,7 +9,7 @@
     "bluebird": "3.5.1",
     "cassandra-driver": "3.4.1",
     "connect-redis": "3.3.3",
-    "express": "4.16.2",
+    "express": "4.16.3",
     "express-session": "1.15.6",
     "joi": "13.1.2",
     "mustache": "2.3.0",
