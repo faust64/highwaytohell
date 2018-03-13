@@ -1240,9 +1240,9 @@
       "resolved": "./node_shrinkwrap/speakeasy-2.0.0.tgz"
     },
     "sshpk": {
-      "version": "1.13.1",
+      "version": "1.14.1",
       "from": "sshpk@>=1.7.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/sshpk-1.13.1.tgz"
+      "resolved": "./node_shrinkwrap/sshpk-1.14.1.tgz"
     },
     "stack-trace": {
       "version": "0.0.9",
@@ -1329,9 +1329,9 @@
       "resolved": "./node_shrinkwrap/tunnel-agent-0.6.0.tgz"
     },
     "twilio": {
-      "version": "3.13.0",
-      "from": "twilio@3.13.0",
-      "resolved": "./node_shrinkwrap/twilio-3.13.0.tgz",
+      "version": "3.13.1",
+      "from": "twilio@3.13.1",
+      "resolved": "./node_shrinkwrap/twilio-3.13.1.tgz",
       "dependencies": {
         "moment": {
           "version": "2.19.3",
