@@ -70,9 +70,9 @@
       "resolved": "./node_shrinkwrap/aws-sign2-0.7.0.tgz"
     },
     "aws4": {
-      "version": "1.6.0",
+      "version": "1.7.0",
       "from": "aws4@>=1.6.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/aws4-1.6.0.tgz"
+      "resolved": "./node_shrinkwrap/aws4-1.7.0.tgz"
     },
     "base32.js": {
       "version": "0.0.1",
@@ -135,9 +135,9 @@
       "resolved": "./node_shrinkwrap/caseless-0.12.0.tgz"
     },
     "cassandra-driver": {
-      "version": "3.4.1",
-      "from": "cassandra-driver@3.4.1",
-      "resolved": "./node_shrinkwrap/cassandra-driver-3.4.1.tgz"
+      "version": "3.5.0",
+      "from": "cassandra-driver@3.5.0",
+      "resolved": "./node_shrinkwrap/cassandra-driver-3.5.0.tgz"
     },
     "cliui": {
       "version": "3.2.0",
@@ -188,7 +188,7 @@
     },
     "colors": {
       "version": "1.2.1",
-      "from": "colors@>=1.1.2 <2.0.0",
+      "from": "colors@>=1.2.0 <2.0.0",
       "resolved": "./node_shrinkwrap/colors-1.2.1.tgz"
     },
     "colorspace": {
@@ -261,9 +261,9 @@
       "resolved": "./node_shrinkwrap/crc-3.4.4.tgz"
     },
     "cron-parser": {
-      "version": "2.4.5",
+      "version": "2.5.0",
       "from": "cron-parser@>=2.4.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/cron-parser-2.4.5.tgz"
+      "resolved": "./node_shrinkwrap/cron-parser-2.5.0.tgz"
     },
     "cross-spawn": {
       "version": "5.1.0",
@@ -383,9 +383,9 @@
       "resolved": "./node_shrinkwrap/error-ex-1.3.1.tgz"
     },
     "es-abstract": {
-      "version": "1.10.0",
+      "version": "1.11.0",
       "from": "es-abstract@>=1.5.1 <2.0.0",
-      "resolved": "./node_shrinkwrap/es-abstract-1.10.0.tgz"
+      "resolved": "./node_shrinkwrap/es-abstract-1.11.0.tgz"
     },
     "es-to-primitive": {
       "version": "1.1.1",
@@ -412,10 +412,10 @@
       "from": "express@4.16.3",
       "resolved": "./node_shrinkwrap/express-4.16.3.tgz",
       "dependencies": {
-        "setprototypeof": {
-          "version": "1.1.0",
-          "from": "setprototypeof@1.1.0",
-          "resolved": "./node_shrinkwrap/setprototypeof-1.1.0.tgz"
+        "statuses": {
+          "version": "1.4.0",
+          "from": "statuses@>=1.4.0 <1.5.0",
+          "resolved": "./node_shrinkwrap/statuses-1.4.0.tgz"
         }
       }
     },
@@ -452,7 +452,14 @@
     "finalhandler": {
       "version": "1.1.1",
       "from": "finalhandler@1.1.1",
-      "resolved": "./node_shrinkwrap/finalhandler-1.1.1.tgz"
+      "resolved": "./node_shrinkwrap/finalhandler-1.1.1.tgz",
+      "dependencies": {
+        "statuses": {
+          "version": "1.4.0",
+          "from": "statuses@>=1.4.0 <1.5.0",
+          "resolved": "./node_shrinkwrap/statuses-1.4.0.tgz"
+        }
+      }
     },
     "find-up": {
       "version": "2.1.0",
@@ -545,16 +552,9 @@
       "resolved": "./node_shrinkwrap/hosted-git-info-2.6.0.tgz"
     },
     "http-errors": {
-      "version": "1.6.2",
+      "version": "1.6.3",
       "from": "http-errors@>=1.6.2 <1.7.0",
-      "resolved": "./node_shrinkwrap/http-errors-1.6.2.tgz",
-      "dependencies": {
-        "depd": {
-          "version": "1.1.1",
-          "from": "depd@1.1.1",
-          "resolved": "./node_shrinkwrap/depd-1.1.1.tgz"
-        }
-      }
+      "resolved": "./node_shrinkwrap/http-errors-1.6.3.tgz"
     },
     "http-signature": {
       "version": "1.2.0",
@@ -652,9 +652,9 @@
       "resolved": "./node_shrinkwrap/isarray-2.0.4.tgz"
     },
     "isemail": {
-      "version": "3.1.1",
+      "version": "3.1.2",
       "from": "isemail@>=3.0.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/isemail-3.1.1.tgz",
+      "resolved": "./node_shrinkwrap/isemail-3.1.2.tgz",
       "dependencies": {
         "punycode": {
           "version": "2.1.0",
@@ -674,9 +674,9 @@
       "resolved": "./node_shrinkwrap/isstream-0.1.2.tgz"
     },
     "joi": {
-      "version": "13.1.2",
-      "from": "joi@13.1.2",
-      "resolved": "./node_shrinkwrap/joi-13.1.2.tgz",
+      "version": "13.2.0",
+      "from": "joi@13.2.0",
+      "resolved": "./node_shrinkwrap/joi-13.2.0.tgz",
       "dependencies": {
         "hoek": {
           "version": "5.0.3",
@@ -701,9 +701,9 @@
       "resolved": "./node_shrinkwrap/json-stringify-safe-5.0.1.tgz"
     },
     "jsonwebtoken": {
-      "version": "8.2.0",
+      "version": "8.2.1",
       "from": "jsonwebtoken@>=8.1.0 <9.0.0",
-      "resolved": "./node_shrinkwrap/jsonwebtoken-8.2.0.tgz",
+      "resolved": "./node_shrinkwrap/jsonwebtoken-8.2.1.tgz",
       "dependencies": {
         "ms": {
           "version": "2.1.1",
@@ -803,9 +803,9 @@
       "resolved": "./node_shrinkwrap/lodash.once-4.1.1.tgz"
     },
     "logform": {
-      "version": "1.2.2",
-      "from": "logform@>=1.2.1 <2.0.0",
-      "resolved": "./node_shrinkwrap/logform-1.2.2.tgz"
+      "version": "1.4.2",
+      "from": "logform@>=1.4.1 <2.0.0",
+      "resolved": "./node_shrinkwrap/logform-1.4.2.tgz"
     },
     "long": {
       "version": "2.4.0",
@@ -863,14 +863,14 @@
       "resolved": "./node_shrinkwrap/mimic-fn-1.2.0.tgz"
     },
     "moment": {
-      "version": "2.21.0",
+      "version": "2.22.1",
       "from": "moment@>=2.9.0",
-      "resolved": "./node_shrinkwrap/moment-2.21.0.tgz"
+      "resolved": "./node_shrinkwrap/moment-2.22.1.tgz"
     },
     "moment-timezone": {
-      "version": "0.5.14",
+      "version": "0.5.16",
       "from": "moment-timezone@>=0.5.0 <0.6.0",
-      "resolved": "./node_shrinkwrap/moment-timezone-0.5.14.tgz"
+      "resolved": "./node_shrinkwrap/moment-timezone-0.5.16.tgz"
     },
     "ms": {
       "version": "2.0.0",
@@ -893,9 +893,9 @@
       "resolved": "./node_shrinkwrap/node-schedule-1.3.0.tgz"
     },
     "nodemailer": {
-      "version": "4.6.3",
-      "from": "nodemailer@4.6.3",
-      "resolved": "./node_shrinkwrap/nodemailer-4.6.3.tgz"
+      "version": "4.6.4",
+      "from": "nodemailer@4.6.4",
+      "resolved": "./node_shrinkwrap/nodemailer-4.6.4.tgz"
     },
     "nodemailer-fetch": {
       "version": "1.6.0",
@@ -1040,9 +1040,9 @@
       }
     },
     "pngjs": {
-      "version": "3.3.2",
+      "version": "3.3.3",
       "from": "pngjs@>=3.3.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/pngjs-3.3.2.tgz"
+      "resolved": "./node_shrinkwrap/pngjs-3.3.3.tgz"
     },
     "pop-iterate": {
       "version": "1.0.1",
@@ -1097,7 +1097,24 @@
     "raw-body": {
       "version": "2.3.2",
       "from": "raw-body@2.3.2",
-      "resolved": "./node_shrinkwrap/raw-body-2.3.2.tgz"
+      "resolved": "./node_shrinkwrap/raw-body-2.3.2.tgz",
+      "dependencies": {
+        "depd": {
+          "version": "1.1.1",
+          "from": "depd@1.1.1",
+          "resolved": "./node_shrinkwrap/depd-1.1.1.tgz"
+        },
+        "http-errors": {
+          "version": "1.6.2",
+          "from": "http-errors@1.6.2",
+          "resolved": "./node_shrinkwrap/http-errors-1.6.2.tgz"
+        },
+        "setprototypeof": {
+          "version": "1.0.3",
+          "from": "setprototypeof@1.0.3",
+          "resolved": "./node_shrinkwrap/setprototypeof-1.0.3.tgz"
+        }
+      }
     },
     "read-pkg": {
       "version": "2.0.0",
@@ -1162,7 +1179,14 @@
     "send": {
       "version": "0.16.2",
       "from": "send@0.16.2",
-      "resolved": "./node_shrinkwrap/send-0.16.2.tgz"
+      "resolved": "./node_shrinkwrap/send-0.16.2.tgz",
+      "dependencies": {
+        "statuses": {
+          "version": "1.4.0",
+          "from": "statuses@>=1.4.0 <1.5.0",
+          "resolved": "./node_shrinkwrap/statuses-1.4.0.tgz"
+        }
+      }
     },
     "serve-static": {
       "version": "1.13.2",
@@ -1175,9 +1199,9 @@
       "resolved": "./node_shrinkwrap/set-blocking-2.0.0.tgz"
     },
     "setprototypeof": {
-      "version": "1.0.3",
-      "from": "setprototypeof@1.0.3",
-      "resolved": "./node_shrinkwrap/setprototypeof-1.0.3.tgz"
+      "version": "1.1.0",
+      "from": "setprototypeof@1.1.0",
+      "resolved": "./node_shrinkwrap/setprototypeof-1.1.0.tgz"
     },
     "shebang-command": {
       "version": "1.2.0",
@@ -1250,9 +1274,9 @@
       "resolved": "./node_shrinkwrap/stack-trace-0.0.9.tgz"
     },
     "statuses": {
-      "version": "1.4.0",
-      "from": "statuses@>=1.3.1 <2.0.0",
-      "resolved": "./node_shrinkwrap/statuses-1.4.0.tgz"
+      "version": "1.5.0",
+      "from": "statuses@>=1.4.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/statuses-1.5.0.tgz"
     },
     "string-width": {
       "version": "2.1.1",
@@ -1329,9 +1353,9 @@
       "resolved": "./node_shrinkwrap/tunnel-agent-0.6.0.tgz"
     },
     "twilio": {
-      "version": "3.13.1",
-      "from": "twilio@3.13.1",
-      "resolved": "./node_shrinkwrap/twilio-3.13.1.tgz",
+      "version": "3.15.1",
+      "from": "twilio@3.15.1",
+      "resolved": "./node_shrinkwrap/twilio-3.15.1.tgz",
       "dependencies": {
         "moment": {
           "version": "2.19.3",
@@ -1416,9 +1440,9 @@
       "resolved": "./node_shrinkwrap/window-or-global-1.0.1.tgz"
     },
     "winston": {
-      "version": "3.0.0-rc2",
+      "version": "3.0.0-rc5",
       "from": "winston@>=3.0.0-rc1 <4.0.0",
-      "resolved": "./node_shrinkwrap/winston-3.0.0-rc2.tgz"
+      "resolved": "./node_shrinkwrap/winston-3.0.0-rc5.tgz"
     },
     "winston-syslog": {
       "version": "2.0.0",
@@ -1426,9 +1450,9 @@
       "resolved": "./node_shrinkwrap/winston-syslog-2.0.0.tgz"
     },
     "winston-transport": {
-      "version": "3.0.1",
-      "from": "winston-transport@>=3.0.1 <4.0.0",
-      "resolved": "./node_shrinkwrap/winston-transport-3.0.1.tgz"
+      "version": "3.1.0",
+      "from": "winston-transport@>=3.1.0 <4.0.0",
+      "resolved": "./node_shrinkwrap/winston-transport-3.1.0.tgz"
     },
     "wrap-ansi": {
       "version": "2.1.0",
