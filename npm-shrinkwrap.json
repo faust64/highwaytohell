@@ -45,14 +45,7 @@
     "async": {
       "version": "2.6.0",
       "from": "async@>=2.6.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/async-2.6.0.tgz",
-      "dependencies": {
-        "lodash": {
-          "version": "4.17.5",
-          "from": "lodash@>=4.14.0 <5.0.0",
-          "resolved": "./node_shrinkwrap/lodash-4.17.5.tgz"
-        }
-      }
+      "resolved": "./node_shrinkwrap/async-2.6.0.tgz"
     },
     "async-listener": {
       "version": "0.6.9",
@@ -188,7 +181,7 @@
     },
     "colors": {
       "version": "1.2.1",
-      "from": "colors@>=1.2.0 <2.0.0",
+      "from": "colors@>=1.2.1 <2.0.0",
       "resolved": "./node_shrinkwrap/colors-1.2.1.tgz"
     },
     "colorspace": {
@@ -211,7 +204,15 @@
       "version": "1.7.2",
       "from": "compression@latest",
       "resolved": "./node_shrinkwrap/compression-1.7.2.tgz",
-      "dev": true
+      "dev": true,
+      "dependencies": {
+        "safe-buffer": {
+          "version": "5.1.1",
+          "from": "safe-buffer@5.1.1",
+          "resolved": "./node_shrinkwrap/safe-buffer-5.1.1.tgz",
+          "dev": true
+        }
+      }
     },
     "connect-redis": {
       "version": "3.3.3",
@@ -412,6 +413,11 @@
       "from": "express@4.16.3",
       "resolved": "./node_shrinkwrap/express-4.16.3.tgz",
       "dependencies": {
+        "safe-buffer": {
+          "version": "5.1.1",
+          "from": "safe-buffer@5.1.1",
+          "resolved": "./node_shrinkwrap/safe-buffer-5.1.1.tgz"
+        },
         "statuses": {
           "version": "1.4.0",
           "from": "statuses@>=1.4.0 <1.5.0",
@@ -446,7 +452,7 @@
     },
     "fecha": {
       "version": "2.3.3",
-      "from": "fecha@>=2.3.2 <3.0.0",
+      "from": "fecha@>=2.3.3 <3.0.0",
       "resolved": "./node_shrinkwrap/fecha-2.3.3.tgz"
     },
     "finalhandler": {
@@ -748,9 +754,9 @@
       "resolved": "./node_shrinkwrap/locate-path-2.0.0.tgz"
     },
     "lodash": {
-      "version": "4.0.0",
-      "from": "lodash@4.0.0",
-      "resolved": "./node_shrinkwrap/lodash-4.0.0.tgz"
+      "version": "4.17.10",
+      "from": "lodash@>=4.17.10 <5.0.0",
+      "resolved": "./node_shrinkwrap/lodash-4.17.10.tgz"
     },
     "lodash.findindex": {
       "version": "4.6.0",
@@ -803,9 +809,16 @@
       "resolved": "./node_shrinkwrap/lodash.once-4.1.1.tgz"
     },
     "logform": {
-      "version": "1.4.2",
+      "version": "1.6.0",
       "from": "logform@>=1.4.1 <2.0.0",
-      "resolved": "./node_shrinkwrap/logform-1.4.2.tgz"
+      "resolved": "./node_shrinkwrap/logform-1.6.0.tgz",
+      "dependencies": {
+        "ms": {
+          "version": "2.1.1",
+          "from": "ms@>=2.1.1 <3.0.0",
+          "resolved": "./node_shrinkwrap/ms-2.1.1.tgz"
+        }
+      }
     },
     "long": {
       "version": "2.4.0",
@@ -1162,9 +1175,9 @@
       "resolved": "./node_shrinkwrap/rootpath-0.1.2.tgz"
     },
     "safe-buffer": {
-      "version": "5.1.1",
+      "version": "5.1.2",
       "from": "safe-buffer@>=5.1.1 <6.0.0",
-      "resolved": "./node_shrinkwrap/safe-buffer-5.1.1.tgz"
+      "resolved": "./node_shrinkwrap/safe-buffer-5.1.2.tgz"
     },
     "scmp": {
       "version": "0.0.3",
@@ -1343,9 +1356,9 @@
       "resolved": "./node_shrinkwrap/tough-cookie-2.3.4.tgz"
     },
     "triple-beam": {
-      "version": "1.1.0",
+      "version": "1.2.0",
       "from": "triple-beam@>=1.0.1 <2.0.0",
-      "resolved": "./node_shrinkwrap/triple-beam-1.1.0.tgz"
+      "resolved": "./node_shrinkwrap/triple-beam-1.2.0.tgz"
     },
     "tunnel-agent": {
       "version": "0.6.0",
@@ -1353,9 +1366,9 @@
       "resolved": "./node_shrinkwrap/tunnel-agent-0.6.0.tgz"
     },
     "twilio": {
-      "version": "3.15.1",
-      "from": "twilio@3.15.1",
-      "resolved": "./node_shrinkwrap/twilio-3.15.1.tgz",
+      "version": "3.16.0",
+      "from": "twilio@3.16.0",
+      "resolved": "./node_shrinkwrap/twilio-3.16.0.tgz",
       "dependencies": {
         "moment": {
           "version": "2.19.3",
@@ -1450,9 +1463,9 @@
       "resolved": "./node_shrinkwrap/winston-syslog-2.0.0.tgz"
     },
     "winston-transport": {
-      "version": "3.1.0",
+      "version": "3.2.1",
       "from": "winston-transport@>=3.1.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/winston-transport-3.1.0.tgz"
+      "resolved": "./node_shrinkwrap/winston-transport-3.2.1.tgz"
     },
     "wrap-ansi": {
       "version": "2.1.0",
