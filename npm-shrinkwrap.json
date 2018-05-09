@@ -90,7 +90,14 @@
     "body-parser": {
       "version": "1.18.2",
       "from": "body-parser@1.18.2",
-      "resolved": "./node_shrinkwrap/body-parser-1.18.2.tgz"
+      "resolved": "./node_shrinkwrap/body-parser-1.18.2.tgz",
+      "dependencies": {
+        "qs": {
+          "version": "6.5.1",
+          "from": "qs@6.5.1",
+          "resolved": "./node_shrinkwrap/qs-6.5.1.tgz"
+        }
+      }
     },
     "boom": {
       "version": "4.3.1",
@@ -180,9 +187,9 @@
       "resolved": "./node_shrinkwrap/colornames-0.0.2.tgz"
     },
     "colors": {
-      "version": "1.2.1",
+      "version": "1.2.4",
       "from": "colors@>=1.2.1 <2.0.0",
-      "resolved": "./node_shrinkwrap/colors-1.2.1.tgz"
+      "resolved": "./node_shrinkwrap/colors-1.2.4.tgz"
     },
     "colorspace": {
       "version": "1.0.1",
@@ -413,6 +420,11 @@
       "from": "express@4.16.3",
       "resolved": "./node_shrinkwrap/express-4.16.3.tgz",
       "dependencies": {
+        "qs": {
+          "version": "6.5.1",
+          "from": "qs@6.5.1",
+          "resolved": "./node_shrinkwrap/qs-6.5.1.tgz"
+        },
         "safe-buffer": {
           "version": "5.1.1",
           "from": "safe-buffer@5.1.1",
@@ -680,9 +692,9 @@
       "resolved": "./node_shrinkwrap/isstream-0.1.2.tgz"
     },
     "joi": {
-      "version": "13.2.0",
-      "from": "joi@13.2.0",
-      "resolved": "./node_shrinkwrap/joi-13.2.0.tgz",
+      "version": "13.3.0",
+      "from": "joi@13.3.0",
+      "resolved": "./node_shrinkwrap/joi-13.3.0.tgz",
       "dependencies": {
         "hoek": {
           "version": "5.0.3",
@@ -831,9 +843,9 @@
       "resolved": "./node_shrinkwrap/long-timeout-0.1.1.tgz"
     },
     "lru-cache": {
-      "version": "4.1.2",
+      "version": "4.1.3",
       "from": "lru-cache@>=4.0.1 <5.0.0",
-      "resolved": "./node_shrinkwrap/lru-cache-4.1.2.tgz"
+      "resolved": "./node_shrinkwrap/lru-cache-4.1.3.tgz"
     },
     "media-typer": {
       "version": "0.3.0",
@@ -1093,9 +1105,9 @@
       "resolved": "./node_shrinkwrap/qrcode-1.2.0.tgz"
     },
     "qs": {
-      "version": "6.5.1",
+      "version": "6.5.2",
       "from": "qs@>=6.5.1 <6.6.0",
-      "resolved": "./node_shrinkwrap/qs-6.5.1.tgz"
+      "resolved": "./node_shrinkwrap/qs-6.5.2.tgz"
     },
     "random-bytes": {
       "version": "1.0.0",
