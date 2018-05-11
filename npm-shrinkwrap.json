@@ -187,9 +187,9 @@
       "resolved": "./node_shrinkwrap/colornames-0.0.2.tgz"
     },
     "colors": {
-      "version": "1.2.4",
+      "version": "1.2.5",
       "from": "colors@>=1.2.1 <2.0.0",
-      "resolved": "./node_shrinkwrap/colors-1.2.4.tgz"
+      "resolved": "./node_shrinkwrap/colors-1.2.5.tgz"
     },
     "colorspace": {
       "version": "1.0.1",
@@ -1378,19 +1378,14 @@
       "resolved": "./node_shrinkwrap/tunnel-agent-0.6.0.tgz"
     },
     "twilio": {
-      "version": "3.16.0",
-      "from": "twilio@3.16.0",
-      "resolved": "./node_shrinkwrap/twilio-3.16.0.tgz",
+      "version": "3.17.0",
+      "from": "twilio@3.17.0",
+      "resolved": "./node_shrinkwrap/twilio-3.17.0.tgz",
       "dependencies": {
         "moment": {
           "version": "2.19.3",
           "from": "moment@2.19.3",
           "resolved": "./node_shrinkwrap/moment-2.19.3.tgz"
-        },
-        "request": {
-          "version": "2.83.0",
-          "from": "request@>=2.83.0 <2.84.0",
-          "resolved": "./node_shrinkwrap/request-2.83.0.tgz"
         }
       }
     },
