@@ -72,11 +72,6 @@
       "from": "base32.js@0.0.1",
       "resolved": "./node_shrinkwrap/base32.js-0.0.1.tgz"
     },
-    "base64url": {
-      "version": "2.0.0",
-      "from": "base64url@>=2.0.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/base64url-2.0.0.tgz"
-    },
     "bee-queue": {
       "version": "1.2.2",
       "from": "bee-queue@1.2.2",
@@ -88,16 +83,9 @@
       "resolved": "./node_shrinkwrap/bluebird-3.5.1.tgz"
     },
     "body-parser": {
-      "version": "1.18.2",
-      "from": "body-parser@1.18.2",
-      "resolved": "./node_shrinkwrap/body-parser-1.18.2.tgz",
-      "dependencies": {
-        "qs": {
-          "version": "6.5.1",
-          "from": "qs@6.5.1",
-          "resolved": "./node_shrinkwrap/qs-6.5.1.tgz"
-        }
-      }
+      "version": "1.18.3",
+      "from": "body-parser@1.18.3",
+      "resolved": "./node_shrinkwrap/body-parser-1.18.3.tgz"
     },
     "boom": {
       "version": "4.3.1",
@@ -327,7 +315,7 @@
     },
     "depd": {
       "version": "1.1.2",
-      "from": "depd@>=1.1.1 <1.2.0",
+      "from": "depd@>=1.1.2 <1.2.0",
       "resolved": "./node_shrinkwrap/depd-1.1.2.tgz"
     },
     "deprecate": {
@@ -356,9 +344,9 @@
       "resolved": "./node_shrinkwrap/double-ended-queue-2.1.0-0.tgz"
     },
     "ecdsa-sig-formatter": {
-      "version": "1.0.9",
-      "from": "ecdsa-sig-formatter@1.0.9",
-      "resolved": "./node_shrinkwrap/ecdsa-sig-formatter-1.0.9.tgz"
+      "version": "1.0.10",
+      "from": "ecdsa-sig-formatter@1.0.10",
+      "resolved": "./node_shrinkwrap/ecdsa-sig-formatter-1.0.10.tgz"
     },
     "ee-first": {
       "version": "1.1.1",
@@ -420,10 +408,42 @@
       "from": "express@4.16.3",
       "resolved": "./node_shrinkwrap/express-4.16.3.tgz",
       "dependencies": {
+        "body-parser": {
+          "version": "1.18.2",
+          "from": "body-parser@1.18.2",
+          "resolved": "./node_shrinkwrap/body-parser-1.18.2.tgz"
+        },
+        "iconv-lite": {
+          "version": "0.4.19",
+          "from": "iconv-lite@0.4.19",
+          "resolved": "./node_shrinkwrap/iconv-lite-0.4.19.tgz"
+        },
         "qs": {
           "version": "6.5.1",
           "from": "qs@6.5.1",
           "resolved": "./node_shrinkwrap/qs-6.5.1.tgz"
+        },
+        "raw-body": {
+          "version": "2.3.2",
+          "from": "raw-body@2.3.2",
+          "resolved": "./node_shrinkwrap/raw-body-2.3.2.tgz",
+          "dependencies": {
+            "depd": {
+              "version": "1.1.1",
+              "from": "depd@1.1.1",
+              "resolved": "./node_shrinkwrap/depd-1.1.1.tgz"
+            },
+            "http-errors": {
+              "version": "1.6.2",
+              "from": "http-errors@1.6.2",
+              "resolved": "./node_shrinkwrap/http-errors-1.6.2.tgz"
+            },
+            "setprototypeof": {
+              "version": "1.0.3",
+              "from": "setprototypeof@1.0.3",
+              "resolved": "./node_shrinkwrap/setprototypeof-1.0.3.tgz"
+            }
+          }
         },
         "safe-buffer": {
           "version": "5.1.1",
@@ -571,7 +591,7 @@
     },
     "http-errors": {
       "version": "1.6.3",
-      "from": "http-errors@>=1.6.2 <1.7.0",
+      "from": "http-errors@>=1.6.3 <1.7.0",
       "resolved": "./node_shrinkwrap/http-errors-1.6.3.tgz"
     },
     "http-signature": {
@@ -590,9 +610,9 @@
       "resolved": "./node_shrinkwrap/httpreq-0.4.24.tgz"
     },
     "iconv-lite": {
-      "version": "0.4.19",
-      "from": "iconv-lite@0.4.19",
-      "resolved": "./node_shrinkwrap/iconv-lite-0.4.19.tgz"
+      "version": "0.4.23",
+      "from": "iconv-lite@0.4.23",
+      "resolved": "./node_shrinkwrap/iconv-lite-0.4.23.tgz"
     },
     "inherits": {
       "version": "2.0.3",
@@ -736,14 +756,14 @@
       "resolved": "./node_shrinkwrap/jsprim-1.4.1.tgz"
     },
     "jwa": {
-      "version": "1.1.5",
-      "from": "jwa@>=1.1.4 <2.0.0",
-      "resolved": "./node_shrinkwrap/jwa-1.1.5.tgz"
+      "version": "1.1.6",
+      "from": "jwa@>=1.1.5 <2.0.0",
+      "resolved": "./node_shrinkwrap/jwa-1.1.6.tgz"
     },
     "jws": {
-      "version": "3.1.4",
+      "version": "3.1.5",
       "from": "jws@>=3.1.4 <4.0.0",
-      "resolved": "./node_shrinkwrap/jws-3.1.4.tgz"
+      "resolved": "./node_shrinkwrap/jws-3.1.5.tgz"
     },
     "kuler": {
       "version": "0.0.0",
@@ -893,9 +913,9 @@
       "resolved": "./node_shrinkwrap/moment-2.22.1.tgz"
     },
     "moment-timezone": {
-      "version": "0.5.16",
+      "version": "0.5.17",
       "from": "moment-timezone@>=0.5.0 <0.6.0",
-      "resolved": "./node_shrinkwrap/moment-timezone-0.5.16.tgz"
+      "resolved": "./node_shrinkwrap/moment-timezone-0.5.17.tgz"
     },
     "ms": {
       "version": "2.0.0",
@@ -1120,26 +1140,9 @@
       "resolved": "./node_shrinkwrap/range-parser-1.2.0.tgz"
     },
     "raw-body": {
-      "version": "2.3.2",
-      "from": "raw-body@2.3.2",
-      "resolved": "./node_shrinkwrap/raw-body-2.3.2.tgz",
-      "dependencies": {
-        "depd": {
-          "version": "1.1.1",
-          "from": "depd@1.1.1",
-          "resolved": "./node_shrinkwrap/depd-1.1.1.tgz"
-        },
-        "http-errors": {
-          "version": "1.6.2",
-          "from": "http-errors@1.6.2",
-          "resolved": "./node_shrinkwrap/http-errors-1.6.2.tgz"
-        },
-        "setprototypeof": {
-          "version": "1.0.3",
-          "from": "setprototypeof@1.0.3",
-          "resolved": "./node_shrinkwrap/setprototypeof-1.0.3.tgz"
-        }
-      }
+      "version": "2.3.3",
+      "from": "raw-body@2.3.3",
+      "resolved": "./node_shrinkwrap/raw-body-2.3.3.tgz"
     },
     "read-pkg": {
       "version": "2.0.0",
@@ -1190,6 +1193,11 @@
       "version": "5.1.2",
       "from": "safe-buffer@>=5.1.1 <6.0.0",
       "resolved": "./node_shrinkwrap/safe-buffer-5.1.2.tgz"
+    },
+    "safer-buffer": {
+      "version": "2.1.2",
+      "from": "safer-buffer@>=2.1.2 <3.0.0",
+      "resolved": "./node_shrinkwrap/safer-buffer-2.1.2.tgz"
     },
     "scmp": {
       "version": "0.0.3",
@@ -1391,7 +1399,7 @@
     },
     "type-is": {
       "version": "1.6.16",
-      "from": "type-is@>=1.6.15 <1.7.0",
+      "from": "type-is@>=1.6.16 <1.7.0",
       "resolved": "./node_shrinkwrap/type-is-1.6.16.tgz"
     },
     "uid-safe": {
