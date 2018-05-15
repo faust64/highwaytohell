@@ -19,7 +19,7 @@
     "pmx": "1.6.4",
     "qrcode": "1.2.0",
     "redis": "2.8.0",
-    "request": "2.85.0",
+    "request": "2.86.0",
     "speakeasy": "2.0.0",
     "twilio": "3.17.0",
     "wraplog": "0.0.4"

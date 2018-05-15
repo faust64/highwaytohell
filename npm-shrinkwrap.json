@@ -1170,9 +1170,9 @@
       "resolved": "./node_shrinkwrap/redis-parser-2.6.0.tgz"
     },
     "request": {
-      "version": "2.85.0",
-      "from": "request@2.85.0",
-      "resolved": "./node_shrinkwrap/request-2.85.0.tgz"
+      "version": "2.86.0",
+      "from": "request@2.86.0",
+      "resolved": "./node_shrinkwrap/request-2.86.0.tgz"
     },
     "require-directory": {
       "version": "2.1.1",
@@ -1394,6 +1394,11 @@
           "version": "2.19.3",
           "from": "moment@2.19.3",
           "resolved": "./node_shrinkwrap/moment-2.19.3.tgz"
+        },
+        "request": {
+          "version": "2.85.0",
+          "from": "request@>=2.85.0 <2.86.0",
+          "resolved": "./node_shrinkwrap/request-2.85.0.tgz"
         }
       }
     },
