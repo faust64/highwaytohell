@@ -43,9 +43,9 @@
       "resolved": "./node_shrinkwrap/assert-plus-1.0.0.tgz"
     },
     "async": {
-      "version": "2.6.0",
+      "version": "2.6.1",
       "from": "async@>=2.6.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/async-2.6.0.tgz"
+      "resolved": "./node_shrinkwrap/async-2.6.1.tgz"
     },
     "async-listener": {
       "version": "0.6.9",
@@ -90,7 +90,14 @@
     "boom": {
       "version": "4.3.1",
       "from": "boom@>=4.0.0 <5.0.0",
-      "resolved": "./node_shrinkwrap/boom-4.3.1.tgz"
+      "resolved": "./node_shrinkwrap/boom-4.3.1.tgz",
+      "dependencies": {
+        "hoek": {
+          "version": "4.2.1",
+          "from": "hoek@>=4.0.0 <5.0.0",
+          "resolved": "./node_shrinkwrap/hoek-4.2.1.tgz"
+        }
+      }
     },
     "buffer-equal-constant-time": {
       "version": "1.0.1",
@@ -175,9 +182,9 @@
       "resolved": "./node_shrinkwrap/colornames-0.0.2.tgz"
     },
     "colors": {
-      "version": "1.2.5",
+      "version": "1.3.0",
       "from": "colors@>=1.2.1 <2.0.0",
-      "resolved": "./node_shrinkwrap/colors-1.2.5.tgz"
+      "resolved": "./node_shrinkwrap/colors-1.3.0.tgz"
     },
     "colorspace": {
       "version": "1.0.1",
@@ -275,6 +282,11 @@
           "version": "5.2.0",
           "from": "boom@>=5.0.0 <6.0.0",
           "resolved": "./node_shrinkwrap/boom-5.2.0.tgz"
+        },
+        "hoek": {
+          "version": "4.2.1",
+          "from": "hoek@>=4.0.0 <5.0.0",
+          "resolved": "./node_shrinkwrap/hoek-4.2.1.tgz"
         }
       }
     },
@@ -577,12 +589,19 @@
     "hawk": {
       "version": "6.0.2",
       "from": "hawk@>=6.0.2 <6.1.0",
-      "resolved": "./node_shrinkwrap/hawk-6.0.2.tgz"
+      "resolved": "./node_shrinkwrap/hawk-6.0.2.tgz",
+      "dependencies": {
+        "hoek": {
+          "version": "4.2.1",
+          "from": "hoek@>=4.0.0 <5.0.0",
+          "resolved": "./node_shrinkwrap/hoek-4.2.1.tgz"
+        }
+      }
     },
     "hoek": {
-      "version": "4.2.1",
-      "from": "hoek@>=4.0.0 <5.0.0",
-      "resolved": "./node_shrinkwrap/hoek-4.2.1.tgz"
+      "version": "5.0.3",
+      "from": "hoek@>=5.0.0 <6.0.0",
+      "resolved": "./node_shrinkwrap/hoek-5.0.3.tgz"
     },
     "hosted-git-info": {
       "version": "2.6.0",
@@ -714,14 +733,7 @@
     "joi": {
       "version": "13.3.0",
       "from": "joi@13.3.0",
-      "resolved": "./node_shrinkwrap/joi-13.3.0.tgz",
-      "dependencies": {
-        "hoek": {
-          "version": "5.0.3",
-          "from": "hoek@>=5.0.0 <6.0.0",
-          "resolved": "./node_shrinkwrap/hoek-5.0.3.tgz"
-        }
-      }
+      "resolved": "./node_shrinkwrap/joi-13.3.0.tgz"
     },
     "json-schema": {
       "version": "0.2.3",
@@ -1170,9 +1182,9 @@
       "resolved": "./node_shrinkwrap/redis-parser-2.6.0.tgz"
     },
     "request": {
-      "version": "2.86.0",
-      "from": "request@2.86.0",
-      "resolved": "./node_shrinkwrap/request-2.86.0.tgz"
+      "version": "2.87.0",
+      "from": "request@2.87.0",
+      "resolved": "./node_shrinkwrap/request-2.87.0.tgz"
     },
     "require-directory": {
       "version": "2.1.1",
@@ -1264,7 +1276,14 @@
     "sntp": {
       "version": "2.1.0",
       "from": "sntp@>=2.0.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/sntp-2.1.0.tgz"
+      "resolved": "./node_shrinkwrap/sntp-2.1.0.tgz",
+      "dependencies": {
+        "hoek": {
+          "version": "4.2.1",
+          "from": "hoek@>=4.0.0 <5.0.0",
+          "resolved": "./node_shrinkwrap/hoek-4.2.1.tgz"
+        }
+      }
     },
     "sorted-array-functions": {
       "version": "1.1.0",
@@ -1334,9 +1353,9 @@
       }
     },
     "stringstream": {
-      "version": "0.0.5",
+      "version": "0.0.6",
       "from": "stringstream@>=0.0.5 <0.1.0",
-      "resolved": "./node_shrinkwrap/stringstream-0.0.5.tgz"
+      "resolved": "./node_shrinkwrap/stringstream-0.0.6.tgz"
     },
     "strip-ansi": {
       "version": "3.0.1",
@@ -1361,14 +1380,7 @@
     "topo": {
       "version": "3.0.0",
       "from": "topo@>=3.0.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/topo-3.0.0.tgz",
-      "dependencies": {
-        "hoek": {
-          "version": "5.0.3",
-          "from": "hoek@>=5.0.0 <6.0.0",
-          "resolved": "./node_shrinkwrap/hoek-5.0.3.tgz"
-        }
-      }
+      "resolved": "./node_shrinkwrap/topo-3.0.0.tgz"
     },
     "tough-cookie": {
       "version": "2.3.4",
