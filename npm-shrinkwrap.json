@@ -950,9 +950,9 @@
       "resolved": "./node_shrinkwrap/node-schedule-1.3.0.tgz"
     },
     "nodemailer": {
-      "version": "4.6.4",
-      "from": "nodemailer@4.6.4",
-      "resolved": "./node_shrinkwrap/nodemailer-4.6.4.tgz"
+      "version": "4.6.5",
+      "from": "nodemailer@4.6.5",
+      "resolved": "./node_shrinkwrap/nodemailer-4.6.5.tgz"
     },
     "nodemailer-fetch": {
       "version": "1.6.0",
