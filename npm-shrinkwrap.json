@@ -43,9 +43,9 @@
       "resolved": "./node_shrinkwrap/assert-plus-1.0.0.tgz"
     },
     "async": {
-      "version": "2.6.1",
-      "from": "async@>=2.6.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/async-2.6.1.tgz"
+      "version": "1.5.2",
+      "from": "async@>=1.0.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/async-1.5.2.tgz"
     },
     "async-listener": {
       "version": "0.6.9",
@@ -185,10 +185,18 @@
       "resolved": "./node_shrinkwrap/combined-stream-1.0.6.tgz"
     },
     "compressible": {
-      "version": "2.0.13",
+      "version": "2.0.14",
       "from": "compressible@>=2.0.13 <2.1.0",
-      "resolved": "./node_shrinkwrap/compressible-2.0.13.tgz",
-      "dev": true
+      "resolved": "./node_shrinkwrap/compressible-2.0.14.tgz",
+      "dev": true,
+      "dependencies": {
+        "mime-db": {
+          "version": "1.34.0",
+          "from": "mime-db@>=1.34.0 <2.0.0",
+          "resolved": "./node_shrinkwrap/mime-db-1.34.0.tgz",
+          "dev": true
+        }
+      }
     },
     "compression": {
       "version": "1.7.2",
@@ -362,9 +370,9 @@
       "resolved": "./node_shrinkwrap/error-ex-1.3.1.tgz"
     },
     "es-abstract": {
-      "version": "1.11.0",
+      "version": "1.12.0",
       "from": "es-abstract@>=1.5.1 <2.0.0",
-      "resolved": "./node_shrinkwrap/es-abstract-1.11.0.tgz"
+      "resolved": "./node_shrinkwrap/es-abstract-1.12.0.tgz"
     },
     "es-to-primitive": {
       "version": "1.1.1",
@@ -553,9 +561,9 @@
       "resolved": "./node_shrinkwrap/har-validator-5.0.3.tgz"
     },
     "has": {
-      "version": "1.0.1",
+      "version": "1.0.3",
       "from": "has@>=1.0.1 <2.0.0",
-      "resolved": "./node_shrinkwrap/has-1.0.1.tgz"
+      "resolved": "./node_shrinkwrap/has-1.0.3.tgz"
     },
     "hoek": {
       "version": "5.0.3",
@@ -690,9 +698,9 @@
       "resolved": "./node_shrinkwrap/isstream-0.1.2.tgz"
     },
     "joi": {
-      "version": "13.3.0",
-      "from": "joi@13.3.0",
-      "resolved": "./node_shrinkwrap/joi-13.3.0.tgz"
+      "version": "13.4.0",
+      "from": "joi@13.4.0",
+      "resolved": "./node_shrinkwrap/joi-13.4.0.tgz"
     },
     "json-schema": {
       "version": "0.2.3",
@@ -710,9 +718,9 @@
       "resolved": "./node_shrinkwrap/json-stringify-safe-5.0.1.tgz"
     },
     "jsonwebtoken": {
-      "version": "8.2.1",
+      "version": "8.3.0",
       "from": "jsonwebtoken@>=8.1.0 <9.0.0",
-      "resolved": "./node_shrinkwrap/jsonwebtoken-8.2.1.tgz",
+      "resolved": "./node_shrinkwrap/jsonwebtoken-8.3.0.tgz",
       "dependencies": {
         "ms": {
           "version": "2.1.1",
@@ -733,7 +741,7 @@
     },
     "jws": {
       "version": "3.1.5",
-      "from": "jws@>=3.1.4 <4.0.0",
+      "from": "jws@>=3.1.5 <4.0.0",
       "resolved": "./node_shrinkwrap/jws-3.1.5.tgz"
     },
     "kuler": {
@@ -813,7 +821,7 @@
     },
     "logform": {
       "version": "1.7.0",
-      "from": "logform@>=1.4.1 <2.0.0",
+      "from": "logform@>=1.2.1 <2.0.0",
       "resolved": "./node_shrinkwrap/logform-1.7.0.tgz",
       "dependencies": {
         "ms": {
@@ -879,9 +887,9 @@
       "resolved": "./node_shrinkwrap/mimic-fn-1.2.0.tgz"
     },
     "moment": {
-      "version": "2.22.1",
+      "version": "2.22.2",
       "from": "moment@>=2.9.0",
-      "resolved": "./node_shrinkwrap/moment-2.22.1.tgz"
+      "resolved": "./node_shrinkwrap/moment-2.22.2.tgz"
     },
     "moment-timezone": {
       "version": "0.5.17",
@@ -909,9 +917,9 @@
       "resolved": "./node_shrinkwrap/node-schedule-1.3.0.tgz"
     },
     "nodemailer": {
-      "version": "4.6.5",
-      "from": "nodemailer@4.6.5",
-      "resolved": "./node_shrinkwrap/nodemailer-4.6.5.tgz"
+      "version": "4.6.6",
+      "from": "nodemailer@4.6.6",
+      "resolved": "./node_shrinkwrap/nodemailer-4.6.6.tgz"
     },
     "nodemailer-fetch": {
       "version": "1.6.0",
@@ -989,9 +997,9 @@
       "resolved": "./node_shrinkwrap/p-finally-1.0.0.tgz"
     },
     "p-limit": {
-      "version": "1.2.0",
+      "version": "1.3.0",
       "from": "p-limit@>=1.1.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/p-limit-1.2.0.tgz"
+      "resolved": "./node_shrinkwrap/p-limit-1.3.0.tgz"
     },
     "p-locate": {
       "version": "2.0.0",
@@ -1167,7 +1175,7 @@
     },
     "safer-buffer": {
       "version": "2.1.2",
-      "from": "safer-buffer@>=2.1.2 <3.0.0",
+      "from": "safer-buffer@>=2.0.2 <3.0.0",
       "resolved": "./node_shrinkwrap/safer-buffer-2.1.2.tgz"
     },
     "scmp": {
@@ -1233,9 +1241,9 @@
       "resolved": "./node_shrinkwrap/smtp-connection-2.12.0.tgz"
     },
     "sorted-array-functions": {
-      "version": "1.1.0",
+      "version": "1.2.0",
       "from": "sorted-array-functions@>=1.0.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/sorted-array-functions-1.1.0.tgz"
+      "resolved": "./node_shrinkwrap/sorted-array-functions-1.2.0.tgz"
     },
     "spdx-correct": {
       "version": "3.0.0",
@@ -1263,9 +1271,9 @@
       "resolved": "./node_shrinkwrap/speakeasy-2.0.0.tgz"
     },
     "sshpk": {
-      "version": "1.14.1",
+      "version": "1.14.2",
       "from": "sshpk@>=1.7.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/sshpk-1.14.1.tgz"
+      "resolved": "./node_shrinkwrap/sshpk-1.14.2.tgz"
     },
     "stack-trace": {
       "version": "0.0.9",
@@ -1340,9 +1348,9 @@
       "resolved": "./node_shrinkwrap/tunnel-agent-0.6.0.tgz"
     },
     "twilio": {
-      "version": "3.17.1",
-      "from": "twilio@3.17.1",
-      "resolved": "./node_shrinkwrap/twilio-3.17.1.tgz",
+      "version": "3.17.2",
+      "from": "twilio@3.17.2",
+      "resolved": "./node_shrinkwrap/twilio-3.17.2.tgz",
       "dependencies": {
         "moment": {
           "version": "2.19.3",
@@ -1422,9 +1430,16 @@
       "resolved": "./node_shrinkwrap/window-or-global-1.0.1.tgz"
     },
     "winston": {
-      "version": "3.0.0-rc5",
-      "from": "winston@>=3.0.0-rc1 <4.0.0",
-      "resolved": "./node_shrinkwrap/winston-3.0.0-rc5.tgz"
+      "version": "3.0.0-rc1",
+      "from": "winston@3.0.0-rc1",
+      "resolved": "./node_shrinkwrap/winston-3.0.0-rc1.tgz",
+      "dependencies": {
+        "winston-transport": {
+          "version": "3.2.1",
+          "from": "winston-transport@>=3.0.1 <4.0.0",
+          "resolved": "./node_shrinkwrap/winston-transport-3.2.1.tgz"
+        }
+      }
     },
     "winston-syslog": {
       "version": "2.0.0",
@@ -1432,9 +1447,9 @@
       "resolved": "./node_shrinkwrap/winston-syslog-2.0.0.tgz"
     },
     "winston-transport": {
-      "version": "3.2.1",
-      "from": "winston-transport@>=3.1.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/winston-transport-3.2.1.tgz"
+      "version": "4.1.0",
+      "from": "winston-transport@>=4.1.0 <5.0.0",
+      "resolved": "./node_shrinkwrap/winston-transport-4.1.0.tgz"
     },
     "wrap-ansi": {
       "version": "2.1.0",
@@ -1449,19 +1464,14 @@
       }
     },
     "wraplog": {
-      "version": "0.0.4",
-      "from": "wraplog@0.0.4",
-      "resolved": "./node_shrinkwrap/wraplog-0.0.4.tgz"
+      "version": "0.0.5",
+      "from": "wraplog@0.0.5",
+      "resolved": "./node_shrinkwrap/wraplog-0.0.5.tgz"
     },
     "xmlbuilder": {
       "version": "9.0.1",
       "from": "xmlbuilder@9.0.1",
       "resolved": "./node_shrinkwrap/xmlbuilder-9.0.1.tgz"
-    },
-    "xtend": {
-      "version": "4.0.1",
-      "from": "xtend@>=4.0.1 <5.0.0",
-      "resolved": "./node_shrinkwrap/xtend-4.0.1.tgz"
     },
     "y18n": {
       "version": "3.2.1",
