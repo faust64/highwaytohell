@@ -458,9 +458,9 @@
       "resolved": "./node_shrinkwrap/fast-json-stable-stringify-2.0.0.tgz"
     },
     "fast-safe-stringify": {
-      "version": "2.0.4",
+      "version": "2.0.5",
       "from": "fast-safe-stringify@>=2.0.4 <3.0.0",
-      "resolved": "./node_shrinkwrap/fast-safe-stringify-2.0.4.tgz"
+      "resolved": "./node_shrinkwrap/fast-safe-stringify-2.0.5.tgz"
     },
     "fecha": {
       "version": "2.3.3",
@@ -1093,9 +1093,9 @@
       "resolved": "./node_shrinkwrap/q-2.0.3.tgz"
     },
     "qrcode": {
-      "version": "1.2.0",
-      "from": "qrcode@1.2.0",
-      "resolved": "./node_shrinkwrap/qrcode-1.2.0.tgz"
+      "version": "1.2.2",
+      "from": "qrcode@1.2.2",
+      "resolved": "./node_shrinkwrap/qrcode-1.2.2.tgz"
     },
     "qs": {
       "version": "6.5.2",
