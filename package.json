@@ -11,7 +11,7 @@
     "connect-redis": "3.3.3",
     "express": "4.16.3",
     "express-session": "1.15.6",
-    "joi": "13.4.0",
+    "joi": "13.5.2",
     "mustache": "2.3.0",
     "node-schedule": "1.3.0",
     "nodemailer": "4.6.7",
@@ -21,7 +21,7 @@
     "redis": "2.8.0",
     "request": "2.87.0",
     "speakeasy": "2.0.0",
-    "twilio": "3.17.5",
+    "twilio": "3.18.0",
     "wraplog": "0.0.5"
   },
   "devDependencies": {
