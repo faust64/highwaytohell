@@ -33,9 +33,9 @@
       "resolved": "./node_shrinkwrap/asap-2.0.6.tgz"
     },
     "asn1": {
-      "version": "0.2.3",
+      "version": "0.2.4",
       "from": "asn1@>=0.2.3 <0.3.0",
-      "resolved": "./node_shrinkwrap/asn1-0.2.3.tgz"
+      "resolved": "./node_shrinkwrap/asn1-0.2.4.tgz"
     },
     "assert-plus": {
       "version": "1.0.0",
@@ -160,9 +160,9 @@
       "resolved": "./node_shrinkwrap/color-name-1.1.1.tgz"
     },
     "color-string": {
-      "version": "1.5.2",
+      "version": "1.5.3",
       "from": "color-string@>=1.5.2 <2.0.0",
-      "resolved": "./node_shrinkwrap/color-string-1.5.2.tgz"
+      "resolved": "./node_shrinkwrap/color-string-1.5.3.tgz"
     },
     "colornames": {
       "version": "1.1.1",
@@ -1371,9 +1371,9 @@
       "resolved": "./node_shrinkwrap/tunnel-agent-0.6.0.tgz"
     },
     "twilio": {
-      "version": "3.18.0",
-      "from": "twilio@3.18.0",
-      "resolved": "./node_shrinkwrap/twilio-3.18.0.tgz",
+      "version": "3.19.0",
+      "from": "twilio@3.19.0",
+      "resolved": "./node_shrinkwrap/twilio-3.19.0.tgz",
       "dependencies": {
         "moment": {
           "version": "2.19.3",
