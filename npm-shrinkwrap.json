@@ -279,9 +279,9 @@
       "resolved": "./node_shrinkwrap/deep-metrics-0.0.1.tgz"
     },
     "define-properties": {
-      "version": "1.1.2",
+      "version": "1.1.3",
       "from": "define-properties@>=1.1.2 <2.0.0",
-      "resolved": "./node_shrinkwrap/define-properties-1.1.2.tgz"
+      "resolved": "./node_shrinkwrap/define-properties-1.1.3.tgz"
     },
     "delayed-stream": {
       "version": "1.0.0",
@@ -458,9 +458,9 @@
       "resolved": "./node_shrinkwrap/fast-json-stable-stringify-2.0.0.tgz"
     },
     "fast-safe-stringify": {
-      "version": "2.0.5",
+      "version": "2.0.6",
       "from": "fast-safe-stringify@>=2.0.4 <3.0.0",
-      "resolved": "./node_shrinkwrap/fast-safe-stringify-2.0.5.tgz"
+      "resolved": "./node_shrinkwrap/fast-safe-stringify-2.0.6.tgz"
     },
     "fecha": {
       "version": "2.3.3",
@@ -483,11 +483,6 @@
       "version": "2.1.0",
       "from": "find-up@>=2.0.0 <3.0.0",
       "resolved": "./node_shrinkwrap/find-up-2.1.0.tgz"
-    },
-    "foreach": {
-      "version": "2.0.5",
-      "from": "foreach@>=2.0.5 <3.0.0",
-      "resolved": "./node_shrinkwrap/foreach-2.0.5.tgz"
     },
     "forever-agent": {
       "version": "0.6.1",
@@ -555,9 +550,9 @@
       "resolved": "./node_shrinkwrap/has-1.0.3.tgz"
     },
     "hoek": {
-      "version": "5.0.3",
+      "version": "5.0.4",
       "from": "hoek@>=5.0.0 <6.0.0",
-      "resolved": "./node_shrinkwrap/hoek-5.0.3.tgz"
+      "resolved": "./node_shrinkwrap/hoek-5.0.4.tgz"
     },
     "hosted-git-info": {
       "version": "2.7.1",
@@ -906,9 +901,9 @@
       "resolved": "./node_shrinkwrap/node-schedule-1.3.0.tgz"
     },
     "nodemailer": {
-      "version": "4.6.7",
-      "from": "nodemailer@4.6.7",
-      "resolved": "./node_shrinkwrap/nodemailer-4.6.7.tgz"
+      "version": "4.6.8",
+      "from": "nodemailer@4.6.8",
+      "resolved": "./node_shrinkwrap/nodemailer-4.6.8.tgz"
     },
     "nodemailer-fetch": {
       "version": "1.6.0",
@@ -952,7 +947,7 @@
     },
     "object-keys": {
       "version": "1.0.12",
-      "from": "object-keys@>=1.0.8 <2.0.0",
+      "from": "object-keys@>=1.0.12 <2.0.0",
       "resolved": "./node_shrinkwrap/object-keys-1.0.12.tgz"
     },
     "object.getownpropertydescriptors": {
