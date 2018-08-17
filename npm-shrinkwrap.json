@@ -886,9 +886,9 @@
       "resolved": "./node_shrinkwrap/ms-2.0.0.tgz"
     },
     "mustache": {
-      "version": "2.3.1",
-      "from": "mustache@2.3.1",
-      "resolved": "./node_shrinkwrap/mustache-2.3.1.tgz"
+      "version": "2.3.2",
+      "from": "mustache@2.3.2",
+      "resolved": "./node_shrinkwrap/mustache-2.3.2.tgz"
     },
     "negotiator": {
       "version": "0.6.1",
