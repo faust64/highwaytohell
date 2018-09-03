@@ -6,7 +6,7 @@
     "airbrake": "2.1.1",
     "body-parser": "1.18.3",
     "bee-queue": "1.2.2",
-    "bluebird": "3.5.1",
+    "bluebird": "3.5.2",
     "cassandra-driver": "3.5.0",
     "connect-redis": "3.3.3",
     "express": "4.16.3",
