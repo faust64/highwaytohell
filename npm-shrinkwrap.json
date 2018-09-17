@@ -247,9 +247,14 @@
       "resolved": "./node_shrinkwrap/connect-redis-3.3.3.tgz",
       "dependencies": {
         "debug": {
-          "version": "3.1.0",
+          "version": "3.2.5",
           "from": "debug@>=3.1.0 <4.0.0",
-          "resolved": "./node_shrinkwrap/debug-3.1.0.tgz"
+          "resolved": "./node_shrinkwrap/debug-3.2.5.tgz"
+        },
+        "ms": {
+          "version": "2.1.1",
+          "from": "ms@>=2.1.1 <3.0.0",
+          "resolved": "./node_shrinkwrap/ms-2.1.1.tgz"
         }
       }
     },
@@ -794,9 +799,9 @@
       "resolved": "./node_shrinkwrap/locate-path-2.0.0.tgz"
     },
     "lodash": {
-      "version": "4.17.10",
+      "version": "4.17.11",
       "from": "lodash@>=4.17.10 <5.0.0",
-      "resolved": "./node_shrinkwrap/lodash-4.17.10.tgz"
+      "resolved": "./node_shrinkwrap/lodash-4.17.11.tgz"
     },
     "lodash.findindex": {
       "version": "4.6.0",
@@ -931,9 +936,9 @@
       "resolved": "./node_shrinkwrap/ms-2.0.0.tgz"
     },
     "mustache": {
-      "version": "2.3.2",
-      "from": "mustache@2.3.2",
-      "resolved": "./node_shrinkwrap/mustache-2.3.2.tgz"
+      "version": "3.0.0",
+      "from": "mustache@3.0.0",
+      "resolved": "./node_shrinkwrap/mustache-3.0.0.tgz"
     },
     "negotiator": {
       "version": "0.6.1",
@@ -1086,9 +1091,14 @@
       "resolved": "./node_shrinkwrap/pmx-1.6.7.tgz",
       "dependencies": {
         "debug": {
-          "version": "3.1.0",
+          "version": "3.2.5",
           "from": "debug@>=3.0.0 <4.0.0",
-          "resolved": "./node_shrinkwrap/debug-3.1.0.tgz"
+          "resolved": "./node_shrinkwrap/debug-3.2.5.tgz"
+        },
+        "ms": {
+          "version": "2.1.1",
+          "from": "ms@>=2.1.1 <3.0.0",
+          "resolved": "./node_shrinkwrap/ms-2.1.1.tgz"
         }
       }
     },
@@ -1324,9 +1334,9 @@
       "resolved": "./node_shrinkwrap/spdx-expression-parse-3.0.0.tgz"
     },
     "spdx-license-ids": {
-      "version": "3.0.0",
+      "version": "3.0.1",
       "from": "spdx-license-ids@>=3.0.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/spdx-license-ids-3.0.0.tgz"
+      "resolved": "./node_shrinkwrap/spdx-license-ids-3.0.1.tgz"
     },
     "speakeasy": {
       "version": "2.0.0",
