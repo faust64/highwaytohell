@@ -33,9 +33,9 @@
       "resolved": "./node_shrinkwrap/@types-mime-2.0.0.tgz"
     },
     "@types/node": {
-      "version": "10.11.2",
+      "version": "10.11.3",
       "from": "@types/node@*",
-      "resolved": "./node_shrinkwrap/@types-node-10.11.2.tgz"
+      "resolved": "./node_shrinkwrap/@types-node-10.11.3.tgz"
     },
     "@types/range-parser": {
       "version": "1.2.2",
@@ -242,14 +242,14 @@
       "dev": true
     },
     "connect-redis": {
-      "version": "3.3.3",
-      "from": "connect-redis@3.3.3",
-      "resolved": "./node_shrinkwrap/connect-redis-3.3.3.tgz",
+      "version": "3.4.0",
+      "from": "connect-redis@3.4.0",
+      "resolved": "./node_shrinkwrap/connect-redis-3.4.0.tgz",
       "dependencies": {
         "debug": {
-          "version": "3.2.5",
-          "from": "debug@>=3.1.0 <4.0.0",
-          "resolved": "./node_shrinkwrap/debug-3.2.5.tgz"
+          "version": "4.0.1",
+          "from": "debug@>=4.0.1 <5.0.0",
+          "resolved": "./node_shrinkwrap/debug-4.0.1.tgz"
         },
         "ms": {
           "version": "2.1.1",
