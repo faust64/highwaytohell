@@ -33,9 +33,9 @@
       "resolved": "./node_shrinkwrap/@types-mime-2.0.0.tgz"
     },
     "@types/node": {
-      "version": "10.10.2",
+      "version": "10.11.2",
       "from": "@types/node@*",
-      "resolved": "./node_shrinkwrap/@types-node-10.10.2.tgz"
+      "resolved": "./node_shrinkwrap/@types-node-10.11.2.tgz"
     },
     "@types/range-parser": {
       "version": "1.2.2",
@@ -409,9 +409,9 @@
       "resolved": "./node_shrinkwrap/es-abstract-1.12.0.tgz"
     },
     "es-to-primitive": {
-      "version": "1.1.1",
+      "version": "1.2.0",
       "from": "es-to-primitive@>=1.1.1 <2.0.0",
-      "resolved": "./node_shrinkwrap/es-to-primitive-1.1.1.tgz"
+      "resolved": "./node_shrinkwrap/es-to-primitive-1.2.0.tgz"
     },
     "escape-html": {
       "version": "1.0.3",
@@ -708,7 +708,7 @@
     },
     "is-symbol": {
       "version": "1.0.2",
-      "from": "is-symbol@>=1.0.1 <2.0.0",
+      "from": "is-symbol@>=1.0.2 <2.0.0",
       "resolved": "./node_shrinkwrap/is-symbol-1.0.2.tgz"
     },
     "is-typedarray": {
@@ -1331,9 +1331,9 @@
       "resolved": "./node_shrinkwrap/sorted-array-functions-1.2.0.tgz"
     },
     "spdx-correct": {
-      "version": "3.0.0",
+      "version": "3.0.1",
       "from": "spdx-correct@>=3.0.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/spdx-correct-3.0.0.tgz"
+      "resolved": "./node_shrinkwrap/spdx-correct-3.0.1.tgz"
     },
     "spdx-exceptions": {
       "version": "2.1.0",
@@ -1438,9 +1438,9 @@
       "resolved": "./node_shrinkwrap/tunnel-agent-0.6.0.tgz"
     },
     "twilio": {
-      "version": "3.20.0",
-      "from": "twilio@3.20.0",
-      "resolved": "./node_shrinkwrap/twilio-3.20.0.tgz",
+      "version": "3.21.0",
+      "from": "twilio@3.21.0",
+      "resolved": "./node_shrinkwrap/twilio-3.21.0.tgz",
       "dependencies": {
         "moment": {
           "version": "2.19.3",
