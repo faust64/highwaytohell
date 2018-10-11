@@ -33,9 +33,9 @@
       "resolved": "./node_shrinkwrap/@types-mime-2.0.0.tgz"
     },
     "@types/node": {
-      "version": "10.11.4",
+      "version": "10.11.7",
       "from": "@types/node@*",
-      "resolved": "./node_shrinkwrap/@types-node-10.11.4.tgz"
+      "resolved": "./node_shrinkwrap/@types-node-10.11.7.tgz"
     },
     "@types/range-parser": {
       "version": "1.2.2",
@@ -247,9 +247,9 @@
       "resolved": "./node_shrinkwrap/connect-redis-3.4.0.tgz",
       "dependencies": {
         "debug": {
-          "version": "4.0.1",
+          "version": "4.1.0",
           "from": "debug@>=4.0.1 <5.0.0",
-          "resolved": "./node_shrinkwrap/debug-4.0.1.tgz"
+          "resolved": "./node_shrinkwrap/debug-4.1.0.tgz"
         },
         "ms": {
           "version": "2.1.1",
@@ -379,9 +379,9 @@
       "resolved": "./node_shrinkwrap/ee-first-1.1.1.tgz"
     },
     "emitter-listener": {
-      "version": "1.1.1",
+      "version": "1.1.2",
       "from": "emitter-listener@>=1.1.1 <2.0.0",
-      "resolved": "./node_shrinkwrap/emitter-listener-1.1.1.tgz"
+      "resolved": "./node_shrinkwrap/emitter-listener-1.1.2.tgz"
     },
     "enabled": {
       "version": "1.0.2",
@@ -429,52 +429,10 @@
       "resolved": "./node_shrinkwrap/execa-0.7.0.tgz"
     },
     "express": {
-      "version": "4.16.3",
-      "from": "express@4.16.3",
-      "resolved": "./node_shrinkwrap/express-4.16.3.tgz",
+      "version": "4.16.4",
+      "from": "express@4.16.4",
+      "resolved": "./node_shrinkwrap/express-4.16.4.tgz",
       "dependencies": {
-        "body-parser": {
-          "version": "1.18.2",
-          "from": "body-parser@1.18.2",
-          "resolved": "./node_shrinkwrap/body-parser-1.18.2.tgz"
-        },
-        "iconv-lite": {
-          "version": "0.4.19",
-          "from": "iconv-lite@0.4.19",
-          "resolved": "./node_shrinkwrap/iconv-lite-0.4.19.tgz"
-        },
-        "qs": {
-          "version": "6.5.1",
-          "from": "qs@6.5.1",
-          "resolved": "./node_shrinkwrap/qs-6.5.1.tgz"
-        },
-        "raw-body": {
-          "version": "2.3.2",
-          "from": "raw-body@2.3.2",
-          "resolved": "./node_shrinkwrap/raw-body-2.3.2.tgz",
-          "dependencies": {
-            "depd": {
-              "version": "1.1.1",
-              "from": "depd@1.1.1",
-              "resolved": "./node_shrinkwrap/depd-1.1.1.tgz"
-            },
-            "http-errors": {
-              "version": "1.6.2",
-              "from": "http-errors@1.6.2",
-              "resolved": "./node_shrinkwrap/http-errors-1.6.2.tgz"
-            },
-            "setprototypeof": {
-              "version": "1.0.3",
-              "from": "setprototypeof@1.0.3",
-              "resolved": "./node_shrinkwrap/setprototypeof-1.0.3.tgz"
-            }
-          }
-        },
-        "safe-buffer": {
-          "version": "5.1.1",
-          "from": "safe-buffer@5.1.1",
-          "resolved": "./node_shrinkwrap/safe-buffer-5.1.1.tgz"
-        },
         "statuses": {
           "version": "1.4.0",
           "from": "statuses@>=1.4.0 <1.5.0",
@@ -1103,9 +1061,9 @@
       "resolved": "./node_shrinkwrap/pmx-1.6.7.tgz",
       "dependencies": {
         "debug": {
-          "version": "3.2.5",
+          "version": "3.2.6",
           "from": "debug@>=3.0.0 <4.0.0",
-          "resolved": "./node_shrinkwrap/debug-3.2.5.tgz"
+          "resolved": "./node_shrinkwrap/debug-3.2.6.tgz"
         },
         "ms": {
           "version": "2.1.1",
@@ -1130,13 +1088,13 @@
       "resolved": "./node_shrinkwrap/process-nextick-args-2.0.0.tgz"
     },
     "promise-callbacks": {
-      "version": "3.1.0",
+      "version": "3.2.0",
       "from": "promise-callbacks@>=3.0.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/promise-callbacks-3.1.0.tgz"
+      "resolved": "./node_shrinkwrap/promise-callbacks-3.2.0.tgz"
     },
     "proxy-addr": {
       "version": "2.0.4",
-      "from": "proxy-addr@>=2.0.3 <2.1.0",
+      "from": "proxy-addr@>=2.0.4 <2.1.0",
       "resolved": "./node_shrinkwrap/proxy-addr-2.0.4.tgz"
     },
     "pseudomap": {
@@ -1212,9 +1170,9 @@
       "resolved": "./node_shrinkwrap/redis-2.8.0.tgz"
     },
     "redis-commands": {
-      "version": "1.3.5",
+      "version": "1.4.0",
       "from": "redis-commands@>=1.2.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/redis-commands-1.3.5.tgz"
+      "resolved": "./node_shrinkwrap/redis-commands-1.4.0.tgz"
     },
     "redis-parser": {
       "version": "2.6.0",
@@ -1257,9 +1215,9 @@
       "resolved": "./node_shrinkwrap/scmp-0.0.3.tgz"
     },
     "semver": {
-      "version": "5.5.1",
+      "version": "5.6.0",
       "from": "semver@>=5.0.0 <6.0.0",
-      "resolved": "./node_shrinkwrap/semver-5.5.1.tgz"
+      "resolved": "./node_shrinkwrap/semver-5.6.0.tgz"
     },
     "send": {
       "version": "0.16.2",
