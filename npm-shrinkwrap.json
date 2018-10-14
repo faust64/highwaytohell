@@ -117,6 +117,11 @@
       "from": "base32.js@0.0.1",
       "resolved": "./node_shrinkwrap/base32.js-0.0.1.tgz"
     },
+    "bcrypt-pbkdf": {
+      "version": "1.0.2",
+      "from": "bcrypt-pbkdf@>=1.0.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/bcrypt-pbkdf-1.0.2.tgz"
+    },
     "bee-queue": {
       "version": "1.2.2",
       "from": "bee-queue@1.2.2",
@@ -367,6 +372,11 @@
       "version": "2.1.0-0",
       "from": "double-ended-queue@>=2.1.0-0 <3.0.0",
       "resolved": "./node_shrinkwrap/double-ended-queue-2.1.0-0.tgz"
+    },
+    "ecc-jsbn": {
+      "version": "0.1.2",
+      "from": "ecc-jsbn@>=0.1.1 <0.2.0",
+      "resolved": "./node_shrinkwrap/ecc-jsbn-0.1.2.tgz"
     },
     "ecdsa-sig-formatter": {
       "version": "1.0.10",
@@ -702,9 +712,14 @@
       "resolved": "./node_shrinkwrap/isstream-0.1.2.tgz"
     },
     "joi": {
-      "version": "13.7.0",
-      "from": "joi@13.7.0",
-      "resolved": "./node_shrinkwrap/joi-13.7.0.tgz"
+      "version": "14.0.0",
+      "from": "joi@14.0.0",
+      "resolved": "./node_shrinkwrap/joi-14.0.0.tgz"
+    },
+    "jsbn": {
+      "version": "0.1.1",
+      "from": "jsbn@>=0.1.0 <0.2.0",
+      "resolved": "./node_shrinkwrap/jsbn-0.1.1.tgz"
     },
     "json-schema": {
       "version": "0.2.3",
@@ -1314,9 +1329,9 @@
       "resolved": "./node_shrinkwrap/speakeasy-2.0.0.tgz"
     },
     "sshpk": {
-      "version": "1.14.2",
+      "version": "1.15.1",
       "from": "sshpk@>=1.7.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/sshpk-1.14.2.tgz"
+      "resolved": "./node_shrinkwrap/sshpk-1.15.1.tgz"
     },
     "stack-trace": {
       "version": "0.0.9",
@@ -1394,6 +1409,11 @@
       "version": "0.6.0",
       "from": "tunnel-agent@>=0.6.0 <0.7.0",
       "resolved": "./node_shrinkwrap/tunnel-agent-0.6.0.tgz"
+    },
+    "tweetnacl": {
+      "version": "0.14.5",
+      "from": "tweetnacl@>=0.14.0 <0.15.0",
+      "resolved": "./node_shrinkwrap/tweetnacl-0.14.5.tgz"
     },
     "twilio": {
       "version": "3.22.0",
