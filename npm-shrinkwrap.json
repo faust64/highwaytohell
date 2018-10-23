@@ -508,16 +508,9 @@
       "resolved": "./node_shrinkwrap/forever-agent-0.6.1.tgz"
     },
     "form-data": {
-      "version": "2.3.2",
+      "version": "2.3.3",
       "from": "form-data@>=2.3.2 <2.4.0",
-      "resolved": "./node_shrinkwrap/form-data-2.3.2.tgz",
-      "dependencies": {
-        "combined-stream": {
-          "version": "1.0.6",
-          "from": "combined-stream@1.0.6",
-          "resolved": "./node_shrinkwrap/combined-stream-1.0.6.tgz"
-        }
-      }
+      "resolved": "./node_shrinkwrap/form-data-2.3.3.tgz"
     },
     "forwarded": {
       "version": "0.1.2",
@@ -690,9 +683,9 @@
       "resolved": "./node_shrinkwrap/isarray-2.0.4.tgz"
     },
     "isemail": {
-      "version": "3.1.4",
+      "version": "3.2.0",
       "from": "isemail@>=3.0.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/isemail-3.1.4.tgz",
+      "resolved": "./node_shrinkwrap/isemail-3.2.0.tgz",
       "dependencies": {
         "punycode": {
           "version": "2.1.1",
@@ -712,9 +705,9 @@
       "resolved": "./node_shrinkwrap/isstream-0.1.2.tgz"
     },
     "joi": {
-      "version": "14.0.0",
-      "from": "joi@14.0.0",
-      "resolved": "./node_shrinkwrap/joi-14.0.0.tgz"
+      "version": "14.0.1",
+      "from": "joi@14.0.1",
+      "resolved": "./node_shrinkwrap/joi-14.0.1.tgz"
     },
     "jsbn": {
       "version": "0.1.1",
@@ -891,14 +884,14 @@
       "resolved": "./node_shrinkwrap/mime-1.4.1.tgz"
     },
     "mime-db": {
-      "version": "1.36.0",
-      "from": "mime-db@>=1.36.0 <1.37.0",
-      "resolved": "./node_shrinkwrap/mime-db-1.36.0.tgz"
+      "version": "1.37.0",
+      "from": "mime-db@>=1.37.0 <1.38.0",
+      "resolved": "./node_shrinkwrap/mime-db-1.37.0.tgz"
     },
     "mime-types": {
-      "version": "2.1.20",
+      "version": "2.1.21",
       "from": "mime-types@>=2.1.19 <2.2.0",
-      "resolved": "./node_shrinkwrap/mime-types-2.1.20.tgz"
+      "resolved": "./node_shrinkwrap/mime-types-2.1.21.tgz"
     },
     "mimic-fn": {
       "version": "1.2.0",
