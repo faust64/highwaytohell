@@ -93,9 +93,9 @@
       "resolved": "./node_shrinkwrap/async-1.5.2.tgz"
     },
     "async-listener": {
-      "version": "0.6.9",
+      "version": "0.6.10",
       "from": "async-listener@>=0.6.0 <0.7.0",
-      "resolved": "./node_shrinkwrap/async-listener-0.6.9.tgz"
+      "resolved": "./node_shrinkwrap/async-listener-0.6.10.tgz"
     },
     "asynckit": {
       "version": "0.4.0",
@@ -1409,9 +1409,9 @@
       "resolved": "./node_shrinkwrap/tweetnacl-0.14.5.tgz"
     },
     "twilio": {
-      "version": "3.23.1",
-      "from": "twilio@3.23.1",
-      "resolved": "./node_shrinkwrap/twilio-3.23.1.tgz",
+      "version": "3.23.2",
+      "from": "twilio@3.23.2",
+      "resolved": "./node_shrinkwrap/twilio-3.23.2.tgz",
       "dependencies": {
         "moment": {
           "version": "2.19.3",
