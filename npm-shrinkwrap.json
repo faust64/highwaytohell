@@ -548,9 +548,9 @@
       "resolved": "./node_shrinkwrap/glossy-0.1.7.tgz"
     },
     "graceful-fs": {
-      "version": "4.1.11",
+      "version": "4.1.14",
       "from": "graceful-fs@>=4.1.2 <5.0.0",
-      "resolved": "./node_shrinkwrap/graceful-fs-4.1.11.tgz"
+      "resolved": "./node_shrinkwrap/graceful-fs-4.1.14.tgz"
     },
     "har-schema": {
       "version": "2.0.0",
@@ -573,9 +573,9 @@
       "resolved": "./node_shrinkwrap/has-symbols-1.0.0.tgz"
     },
     "hoek": {
-      "version": "6.0.0",
+      "version": "6.0.1",
       "from": "hoek@>=6.0.0 <7.0.0",
-      "resolved": "./node_shrinkwrap/hoek-6.0.0.tgz"
+      "resolved": "./node_shrinkwrap/hoek-6.0.1.tgz"
     },
     "hosted-git-info": {
       "version": "2.7.1",
@@ -705,9 +705,9 @@
       "resolved": "./node_shrinkwrap/isstream-0.1.2.tgz"
     },
     "joi": {
-      "version": "14.0.3",
-      "from": "joi@14.0.3",
-      "resolved": "./node_shrinkwrap/joi-14.0.3.tgz"
+      "version": "14.0.4",
+      "from": "joi@14.0.4",
+      "resolved": "./node_shrinkwrap/joi-14.0.4.tgz"
     },
     "jsbn": {
       "version": "0.1.1",
@@ -1384,16 +1384,9 @@
       "resolved": "./node_shrinkwrap/text-hex-1.0.0.tgz"
     },
     "topo": {
-      "version": "3.0.1",
+      "version": "3.0.3",
       "from": "topo@>=3.0.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/topo-3.0.1.tgz",
-      "dependencies": {
-        "hoek": {
-          "version": "5.0.4",
-          "from": "hoek@>=5.0.0 <6.0.0",
-          "resolved": "./node_shrinkwrap/hoek-5.0.4.tgz"
-        }
-      }
+      "resolved": "./node_shrinkwrap/topo-3.0.3.tgz"
     },
     "tough-cookie": {
       "version": "2.4.3",
