@@ -33,9 +33,9 @@
       "resolved": "./node_shrinkwrap/@types-mime-2.0.0.tgz"
     },
     "@types/node": {
-      "version": "10.12.5",
+      "version": "10.12.9",
       "from": "@types/node@*",
-      "resolved": "./node_shrinkwrap/@types-node-10.12.5.tgz"
+      "resolved": "./node_shrinkwrap/@types-node-10.12.9.tgz"
     },
     "@types/range-parser": {
       "version": "1.2.2",
@@ -718,9 +718,9 @@
       "resolved": "./node_shrinkwrap/json-stringify-safe-5.0.1.tgz"
     },
     "jsonwebtoken": {
-      "version": "8.3.0",
+      "version": "8.4.0",
       "from": "jsonwebtoken@>=8.1.0 <9.0.0",
-      "resolved": "./node_shrinkwrap/jsonwebtoken-8.3.0.tgz",
+      "resolved": "./node_shrinkwrap/jsonwebtoken-8.4.0.tgz",
       "dependencies": {
         "ms": {
           "version": "2.1.1",
@@ -1404,9 +1404,9 @@
       "resolved": "./node_shrinkwrap/tweetnacl-0.14.5.tgz"
     },
     "twilio": {
-      "version": "3.23.2",
-      "from": "twilio@3.23.2",
-      "resolved": "./node_shrinkwrap/twilio-3.23.2.tgz",
+      "version": "3.24.0",
+      "from": "twilio@3.24.0",
+      "resolved": "./node_shrinkwrap/twilio-3.24.0.tgz",
       "dependencies": {
         "moment": {
           "version": "2.19.3",
