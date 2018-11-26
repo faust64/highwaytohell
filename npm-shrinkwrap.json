@@ -693,9 +693,9 @@
       "resolved": "./node_shrinkwrap/isstream-0.1.2.tgz"
     },
     "joi": {
-      "version": "14.1.1",
-      "from": "joi@14.1.1",
-      "resolved": "./node_shrinkwrap/joi-14.1.1.tgz"
+      "version": "14.3.0",
+      "from": "joi@14.3.0",
+      "resolved": "./node_shrinkwrap/joi-14.3.0.tgz"
     },
     "jsbn": {
       "version": "0.1.1",
