@@ -33,9 +33,9 @@
       "resolved": "./node_shrinkwrap/@types-mime-2.0.0.tgz"
     },
     "@types/node": {
-      "version": "10.12.11",
+      "version": "10.12.12",
       "from": "@types/node@*",
-      "resolved": "./node_shrinkwrap/@types-node-10.12.11.tgz"
+      "resolved": "./node_shrinkwrap/@types-node-10.12.12.tgz"
     },
     "@types/range-parser": {
       "version": "1.2.2",
@@ -168,9 +168,9 @@
       "resolved": "./node_shrinkwrap/caseless-0.12.0.tgz"
     },
     "cassandra-driver": {
-      "version": "3.5.0",
-      "from": "cassandra-driver@3.5.0",
-      "resolved": "./node_shrinkwrap/cassandra-driver-3.5.0.tgz"
+      "version": "3.6.0",
+      "from": "cassandra-driver@3.6.0",
+      "resolved": "./node_shrinkwrap/cassandra-driver-3.6.0.tgz"
     },
     "cliui": {
       "version": "3.2.0",
@@ -568,9 +568,9 @@
       "resolved": "./node_shrinkwrap/has-symbols-1.0.0.tgz"
     },
     "hoek": {
-      "version": "6.1.1",
+      "version": "6.1.2",
       "from": "hoek@>=6.0.0 <7.0.0",
-      "resolved": "./node_shrinkwrap/hoek-6.1.1.tgz"
+      "resolved": "./node_shrinkwrap/hoek-6.1.2.tgz"
     },
     "hosted-git-info": {
       "version": "2.7.1",
@@ -1084,9 +1084,9 @@
       "resolved": "./node_shrinkwrap/process-nextick-args-2.0.0.tgz"
     },
     "promise-callbacks": {
-      "version": "3.2.0",
+      "version": "3.2.2",
       "from": "promise-callbacks@>=3.0.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/promise-callbacks-3.2.0.tgz"
+      "resolved": "./node_shrinkwrap/promise-callbacks-3.2.2.tgz"
     },
     "proxy-addr": {
       "version": "2.0.4",
