@@ -12,35 +12,30 @@
       "from": "@types/connect@*",
       "resolved": "./node_shrinkwrap/@types-connect-3.4.32.tgz"
     },
-    "@types/events": {
-      "version": "1.2.0",
-      "from": "@types/events@*",
-      "resolved": "./node_shrinkwrap/@types-events-1.2.0.tgz"
-    },
     "@types/express": {
-      "version": "4.16.0",
+      "version": "4.16.1",
       "from": "@types/express@>=4.11.1 <5.0.0",
-      "resolved": "./node_shrinkwrap/@types-express-4.16.0.tgz"
+      "resolved": "./node_shrinkwrap/@types-express-4.16.1.tgz"
     },
     "@types/express-serve-static-core": {
-      "version": "4.16.0",
+      "version": "4.16.1",
       "from": "@types/express-serve-static-core@*",
-      "resolved": "./node_shrinkwrap/@types-express-serve-static-core-4.16.0.tgz"
+      "resolved": "./node_shrinkwrap/@types-express-serve-static-core-4.16.1.tgz"
     },
     "@types/mime": {
-      "version": "2.0.0",
+      "version": "2.0.1",
       "from": "@types/mime@*",
-      "resolved": "./node_shrinkwrap/@types-mime-2.0.0.tgz"
+      "resolved": "./node_shrinkwrap/@types-mime-2.0.1.tgz"
     },
     "@types/node": {
-      "version": "10.12.12",
+      "version": "11.9.3",
       "from": "@types/node@*",
-      "resolved": "./node_shrinkwrap/@types-node-10.12.12.tgz"
+      "resolved": "./node_shrinkwrap/@types-node-11.9.3.tgz"
     },
     "@types/range-parser": {
-      "version": "1.2.2",
+      "version": "1.2.3",
       "from": "@types/range-parser@*",
-      "resolved": "./node_shrinkwrap/@types-range-parser-1.2.2.tgz"
+      "resolved": "./node_shrinkwrap/@types-range-parser-1.2.3.tgz"
     },
     "@types/serve-static": {
       "version": "1.13.2",
@@ -58,14 +53,14 @@
       "resolved": "./node_shrinkwrap/airbrake-2.1.1.tgz"
     },
     "ajv": {
-      "version": "6.6.1",
+      "version": "6.9.1",
       "from": "ajv@>=6.5.5 <7.0.0",
-      "resolved": "./node_shrinkwrap/ajv-6.6.1.tgz"
+      "resolved": "./node_shrinkwrap/ajv-6.9.1.tgz"
     },
     "ansi-regex": {
-      "version": "2.1.1",
-      "from": "ansi-regex@>=2.0.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/ansi-regex-2.1.1.tgz"
+      "version": "3.0.0",
+      "from": "ansi-regex@>=3.0.0 <4.0.0",
+      "resolved": "./node_shrinkwrap/ansi-regex-3.0.0.tgz"
     },
     "array-flatten": {
       "version": "1.1.1",
@@ -142,20 +137,15 @@
       "from": "buffer-equal-constant-time@1.0.1",
       "resolved": "./node_shrinkwrap/buffer-equal-constant-time-1.0.1.tgz"
     },
-    "builtin-modules": {
-      "version": "1.1.1",
-      "from": "builtin-modules@>=1.0.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/builtin-modules-1.1.1.tgz"
-    },
     "bytes": {
       "version": "3.0.0",
       "from": "bytes@3.0.0",
       "resolved": "./node_shrinkwrap/bytes-3.0.0.tgz"
     },
     "camelcase": {
-      "version": "4.1.0",
-      "from": "camelcase@>=4.1.0 <5.0.0",
-      "resolved": "./node_shrinkwrap/camelcase-4.1.0.tgz"
+      "version": "5.0.0",
+      "from": "camelcase@>=5.0.0 <6.0.0",
+      "resolved": "./node_shrinkwrap/camelcase-5.0.0.tgz"
     },
     "can-promise": {
       "version": "0.0.1",
@@ -168,21 +158,14 @@
       "resolved": "./node_shrinkwrap/caseless-0.12.0.tgz"
     },
     "cassandra-driver": {
-      "version": "3.6.0",
-      "from": "cassandra-driver@3.6.0",
-      "resolved": "./node_shrinkwrap/cassandra-driver-3.6.0.tgz"
+      "version": "4.0.0",
+      "from": "cassandra-driver@4.0.0",
+      "resolved": "./node_shrinkwrap/cassandra-driver-4.0.0.tgz"
     },
     "cliui": {
-      "version": "3.2.0",
-      "from": "cliui@>=3.2.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/cliui-3.2.0.tgz",
-      "dependencies": {
-        "string-width": {
-          "version": "1.0.2",
-          "from": "string-width@>=1.0.1 <2.0.0",
-          "resolved": "./node_shrinkwrap/string-width-1.0.2.tgz"
-        }
-      }
+      "version": "4.1.0",
+      "from": "cliui@>=4.0.0 <5.0.0",
+      "resolved": "./node_shrinkwrap/cliui-4.1.0.tgz"
     },
     "code-point-at": {
       "version": "1.1.0",
@@ -215,9 +198,9 @@
       "resolved": "./node_shrinkwrap/colornames-1.1.1.tgz"
     },
     "colors": {
-      "version": "1.3.2",
+      "version": "1.3.3",
       "from": "colors@>=1.2.1 <2.0.0",
-      "resolved": "./node_shrinkwrap/colors-1.3.2.tgz"
+      "resolved": "./node_shrinkwrap/colors-1.3.3.tgz"
     },
     "colorspace": {
       "version": "1.1.1",
@@ -247,9 +230,9 @@
       "resolved": "./node_shrinkwrap/connect-redis-3.4.0.tgz",
       "dependencies": {
         "debug": {
-          "version": "4.1.0",
+          "version": "4.1.1",
           "from": "debug@>=4.0.1 <5.0.0",
-          "resolved": "./node_shrinkwrap/debug-4.1.0.tgz"
+          "resolved": "./node_shrinkwrap/debug-4.1.1.tgz"
         },
         "ms": {
           "version": "2.1.1",
@@ -299,9 +282,9 @@
       "resolved": "./node_shrinkwrap/cron-parser-2.7.3.tgz"
     },
     "cross-spawn": {
-      "version": "5.1.0",
-      "from": "cross-spawn@>=5.0.1 <6.0.0",
-      "resolved": "./node_shrinkwrap/cross-spawn-5.1.0.tgz"
+      "version": "6.0.5",
+      "from": "cross-spawn@>=6.0.0 <7.0.0",
+      "resolved": "./node_shrinkwrap/cross-spawn-6.0.5.tgz"
     },
     "cycle": {
       "version": "1.0.3",
@@ -320,7 +303,7 @@
     },
     "decamelize": {
       "version": "1.2.0",
-      "from": "decamelize@>=1.1.1 <2.0.0",
+      "from": "decamelize@>=1.2.0 <2.0.0",
       "resolved": "./node_shrinkwrap/decamelize-1.2.0.tgz"
     },
     "deep-metrics": {
@@ -398,24 +381,24 @@
       "from": "encodeurl@>=1.0.2 <1.1.0",
       "resolved": "./node_shrinkwrap/encodeurl-1.0.2.tgz"
     },
+    "end-of-stream": {
+      "version": "1.4.1",
+      "from": "end-of-stream@>=1.1.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/end-of-stream-1.4.1.tgz"
+    },
     "env-variable": {
       "version": "0.0.5",
       "from": "env-variable@>=0.0.0 <0.1.0",
       "resolved": "./node_shrinkwrap/env-variable-0.0.5.tgz"
     },
-    "error-ex": {
-      "version": "1.3.2",
-      "from": "error-ex@>=1.2.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/error-ex-1.3.2.tgz"
-    },
     "es-abstract": {
-      "version": "1.12.0",
+      "version": "1.13.0",
       "from": "es-abstract@>=1.5.1 <2.0.0",
-      "resolved": "./node_shrinkwrap/es-abstract-1.12.0.tgz"
+      "resolved": "./node_shrinkwrap/es-abstract-1.13.0.tgz"
     },
     "es-to-primitive": {
       "version": "1.2.0",
-      "from": "es-to-primitive@>=1.1.1 <2.0.0",
+      "from": "es-to-primitive@>=1.2.0 <2.0.0",
       "resolved": "./node_shrinkwrap/es-to-primitive-1.2.0.tgz"
     },
     "escape-html": {
@@ -429,9 +412,9 @@
       "resolved": "./node_shrinkwrap/etag-1.8.1.tgz"
     },
     "execa": {
-      "version": "0.7.0",
-      "from": "execa@>=0.7.0 <0.8.0",
-      "resolved": "./node_shrinkwrap/execa-0.7.0.tgz"
+      "version": "1.0.0",
+      "from": "execa@>=1.0.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/execa-1.0.0.tgz"
     },
     "express": {
       "version": "4.16.4",
@@ -493,9 +476,9 @@
       }
     },
     "find-up": {
-      "version": "2.1.0",
-      "from": "find-up@>=2.0.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/find-up-2.1.0.tgz"
+      "version": "3.0.0",
+      "from": "find-up@>=3.0.0 <4.0.0",
+      "resolved": "./node_shrinkwrap/find-up-3.0.0.tgz"
     },
     "forever-agent": {
       "version": "0.6.1",
@@ -528,9 +511,9 @@
       "resolved": "./node_shrinkwrap/get-caller-file-1.0.3.tgz"
     },
     "get-stream": {
-      "version": "3.0.0",
-      "from": "get-stream@>=3.0.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/get-stream-3.0.0.tgz"
+      "version": "4.1.0",
+      "from": "get-stream@>=4.0.0 <5.0.0",
+      "resolved": "./node_shrinkwrap/get-stream-4.1.0.tgz"
     },
     "getpass": {
       "version": "0.1.7",
@@ -541,11 +524,6 @@
       "version": "0.1.7",
       "from": "glossy@>=0.0.0 <1.0.0",
       "resolved": "./node_shrinkwrap/glossy-0.1.7.tgz"
-    },
-    "graceful-fs": {
-      "version": "4.1.15",
-      "from": "graceful-fs@>=4.1.2 <5.0.0",
-      "resolved": "./node_shrinkwrap/graceful-fs-4.1.15.tgz"
     },
     "har-schema": {
       "version": "2.0.0",
@@ -559,7 +537,7 @@
     },
     "has": {
       "version": "1.0.3",
-      "from": "has@>=1.0.1 <2.0.0",
+      "from": "has@>=1.0.3 <2.0.0",
       "resolved": "./node_shrinkwrap/has-1.0.3.tgz"
     },
     "has-symbols": {
@@ -571,11 +549,6 @@
       "version": "6.1.2",
       "from": "hoek@>=6.0.0 <7.0.0",
       "resolved": "./node_shrinkwrap/hoek-6.1.2.tgz"
-    },
-    "hosted-git-info": {
-      "version": "2.7.1",
-      "from": "hosted-git-info@>=2.1.4 <3.0.0",
-      "resolved": "./node_shrinkwrap/hosted-git-info-2.7.1.tgz"
     },
     "http-errors": {
       "version": "1.6.3",
@@ -608,9 +581,9 @@
       "resolved": "./node_shrinkwrap/inherits-2.0.3.tgz"
     },
     "invert-kv": {
-      "version": "1.0.0",
-      "from": "invert-kv@>=1.0.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/invert-kv-1.0.0.tgz"
+      "version": "2.0.0",
+      "from": "invert-kv@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/invert-kv-2.0.0.tgz"
     },
     "ipaddr.js": {
       "version": "1.8.0",
@@ -618,23 +591,18 @@
       "resolved": "./node_shrinkwrap/ipaddr.js-1.8.0.tgz"
     },
     "is": {
-      "version": "3.2.1",
+      "version": "3.3.0",
       "from": "is@>=3.2.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/is-3.2.1.tgz"
+      "resolved": "./node_shrinkwrap/is-3.3.0.tgz"
     },
     "is-arrayish": {
-      "version": "0.2.1",
-      "from": "is-arrayish@>=0.2.1 <0.3.0",
-      "resolved": "./node_shrinkwrap/is-arrayish-0.2.1.tgz"
-    },
-    "is-builtin-module": {
-      "version": "1.0.0",
-      "from": "is-builtin-module@>=1.0.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/is-builtin-module-1.0.0.tgz"
+      "version": "0.3.2",
+      "from": "is-arrayish@>=0.3.1 <0.4.0",
+      "resolved": "./node_shrinkwrap/is-arrayish-0.3.2.tgz"
     },
     "is-callable": {
       "version": "1.1.4",
-      "from": "is-callable@>=1.1.3 <2.0.0",
+      "from": "is-callable@>=1.1.4 <2.0.0",
       "resolved": "./node_shrinkwrap/is-callable-1.1.4.tgz"
     },
     "is-date-object": {
@@ -643,9 +611,9 @@
       "resolved": "./node_shrinkwrap/is-date-object-1.0.1.tgz"
     },
     "is-fullwidth-code-point": {
-      "version": "1.0.0",
-      "from": "is-fullwidth-code-point@>=1.0.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/is-fullwidth-code-point-1.0.0.tgz"
+      "version": "2.0.0",
+      "from": "is-fullwidth-code-point@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/is-fullwidth-code-point-2.0.0.tgz"
     },
     "is-nan": {
       "version": "1.2.1",
@@ -693,9 +661,9 @@
       "resolved": "./node_shrinkwrap/isstream-0.1.2.tgz"
     },
     "joi": {
-      "version": "14.3.0",
-      "from": "joi@14.3.0",
-      "resolved": "./node_shrinkwrap/joi-14.3.0.tgz"
+      "version": "14.3.1",
+      "from": "joi@14.3.1",
+      "resolved": "./node_shrinkwrap/joi-14.3.1.tgz"
     },
     "jsbn": {
       "version": "0.1.1",
@@ -735,14 +703,14 @@
       "resolved": "./node_shrinkwrap/jsprim-1.4.1.tgz"
     },
     "jwa": {
-      "version": "1.1.6",
-      "from": "jwa@>=1.1.5 <2.0.0",
-      "resolved": "./node_shrinkwrap/jwa-1.1.6.tgz"
+      "version": "1.2.0",
+      "from": "jwa@>=1.2.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/jwa-1.2.0.tgz"
     },
     "jws": {
-      "version": "3.1.5",
+      "version": "3.2.1",
       "from": "jws@>=3.1.5 <4.0.0",
-      "resolved": "./node_shrinkwrap/jws-3.1.5.tgz"
+      "resolved": "./node_shrinkwrap/jws-3.2.1.tgz"
     },
     "kuler": {
       "version": "1.0.1",
@@ -750,19 +718,14 @@
       "resolved": "./node_shrinkwrap/kuler-1.0.1.tgz"
     },
     "lcid": {
-      "version": "1.0.0",
-      "from": "lcid@>=1.0.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/lcid-1.0.0.tgz"
-    },
-    "load-json-file": {
       "version": "2.0.0",
-      "from": "load-json-file@>=2.0.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/load-json-file-2.0.0.tgz"
+      "from": "lcid@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/lcid-2.0.0.tgz"
     },
     "locate-path": {
-      "version": "2.0.0",
-      "from": "locate-path@>=2.0.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/locate-path-2.0.0.tgz"
+      "version": "3.0.0",
+      "from": "locate-path@>=3.0.0 <4.0.0",
+      "resolved": "./node_shrinkwrap/locate-path-3.0.0.tgz"
     },
     "lodash": {
       "version": "4.17.11",
@@ -841,10 +804,10 @@
       "from": "long-timeout@0.1.1",
       "resolved": "./node_shrinkwrap/long-timeout-0.1.1.tgz"
     },
-    "lru-cache": {
-      "version": "4.1.5",
-      "from": "lru-cache@>=4.0.1 <5.0.0",
-      "resolved": "./node_shrinkwrap/lru-cache-4.1.5.tgz"
+    "map-age-cleaner": {
+      "version": "0.1.3",
+      "from": "map-age-cleaner@>=0.1.1 <0.2.0",
+      "resolved": "./node_shrinkwrap/map-age-cleaner-0.1.3.tgz"
     },
     "media-typer": {
       "version": "0.3.0",
@@ -852,9 +815,9 @@
       "resolved": "./node_shrinkwrap/media-typer-0.3.0.tgz"
     },
     "mem": {
-      "version": "1.1.0",
-      "from": "mem@>=1.1.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/mem-1.1.0.tgz"
+      "version": "4.1.0",
+      "from": "mem@>=4.0.0 <5.0.0",
+      "resolved": "./node_shrinkwrap/mem-4.1.0.tgz"
     },
     "merge-descriptors": {
       "version": "1.0.1",
@@ -887,9 +850,9 @@
       "resolved": "./node_shrinkwrap/mimic-fn-1.2.0.tgz"
     },
     "moment": {
-      "version": "2.22.2",
+      "version": "2.24.0",
       "from": "moment@>=2.9.0",
-      "resolved": "./node_shrinkwrap/moment-2.22.2.tgz"
+      "resolved": "./node_shrinkwrap/moment-2.24.0.tgz"
     },
     "moment-timezone": {
       "version": "0.5.23",
@@ -911,15 +874,20 @@
       "from": "negotiator@0.6.1",
       "resolved": "./node_shrinkwrap/negotiator-0.6.1.tgz"
     },
+    "nice-try": {
+      "version": "1.0.5",
+      "from": "nice-try@>=1.0.4 <2.0.0",
+      "resolved": "./node_shrinkwrap/nice-try-1.0.5.tgz"
+    },
     "node-schedule": {
-      "version": "1.3.1",
-      "from": "node-schedule@1.3.1",
-      "resolved": "./node_shrinkwrap/node-schedule-1.3.1.tgz"
+      "version": "1.3.2",
+      "from": "node-schedule@1.3.2",
+      "resolved": "./node_shrinkwrap/node-schedule-1.3.2.tgz"
     },
     "nodemailer": {
-      "version": "4.7.0",
-      "from": "nodemailer@4.7.0",
-      "resolved": "./node_shrinkwrap/nodemailer-4.7.0.tgz"
+      "version": "5.1.1",
+      "from": "nodemailer@5.1.1",
+      "resolved": "./node_shrinkwrap/nodemailer-5.1.1.tgz"
     },
     "nodemailer-fetch": {
       "version": "1.6.0",
@@ -941,11 +909,6 @@
       "from": "nodemailer-wellknown@0.1.10",
       "resolved": "./node_shrinkwrap/nodemailer-wellknown-0.1.10.tgz"
     },
-    "normalize-package-data": {
-      "version": "2.4.0",
-      "from": "normalize-package-data@>=2.3.2 <3.0.0",
-      "resolved": "./node_shrinkwrap/normalize-package-data-2.4.0.tgz"
-    },
     "npm-run-path": {
       "version": "2.0.2",
       "from": "npm-run-path@>=2.0.0 <3.0.0",
@@ -962,9 +925,9 @@
       "resolved": "./node_shrinkwrap/oauth-sign-0.9.0.tgz"
     },
     "object-keys": {
-      "version": "1.0.12",
+      "version": "1.1.0",
       "from": "object-keys@>=1.0.12 <2.0.0",
-      "resolved": "./node_shrinkwrap/object-keys-1.0.12.tgz"
+      "resolved": "./node_shrinkwrap/object-keys-1.1.0.tgz"
     },
     "object.getownpropertydescriptors": {
       "version": "2.0.3",
@@ -981,40 +944,50 @@
       "from": "on-headers@>=1.0.1 <1.1.0",
       "resolved": "./node_shrinkwrap/on-headers-1.0.1.tgz"
     },
+    "once": {
+      "version": "1.4.0",
+      "from": "once@>=1.3.1 <2.0.0",
+      "resolved": "./node_shrinkwrap/once-1.4.0.tgz"
+    },
     "one-time": {
       "version": "0.0.4",
       "from": "one-time@0.0.4",
       "resolved": "./node_shrinkwrap/one-time-0.0.4.tgz"
     },
     "os-locale": {
-      "version": "2.1.0",
-      "from": "os-locale@>=2.0.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/os-locale-2.1.0.tgz"
+      "version": "3.1.0",
+      "from": "os-locale@>=3.0.0 <4.0.0",
+      "resolved": "./node_shrinkwrap/os-locale-3.1.0.tgz"
+    },
+    "p-defer": {
+      "version": "1.0.0",
+      "from": "p-defer@>=1.0.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/p-defer-1.0.0.tgz"
     },
     "p-finally": {
       "version": "1.0.0",
       "from": "p-finally@>=1.0.0 <2.0.0",
       "resolved": "./node_shrinkwrap/p-finally-1.0.0.tgz"
     },
+    "p-is-promise": {
+      "version": "2.0.0",
+      "from": "p-is-promise@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/p-is-promise-2.0.0.tgz"
+    },
     "p-limit": {
-      "version": "1.3.0",
-      "from": "p-limit@>=1.1.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/p-limit-1.3.0.tgz"
+      "version": "2.1.0",
+      "from": "p-limit@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/p-limit-2.1.0.tgz"
     },
     "p-locate": {
-      "version": "2.0.0",
-      "from": "p-locate@>=2.0.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/p-locate-2.0.0.tgz"
+      "version": "3.0.0",
+      "from": "p-locate@>=3.0.0 <4.0.0",
+      "resolved": "./node_shrinkwrap/p-locate-3.0.0.tgz"
     },
     "p-try": {
-      "version": "1.0.0",
-      "from": "p-try@>=1.0.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/p-try-1.0.0.tgz"
-    },
-    "parse-json": {
-      "version": "2.2.0",
-      "from": "parse-json@>=2.2.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/parse-json-2.2.0.tgz"
+      "version": "2.0.0",
+      "from": "p-try@>=2.0.0 <3.0.0",
+      "resolved": "./node_shrinkwrap/p-try-2.0.0.tgz"
     },
     "parseurl": {
       "version": "1.3.2",
@@ -1028,7 +1001,7 @@
     },
     "path-key": {
       "version": "2.0.1",
-      "from": "path-key@>=2.0.0 <3.0.0",
+      "from": "path-key@>=2.0.1 <3.0.0",
       "resolved": "./node_shrinkwrap/path-key-2.0.1.tgz"
     },
     "path-to-regexp": {
@@ -1036,20 +1009,10 @@
       "from": "path-to-regexp@0.1.7",
       "resolved": "./node_shrinkwrap/path-to-regexp-0.1.7.tgz"
     },
-    "path-type": {
-      "version": "2.0.0",
-      "from": "path-type@>=2.0.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/path-type-2.0.0.tgz"
-    },
     "performance-now": {
       "version": "2.1.0",
       "from": "performance-now@>=2.1.0 <3.0.0",
       "resolved": "./node_shrinkwrap/performance-now-2.1.0.tgz"
-    },
-    "pify": {
-      "version": "2.3.0",
-      "from": "pify@>=2.0.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/pify-2.3.0.tgz"
     },
     "pmx": {
       "version": "1.6.7",
@@ -1093,15 +1056,15 @@
       "from": "proxy-addr@>=2.0.4 <2.1.0",
       "resolved": "./node_shrinkwrap/proxy-addr-2.0.4.tgz"
     },
-    "pseudomap": {
-      "version": "1.0.2",
-      "from": "pseudomap@>=1.0.2 <2.0.0",
-      "resolved": "./node_shrinkwrap/pseudomap-1.0.2.tgz"
-    },
     "psl": {
-      "version": "1.1.29",
+      "version": "1.1.31",
       "from": "psl@>=1.1.24 <2.0.0",
-      "resolved": "./node_shrinkwrap/psl-1.1.29.tgz"
+      "resolved": "./node_shrinkwrap/psl-1.1.31.tgz"
+    },
+    "pump": {
+      "version": "3.0.0",
+      "from": "pump@>=3.0.0 <4.0.0",
+      "resolved": "./node_shrinkwrap/pump-3.0.0.tgz"
     },
     "punycode": {
       "version": "2.1.1",
@@ -1114,9 +1077,9 @@
       "resolved": "./node_shrinkwrap/q-2.0.3.tgz"
     },
     "qrcode": {
-      "version": "1.3.2",
-      "from": "qrcode@1.3.2",
-      "resolved": "./node_shrinkwrap/qrcode-1.3.2.tgz"
+      "version": "1.3.3",
+      "from": "qrcode@1.3.3",
+      "resolved": "./node_shrinkwrap/qrcode-1.3.3.tgz"
     },
     "qs": {
       "version": "6.5.2",
@@ -1137,16 +1100,6 @@
       "version": "2.3.3",
       "from": "raw-body@2.3.3",
       "resolved": "./node_shrinkwrap/raw-body-2.3.3.tgz"
-    },
-    "read-pkg": {
-      "version": "2.0.0",
-      "from": "read-pkg@>=2.0.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/read-pkg-2.0.0.tgz"
-    },
-    "read-pkg-up": {
-      "version": "2.0.0",
-      "from": "read-pkg-up@>=2.0.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/read-pkg-up-2.0.0.tgz"
     },
     "readable-stream": {
       "version": "2.3.6",
@@ -1206,9 +1159,9 @@
       "resolved": "./node_shrinkwrap/safer-buffer-2.1.2.tgz"
     },
     "scmp": {
-      "version": "0.0.3",
-      "from": "scmp@0.0.3",
-      "resolved": "./node_shrinkwrap/scmp-0.0.3.tgz"
+      "version": "2.0.0",
+      "from": "scmp@2.0.0",
+      "resolved": "./node_shrinkwrap/scmp-2.0.0.tgz"
     },
     "semver": {
       "version": "5.6.0",
@@ -1253,9 +1206,9 @@
       "resolved": "./node_shrinkwrap/shebang-regex-1.0.0.tgz"
     },
     "shimmer": {
-      "version": "1.2.0",
+      "version": "1.2.1",
       "from": "shimmer@>=1.0.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/shimmer-1.2.0.tgz"
+      "resolved": "./node_shrinkwrap/shimmer-1.2.1.tgz"
     },
     "signal-exit": {
       "version": "3.0.2",
@@ -1265,14 +1218,7 @@
     "simple-swizzle": {
       "version": "0.2.2",
       "from": "simple-swizzle@>=0.2.2 <0.3.0",
-      "resolved": "./node_shrinkwrap/simple-swizzle-0.2.2.tgz",
-      "dependencies": {
-        "is-arrayish": {
-          "version": "0.3.2",
-          "from": "is-arrayish@>=0.3.1 <0.4.0",
-          "resolved": "./node_shrinkwrap/is-arrayish-0.3.2.tgz"
-        }
-      }
+      "resolved": "./node_shrinkwrap/simple-swizzle-0.2.2.tgz"
     },
     "smtp-connection": {
       "version": "2.12.0",
@@ -1284,35 +1230,15 @@
       "from": "sorted-array-functions@>=1.0.0 <2.0.0",
       "resolved": "./node_shrinkwrap/sorted-array-functions-1.2.0.tgz"
     },
-    "spdx-correct": {
-      "version": "3.0.2",
-      "from": "spdx-correct@>=3.0.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/spdx-correct-3.0.2.tgz"
-    },
-    "spdx-exceptions": {
-      "version": "2.2.0",
-      "from": "spdx-exceptions@>=2.1.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/spdx-exceptions-2.2.0.tgz"
-    },
-    "spdx-expression-parse": {
-      "version": "3.0.0",
-      "from": "spdx-expression-parse@>=3.0.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/spdx-expression-parse-3.0.0.tgz"
-    },
-    "spdx-license-ids": {
-      "version": "3.0.2",
-      "from": "spdx-license-ids@>=3.0.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/spdx-license-ids-3.0.2.tgz"
-    },
     "speakeasy": {
       "version": "2.0.0",
       "from": "speakeasy@2.0.0",
       "resolved": "./node_shrinkwrap/speakeasy-2.0.0.tgz"
     },
     "sshpk": {
-      "version": "1.15.2",
+      "version": "1.16.1",
       "from": "sshpk@>=1.7.0 <2.0.0",
-      "resolved": "./node_shrinkwrap/sshpk-1.15.2.tgz"
+      "resolved": "./node_shrinkwrap/sshpk-1.16.1.tgz"
     },
     "stack-trace": {
       "version": "0.0.9",
@@ -1332,34 +1258,12 @@
     "string-width": {
       "version": "2.1.1",
       "from": "string-width@>=2.0.0 <3.0.0",
-      "resolved": "./node_shrinkwrap/string-width-2.1.1.tgz",
-      "dependencies": {
-        "ansi-regex": {
-          "version": "3.0.0",
-          "from": "ansi-regex@>=3.0.0 <4.0.0",
-          "resolved": "./node_shrinkwrap/ansi-regex-3.0.0.tgz"
-        },
-        "is-fullwidth-code-point": {
-          "version": "2.0.0",
-          "from": "is-fullwidth-code-point@>=2.0.0 <3.0.0",
-          "resolved": "./node_shrinkwrap/is-fullwidth-code-point-2.0.0.tgz"
-        },
-        "strip-ansi": {
-          "version": "4.0.0",
-          "from": "strip-ansi@>=4.0.0 <5.0.0",
-          "resolved": "./node_shrinkwrap/strip-ansi-4.0.0.tgz"
-        }
-      }
+      "resolved": "./node_shrinkwrap/string-width-2.1.1.tgz"
     },
     "strip-ansi": {
-      "version": "3.0.1",
-      "from": "strip-ansi@>=3.0.1 <4.0.0",
-      "resolved": "./node_shrinkwrap/strip-ansi-3.0.1.tgz"
-    },
-    "strip-bom": {
-      "version": "3.0.0",
-      "from": "strip-bom@>=3.0.0 <4.0.0",
-      "resolved": "./node_shrinkwrap/strip-bom-3.0.0.tgz"
+      "version": "4.0.0",
+      "from": "strip-ansi@>=4.0.0 <5.0.0",
+      "resolved": "./node_shrinkwrap/strip-ansi-4.0.0.tgz"
     },
     "strip-eof": {
       "version": "1.0.0",
@@ -1404,9 +1308,9 @@
       "resolved": "./node_shrinkwrap/tweetnacl-0.14.5.tgz"
     },
     "twilio": {
-      "version": "3.25.0",
-      "from": "twilio@3.25.0",
-      "resolved": "./node_shrinkwrap/twilio-3.25.0.tgz",
+      "version": "3.28.0",
+      "from": "twilio@3.28.0",
+      "resolved": "./node_shrinkwrap/twilio-3.28.0.tgz",
       "dependencies": {
         "moment": {
           "version": "2.19.3",
@@ -1454,11 +1358,6 @@
       "version": "3.3.2",
       "from": "uuid@>=3.3.2 <4.0.0",
       "resolved": "./node_shrinkwrap/uuid-3.3.2.tgz"
-    },
-    "validate-npm-package-license": {
-      "version": "3.0.4",
-      "from": "validate-npm-package-license@>=3.0.1 <4.0.0",
-      "resolved": "./node_shrinkwrap/validate-npm-package-license-3.0.4.tgz"
     },
     "vary": {
       "version": "1.1.2",
@@ -1513,19 +1412,34 @@
       "resolved": "./node_shrinkwrap/winston-syslog-2.0.0.tgz"
     },
     "winston-transport": {
-      "version": "4.2.0",
+      "version": "4.3.0",
       "from": "winston-transport@>=4.1.0 <5.0.0",
-      "resolved": "./node_shrinkwrap/winston-transport-4.2.0.tgz"
+      "resolved": "./node_shrinkwrap/winston-transport-4.3.0.tgz"
     },
     "wrap-ansi": {
       "version": "2.1.0",
       "from": "wrap-ansi@>=2.0.0 <3.0.0",
       "resolved": "./node_shrinkwrap/wrap-ansi-2.1.0.tgz",
       "dependencies": {
+        "ansi-regex": {
+          "version": "2.1.1",
+          "from": "ansi-regex@>=2.0.0 <3.0.0",
+          "resolved": "./node_shrinkwrap/ansi-regex-2.1.1.tgz"
+        },
+        "is-fullwidth-code-point": {
+          "version": "1.0.0",
+          "from": "is-fullwidth-code-point@>=1.0.0 <2.0.0",
+          "resolved": "./node_shrinkwrap/is-fullwidth-code-point-1.0.0.tgz"
+        },
         "string-width": {
           "version": "1.0.2",
           "from": "string-width@>=1.0.1 <2.0.0",
           "resolved": "./node_shrinkwrap/string-width-1.0.2.tgz"
+        },
+        "strip-ansi": {
+          "version": "3.0.1",
+          "from": "strip-ansi@>=3.0.1 <4.0.0",
+          "resolved": "./node_shrinkwrap/strip-ansi-3.0.1.tgz"
         }
       }
     },
@@ -1534,30 +1448,30 @@
       "from": "wraplog@0.0.5",
       "resolved": "./node_shrinkwrap/wraplog-0.0.5.tgz"
     },
+    "wrappy": {
+      "version": "1.0.2",
+      "from": "wrappy@>=1.0.0 <2.0.0",
+      "resolved": "./node_shrinkwrap/wrappy-1.0.2.tgz"
+    },
     "xmlbuilder": {
       "version": "9.0.1",
       "from": "xmlbuilder@9.0.1",
       "resolved": "./node_shrinkwrap/xmlbuilder-9.0.1.tgz"
     },
     "y18n": {
-      "version": "3.2.1",
-      "from": "y18n@>=3.2.1 <4.0.0",
-      "resolved": "./node_shrinkwrap/y18n-3.2.1.tgz"
-    },
-    "yallist": {
-      "version": "2.1.2",
-      "from": "yallist@>=2.1.2 <3.0.0",
-      "resolved": "./node_shrinkwrap/yallist-2.1.2.tgz"
+      "version": "4.0.0",
+      "from": "y18n@>=3.2.1 <4.0.0||>=4.0.0 <5.0.0",
+      "resolved": "./node_shrinkwrap/y18n-4.0.0.tgz"
     },
     "yargs": {
-      "version": "8.0.2",
-      "from": "yargs@>=8.0.2 <9.0.0",
-      "resolved": "./node_shrinkwrap/yargs-8.0.2.tgz"
+      "version": "12.0.5",
+      "from": "yargs@>=12.0.5 <13.0.0",
+      "resolved": "./node_shrinkwrap/yargs-12.0.5.tgz"
     },
     "yargs-parser": {
-      "version": "7.0.0",
-      "from": "yargs-parser@>=7.0.0 <8.0.0",
-      "resolved": "./node_shrinkwrap/yargs-parser-7.0.0.tgz"
+      "version": "11.1.1",
+      "from": "yargs-parser@>=11.1.1 <12.0.0",
+      "resolved": "./node_shrinkwrap/yargs-parser-11.1.1.tgz"
     }
   }
 }
